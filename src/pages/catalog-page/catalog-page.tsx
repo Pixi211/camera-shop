@@ -5,9 +5,15 @@ import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import Pagination from '../../components/pagination/pagination';
+import { useAppSelector } from '../../store';
+import { getCameras } from '../../store/cameras-data/cameras-data.selectors';
+// import { getPromos } from '../../store/promo-data/promo-data.selectors';
 
 
 function CatalogPage(): JSX.Element {
+
+  const allCameras = useAppSelector(getCameras);
+  // const allPromos = useAppSelector(getPromos);
 
   return (
     <div className="wrapper">
@@ -39,7 +45,7 @@ function CatalogPage(): JSX.Element {
                 </div>
                 <div className="catalog__content">
                   <CatalogSort />
-                  <CatalogCards />
+                  <CatalogCards cameras={allCameras}/>
                   <Pagination />
                 </div>
               </div>
