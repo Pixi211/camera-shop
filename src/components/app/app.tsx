@@ -21,7 +21,7 @@ function App(): JSX.Element {
           element={<CatalogPage />}
         />
         <Route
-          path={AppRoute.ItemPage}
+          path={`${AppRoute.ItemPage}/:id`}
           element={<ItemPage />}
         />
         <Route

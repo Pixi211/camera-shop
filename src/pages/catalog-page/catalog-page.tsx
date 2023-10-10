@@ -7,19 +7,19 @@ import Header from '../../components/header/header';
 import Pagination from '../../components/pagination/pagination';
 import { useAppSelector } from '../../store';
 import { getCameras } from '../../store/cameras-data/cameras-data.selectors';
-// import { getPromos } from '../../store/promo-data/promo-data.selectors';
+import { getPromos } from '../../store/promo-data/promo-data.selectors';
 
 
 function CatalogPage(): JSX.Element {
 
   const allCameras = useAppSelector(getCameras);
-  // const allPromos = useAppSelector(getPromos);
+  const allPromos = useAppSelector(getPromos);
 
   return (
     <div className="wrapper">
       <Header />
       <main>
-        <Banner />
+        <Banner promos={allPromos}/>
         <div className="page-content">
           <div className="breadcrumbs">
             <div className="container">
