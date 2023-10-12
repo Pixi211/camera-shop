@@ -1,10 +1,15 @@
+import { Link } from 'react-router-dom';
 import { CameraType } from '../../types/types';
+import { AppRoute } from '../../const';
+import { setActiveStatus, setAddItemToBasketStatus, setModalData } from '../../store/modal-data/modal-data.slice';
+import { useAppDispatch } from '../../store';
 
 type ProductCardProps = CameraType;
 
 function ProductCard(props: ProductCardProps): JSX.Element {
 
   const {
+    id,
     name,
     price,
     rating,
@@ -15,7 +20,7 @@ function ProductCard(props: ProductCardProps): JSX.Element {
     previewImgWebp2x
   } = props;
 
-
+  //to const
   const stars = [1, 2, 3, 4, 5];
   const ratingForm = (
     <>
@@ -27,6 +32,13 @@ function ProductCard(props: ProductCardProps): JSX.Element {
     </>
   );
 
+  const dispatch = useAppDispatch();
+
+  const buyButtonClickHandler = () => {
+    dispatch(setModalData(props));
+    dispatch(setActiveStatus(true));
+    dispatch(setAddItemToBasketStatus(true));
+  };
 
   return (
     <div className="product-card">
@@ -58,10 +70,12 @@ function ProductCard(props: ProductCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
+        <button className="btn btn--purple product-card__btn" type="button" onClick={buyButtonClickHandler}>
+          Купить
         </button>
-        <a className="btn btn--transparent" href="#">Подробнее
-        </a>
+        <Link className="btn btn--transparent" to={`${AppRoute.ItemPage}/${id}`}>
+          Подробнее
+        </Link>
       </div>
     </div>
   );

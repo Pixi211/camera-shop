@@ -17,6 +17,8 @@ enum APIRoute {
 enum NameSpace {
   Cameras = 'CAMERAS',
   Promo = 'PROMO',
+  Modal = 'MODAL',
+  Current = 'CURRENT'
 }
 
 const BACKEND_URL = 'https://camera-shop.accelerator.pages.academy/';

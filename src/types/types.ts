@@ -38,7 +38,6 @@ export type PromoCameraType = {
 }
 
 
-
 //state.ts
 import { store } from '../store';
 
@@ -51,6 +50,17 @@ export type CamerasData = {
   cameras: CamerasListType;
   hasError: boolean;
   isDataLoading: boolean;
+}
+
+export type CurrentData = {
+  currentItemData: CameraType | null;
+}
+
+export type ModalData = {
+  addItemToBasketStatus: boolean;
+  successStatus: boolean;
+  isActive: boolean;
+  modalData: CameraType | null;
 }
 
 export type State = ReturnType<typeof store.getState>;

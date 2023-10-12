@@ -11,6 +11,7 @@ import { getCameras } from '../../store/cameras-data/cameras-data.selectors';
 import { getPromos } from '../../store/promo-data/promo-data.selectors';
 import { MAX_PRODUCTS_ON_PAGE } from '../../const';
 import { useLocation } from 'react-router-dom';
+import ModalWrapper from '../../components/modal-wrapper/modal-wrapper';
 
 
 function CatalogPage(): JSX.Element {
@@ -73,6 +74,7 @@ function CatalogPage(): JSX.Element {
             </div>
           </section>
         </div>
+        <ModalWrapper />
       </main>
       <Footer />
     </div>
