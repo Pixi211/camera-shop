@@ -73,7 +73,7 @@ function ProductCard(props: ProductCardProps): JSX.Element {
         <button className="btn btn--purple product-card__btn" type="button" onClick={buyButtonClickHandler}>
           Купить
         </button>
-        <Link className="btn btn--transparent" to={`${AppRoute.ItemPage}/${id}`}>
+        <Link className="btn btn--transparent" to={`/${id}`}>
           Подробнее
         </Link>
       </div>

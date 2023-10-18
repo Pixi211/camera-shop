@@ -87,8 +87,16 @@ function ProductContent(props: CameraType): JSX.Element {
             </button>
             <div className="tabs product__tabs">
               <div className="tabs__controls product__tabs-controls">
-                <button className={`tabs__control ${!isDescription ? 'is-active' : ''}`} type="button" onClick={handleStatsClick}>Характеристики</button>
-                <button className={`tabs__control ${isDescription ? 'is-active' : ''}`} type="button" onClick={handleDescriptionClick}>Описание</button>
+                <button className={`tabs__control ${!isDescription ? 'is-active' : ''}`}
+                  type="button" onClick={handleStatsClick}
+                >
+                  Характеристики
+                </button>
+                <button className={`tabs__control ${isDescription ? 'is-active' : ''}`}
+                  type="button" onClick={handleDescriptionClick}
+                >
+                  Описание
+                </button>
               </div>
               <div className="tabs__content">
                 <div className={`tabs__element ${!isDescription ? 'is-active' : ''}`}>

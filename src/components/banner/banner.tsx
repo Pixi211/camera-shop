@@ -46,7 +46,7 @@ function Banner({ promos }: BannerProps): JSX.Element {
             <p className="banner__info"><span className="banner__message">Новинка!</span>
               <span className="title title--h1">{promo.name}</span>
               <span className="banner__text">Профессиональная камера от&nbsp;известного производителя</span>
-              <Link className="btn" to={`${AppRoute.ItemPage}/${promo.id}`}>Подробнее</Link>
+              <Link className="btn" to={`/${promo.id}`}>Подробнее</Link>
             </p>
           </div>
         </SwiperSlide>
