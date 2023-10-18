@@ -13,7 +13,7 @@ function CatalogCards({ cameras }: CatalogCardsProps): JSX.Element {
     <div className="cards catalog__cards">
       {cameras.map((camera) => (
         <ProductCard
-          key={camera.id} {...camera}
+          key={camera.id} camera={camera} isActive=''
         />
       ))}
     </div>

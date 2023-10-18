@@ -7,9 +7,9 @@ enum AppRoute {
 
 enum APIRoute {
   Camera = '/cameras',
-  Similar = '/similar',
+  Similar = 'similar',
   Promo = '/promo',
-  Review = '/reviews',
+  Review = 'reviews',
   Coupon = '/coupons',
   Order = '/orders',
 }

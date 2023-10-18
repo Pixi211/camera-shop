@@ -37,6 +37,18 @@ export type PromoCameraType = {
   previewImgWebp2x: string;
 }
 
+//GET /cameras/{cameraId}/reviews
+export type Review = {
+  id: string;
+  createAt: string;
+  cameraId: number;
+  userName: string;
+  advantage: string;
+  disadvantage: string;
+  review: string;
+  rating: number;
+}[]
+
 
 //state.ts
 import { store } from '../store';
@@ -54,6 +66,8 @@ export type CamerasData = {
 
 export type CurrentData = {
   currentItemData: CameraType | null;
+  similarCameras: CamerasListType;
+  reviews: Review;
 }
 
 export type ModalData = {

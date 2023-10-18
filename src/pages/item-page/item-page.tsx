@@ -5,8 +5,8 @@ import ProductContent from '../../components/product-content/product-content';
 import ProductSimilar from '../../components/product-similar/product-similar';
 import ReviewBlock from '../../components/review-block/review-block';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { fetchCurrentAction } from '../../store/current-item-data/current-item-data.action';
-import { getCurentItemData } from '../../store/current-item-data/current-item-data.selectors';
+import { fetchCurrentAction, fetchSimilarAction } from '../../store/current-item-data/current-item-data.action';
+import { getCurentItemData, getSimilarCameras } from '../../store/current-item-data/current-item-data.selectors';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { useEffect, useState } from 'react';
 import { AppRoute } from '../../const';
@@ -14,6 +14,8 @@ import { AppRoute } from '../../const';
 function ItemPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
+  const similars = useAppSelector(getSimilarCameras);
+
   const currentId = useParams().id;
   const { search } = useLocation();
 
@@ -23,6 +25,7 @@ function ItemPage(): JSX.Element {
 
     if (currentId) {
       dispatch(fetchCurrentAction(Number(currentId)));
+      dispatch(fetchSimilarAction(Number(currentId)));
     }
   }, [dispatch, currentId]);
 
@@ -63,7 +66,7 @@ function ItemPage(): JSX.Element {
           </div>
           <ProductContent camera={currentItem} typeTag={currentTag} />
 
-          <ProductSimilar />
+          {similars.length > 0 ? <ProductSimilar cameras={similars}/> : null}
           <ReviewBlock />
         </div>
       </main>

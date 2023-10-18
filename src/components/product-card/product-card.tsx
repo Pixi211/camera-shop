@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import { CameraType } from '../../types/types';
-import { AppRoute } from '../../const';
 import { setActiveStatus, setAddItemToBasketStatus, setModalData } from '../../store/modal-data/modal-data.slice';
 import { useAppDispatch } from '../../store';
 
-type ProductCardProps = CameraType;
+type ProductCardProps = {
+  camera: CameraType;
+  isActive: string;
+};
 
-function ProductCard(props: ProductCardProps): JSX.Element {
+function ProductCard({camera, isActive}: ProductCardProps): JSX.Element {
 
   const {
     id,
@@ -18,7 +20,7 @@ function ProductCard(props: ProductCardProps): JSX.Element {
     previewImg2x,
     previewImgWebp,
     previewImgWebp2x
-  } = props;
+  } = camera;
 
   //to const
   const stars = [1, 2, 3, 4, 5];
@@ -35,13 +37,13 @@ function ProductCard(props: ProductCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const buyButtonClickHandler = () => {
-    dispatch(setModalData(props));
+    dispatch(setModalData(camera));
     dispatch(setActiveStatus(true));
     dispatch(setAddItemToBasketStatus(true));
   };
 
   return (
-    <div className="product-card">
+    <div className={`product-card ${isActive}`}>
       <div className="product-card__img">
         <picture>
           <source
@@ -49,7 +51,7 @@ function ProductCard(props: ProductCardProps): JSX.Element {
             srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}
           />
           <img src={previewImg}
-            srcSet={previewImg2x}
+            srcSet={`${previewImg2x} 2x`}
             width={280}
             height={240}
             alt={name}
