@@ -2,7 +2,12 @@ import { useCallback, useState } from 'react';
 import { CameraType } from '../../types/types';
 import { useSearchParams } from 'react-router-dom';
 
-function ProductContent(props: CameraType): JSX.Element {
+type ProductContentProps = {
+  camera: CameraType;
+  typeTag: string;
+}
+
+function ProductContent({camera, typeTag}: ProductContentProps): JSX.Element {
 
   const { name,
     vendorCode,
@@ -15,7 +20,7 @@ function ProductContent(props: CameraType): JSX.Element {
     previewImg,
     previewImg2x,
     previewImgWebp,
-    previewImgWebp2x } = props;
+    previewImgWebp2x } = camera;
 
 
   //to const
@@ -30,8 +35,8 @@ function ProductContent(props: CameraType): JSX.Element {
     </>
   );
 
-  const [isDescription, setIsDescription] = useState<boolean>(true);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [isDescription, setIsDescription] = useState<boolean>(typeTag === 'description');
+  const setSearchParams = useSearchParams()[1];
 
   const handleDescriptionClick = useCallback(() => {
     setIsDescription(true);

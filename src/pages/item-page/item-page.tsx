@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import ProductContent from '../../components/product-content/product-content';
@@ -8,15 +8,16 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchCurrentAction } from '../../store/current-item-data/current-item-data.action';
 import { getCurentItemData } from '../../store/current-item-data/current-item-data.selectors';
 import NotFoundPage from '../not-found-page/not-found-page';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AppRoute } from '../../const';
-
 
 function ItemPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
-
   const currentId = useParams().id;
+  const { search } = useLocation();
+
+  const currentTag = useState((search.split('=')[1]) || 'description')[0];
 
   useEffect(() => {
 
@@ -60,7 +61,7 @@ function ItemPage(): JSX.Element {
               </ul>
             </div>
           </div>
-          <ProductContent {...currentItem} />
+          <ProductContent camera={currentItem} typeTag={currentTag} />
 
           <ProductSimilar />
           <ReviewBlock />
