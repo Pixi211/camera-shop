@@ -32,17 +32,16 @@ export const fetchSimilarAction = createAsyncThunk<CamerasListType, number, {
 
 );
 
-export const fetchReviewsAction = createAsyncThunk<Review, number, {
+export const fetchReviewsAction = createAsyncThunk<Review[], number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchReviews',
-  async (id, { extra: api }) : Promise<Review> => {
-    const {data} = await api.get<Review>(`${APIRoute.Camera}/${id}/${APIRoute.Review}`);
-    // const sortedByDate = data.sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
-    // return sortedByDate;
-    return data;
+  async (id, { extra: api }) : Promise<Review[]> => {
+    const {data} = await api.get<Review[]>(`${APIRoute.Camera}/${id}/${APIRoute.Review}`);
+    const sortedByDate = data.sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
+    return sortedByDate;
   }
 
 );

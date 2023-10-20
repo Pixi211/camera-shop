@@ -5,16 +5,16 @@ import ProductContent from '../../components/product-content/product-content';
 import ProductSimilar from '../../components/product-similar/product-similar';
 import ReviewBlock from '../../components/review-block/review-block';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { fetchCurrentAction, fetchSimilarAction } from '../../store/current-item-data/current-item-data.action';
-import { getCurentItemData, getSimilarCameras } from '../../store/current-item-data/current-item-data.selectors';
+import { fetchCurrentAction, fetchReviewsAction, fetchSimilarAction } from '../../store/current-item-data/current-item-data.action';
+import { getCurentItemData, getReviews, getSimilarCameras } from '../../store/current-item-data/current-item-data.selectors';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { useEffect, useState } from 'react';
 import { AppRoute } from '../../const';
+import { Link as LinkScroll} from 'react-scroll';
 
 function ItemPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
-  const similars = useAppSelector(getSimilarCameras);
 
   const currentId = useParams().id;
   const { search } = useLocation();
@@ -26,10 +26,23 @@ function ItemPage(): JSX.Element {
     if (currentId) {
       dispatch(fetchCurrentAction(Number(currentId)));
       dispatch(fetchSimilarAction(Number(currentId)));
+      dispatch(fetchReviewsAction(Number(currentId)));
     }
   }, [dispatch, currentId]);
 
   const currentItem = useAppSelector(getCurentItemData);
+  const similars = useAppSelector(getSimilarCameras);
+  const reviews = useAppSelector(getReviews);
+
+  const [currentMax , setCurrentMax] = useState(3);
+  const visibleReviews = reviews.slice(0, currentMax);
+
+  const loadNextThreeReviews = () => {
+    setCurrentMax(currentMax + 3);
+  };
+  const isDisabled = currentMax >= reviews.length;
+
+
   if (!currentItem) {
     return (<NotFoundPage />);
   }
@@ -67,14 +80,14 @@ function ItemPage(): JSX.Element {
           <ProductContent camera={currentItem} typeTag={currentTag} />
 
           {similars.length > 0 ? <ProductSimilar cameras={similars}/> : null}
-          <ReviewBlock />
+          <ReviewBlock reviews={reviews} visibleReviews={visibleReviews} onMoreButtonClick={loadNextThreeReviews} isDisabled={isDisabled}/>
         </div>
       </main>
-      <a className="up-btn" href="#header">
+      <LinkScroll className="up-btn" to="header" smooth duration={1000}>
         <svg width="12" height="18" aria-hidden="true">
           <use xlinkHref="#icon-arrow2"></use>
         </svg>
-      </a>
+      </LinkScroll>
       <Footer />
     </div>
   );

@@ -47,7 +47,7 @@ export type Review = {
   disadvantage: string;
   review: string;
   rating: number;
-}[]
+}
 
 
 //state.ts
@@ -67,7 +67,7 @@ export type CamerasData = {
 export type CurrentData = {
   currentItemData: CameraType | null;
   similarCameras: CamerasListType;
-  reviews: Review;
+  reviews: Review[];
 }
 
 export type ModalData = {

@@ -1,11 +1,17 @@
+import { Review } from '../../types/types';
 import ReviewCard from '../review-card/review-card';
 
-function ReviewList(): JSX.Element {
+type ReviewListProps = {
+  reviews: Review[];
+}
+function ReviewList({ reviews }: ReviewListProps): JSX.Element {
 
   return (
+
     <ul className="review-block__list">
-      <ReviewCard />
+      {reviews.map((review) => <ReviewCard key={review.id} {...review} />)}
     </ul>
+
   );
 }
 
