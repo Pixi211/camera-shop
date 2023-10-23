@@ -68,6 +68,9 @@ export type CurrentData = {
   currentItemData: CameraType | null;
   similarCameras: CamerasListType;
   reviews: Review[];
+  isCurrentDataLoading: boolean;
+  isSimilarsLoading: boolean;
+  isReviewsLoading: boolean;
 }
 
 export type ModalData = {

@@ -6,11 +6,11 @@ import ProductSimilar from '../../components/product-similar/product-similar';
 import ReviewBlock from '../../components/review-block/review-block';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchCurrentAction, fetchReviewsAction, fetchSimilarAction } from '../../store/current-item-data/current-item-data.action';
-import { getCurentItemData, getReviews, getSimilarCameras } from '../../store/current-item-data/current-item-data.selectors';
+import { getCurentItemData, getLoadingCurrentDataStatus, getLoadingReviewsStatus, getLoadingSimilarsStatus, getReviews, getSimilarCameras } from '../../store/current-item-data/current-item-data.selectors';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { useEffect, useState } from 'react';
 import { AppRoute } from '../../const';
-import { Link as LinkScroll} from 'react-scroll';
+import { Link as LinkScroll } from 'react-scroll';
 
 function ItemPage(): JSX.Element {
 
@@ -33,8 +33,12 @@ function ItemPage(): JSX.Element {
   const currentItem = useAppSelector(getCurentItemData);
   const similars = useAppSelector(getSimilarCameras);
   const reviews = useAppSelector(getReviews);
+  const isCurrentDataLoading = useAppSelector(getLoadingCurrentDataStatus);
+  const isSimilarsLoading = useAppSelector(getLoadingSimilarsStatus);
+  const isReviewsLoading = useAppSelector(getLoadingReviewsStatus);
 
-  const [currentMax , setCurrentMax] = useState(3);
+
+  const [currentMax, setCurrentMax] = useState(3);
   const visibleReviews = reviews.slice(0, currentMax);
 
   const loadNextThreeReviews = () => {
@@ -42,10 +46,14 @@ function ItemPage(): JSX.Element {
   };
   const isDisabled = currentMax >= reviews.length;
 
+  if (isCurrentDataLoading || isSimilarsLoading || isReviewsLoading) {
+    return (<p> Loading</p>); ///
+  }
 
   if (!currentItem) {
     return (<NotFoundPage />);
   }
+
 
   return (
     <div className="wrapper">
@@ -77,10 +85,12 @@ function ItemPage(): JSX.Element {
               </ul>
             </div>
           </div>
+
           <ProductContent camera={currentItem} typeTag={currentTag} />
 
-          {similars.length > 0 ? <ProductSimilar cameras={similars}/> : null}
-          <ReviewBlock reviews={reviews} visibleReviews={visibleReviews} onMoreButtonClick={loadNextThreeReviews} isDisabled={isDisabled}/>
+          {similars.length > 0 ? <ProductSimilar cameras={similars} /> : null}
+
+          <ReviewBlock reviews={reviews} visibleReviews={visibleReviews} onMoreButtonClick={loadNextThreeReviews} isDisabled={isDisabled} />
         </div>
       </main>
       <LinkScroll className="up-btn" to="header" smooth duration={1000}>

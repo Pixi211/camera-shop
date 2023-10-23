@@ -8,7 +8,7 @@ type ProductCardProps = {
   isActive: string;
 };
 
-function ProductCard({camera, isActive}: ProductCardProps): JSX.Element {
+function ProductCard({ camera, isActive }: ProductCardProps): JSX.Element {
 
   const {
     id,
@@ -50,7 +50,8 @@ function ProductCard({camera, isActive}: ProductCardProps): JSX.Element {
             type="image/webp"
             srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}
           />
-          <img src={previewImg}
+          <img
+            src={previewImg}
             srcSet={`${previewImg2x} 2x`}
             width={280}
             height={240}
