@@ -48,7 +48,15 @@ export type Review = {
   review: string;
   rating: number;
 }
-
+//GET /reviews
+export type UserReview = {
+  cameraId: number;
+  userName: string;
+  advantage: string;
+  disadvantage: string;
+  review: string;
+  rating: number;
+}
 
 //state.ts
 import { store } from '../store';
@@ -71,6 +79,7 @@ export type CurrentData = {
   isCurrentDataLoading: boolean;
   isSimilarsLoading: boolean;
   isReviewsLoading: boolean;
+  hasError: boolean;
 }
 
 export type ModalData = {
@@ -78,6 +87,8 @@ export type ModalData = {
   successStatus: boolean;
   isActive: boolean;
   modalData: CameraType | null;
+  addReviewStatus: boolean;
+  successType: 'newReview' | 'addToBasket' | 'purchase';
 }
 
 export type State = ReturnType<typeof store.getState>;

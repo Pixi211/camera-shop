@@ -1,6 +1,7 @@
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { useAppSelector } from '../../store';
 import { getModalData } from '../../store/modal-data/modal-data.selectors';
+import {useCallback} from 'react';
 
 
 type ModalAddItemToBasketProps = {
@@ -10,6 +11,13 @@ type ModalAddItemToBasketProps = {
 
 function ModalAddItemToBasket({ onAddButtonClick, onCloseButtonClick }: ModalAddItemToBasketProps): JSX.Element {
   const currentItemData = useAppSelector(getModalData);
+
+  ///не работает фокус
+  const focusOnButton = useCallback((button: HTMLButtonElement | null) => {
+    if (button) {
+      button.focus();
+    }
+  }, []);
 
   if (!currentItemData) {
     return (<NotFoundPage />);
@@ -30,9 +38,9 @@ function ModalAddItemToBasket({ onAddButtonClick, onCloseButtonClick }: ModalAdd
 
   return (
     <div className="modal__wrapper">
-      <div className="modal__overlay"></div>
-      <div className="modal__content">
-        <p className="title title--h4">Добавить товар в корзину</p>
+      <div className="modal__overlay" onClick={() => onCloseButtonClick()}></div>
+      <div className="modal__content" >
+        <p className="title title--h4" >Добавить товар в корзину</p>
         <div className="basket-item basket-item--short">
           <div className="basket-item__img">
             <picture>
@@ -79,9 +87,10 @@ function ModalAddItemToBasket({ onAddButtonClick, onCloseButtonClick }: ModalAdd
           <button
             className="btn btn--purple modal__btn modal__btn--fit-width"
             type="button"
+            ref={focusOnButton}
             onClick={() => onAddButtonClick()}
           >
-            <svg width="24" height="16" aria-hidden="true">
+            <svg width={24} height={16} aria-hidden="true">
               <use xlinkHref="#icon-add-basket"></use>
             </svg>
             Добавить в корзину
@@ -93,7 +102,7 @@ function ModalAddItemToBasket({ onAddButtonClick, onCloseButtonClick }: ModalAdd
           aria-label="Закрыть попап"
           onClick={() => onCloseButtonClick()}
         >
-          <svg width="10" height="10" aria-hidden="true">
+          <svg width={10} height={10} aria-hidden="true">
             <use xlinkHref="#icon-close"></use>
           </svg>
         </button>

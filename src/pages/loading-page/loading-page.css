@@ -1,0 +1,9 @@
+.loading_msg {
+  margin: 0;
+  margin-top: 280px;
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 60px;
+  text-align: center;
+  opacity: 0.89;
+}

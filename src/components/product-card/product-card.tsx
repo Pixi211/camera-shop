@@ -37,6 +37,7 @@ function ProductCard({ camera, isActive }: ProductCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const buyButtonClickHandler = () => {
+    document.body.style.overflow = 'hidden';
     dispatch(setModalData(camera));
     dispatch(setActiveStatus(true));
     dispatch(setAddItemToBasketStatus(true));

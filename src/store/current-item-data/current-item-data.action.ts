@@ -1,6 +1,6 @@
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { CameraType, CamerasListType, Review } from '../../types/types';
+import { CameraType, CamerasListType, Review, UserReview } from '../../types/types';
 import { AppDispatch, State } from '../../types/types';
 import { AxiosInstance } from 'axios';
 import { APIRoute } from '../../const';
@@ -45,3 +45,15 @@ export const fetchReviewsAction = createAsyncThunk<Review[], number, {
   }
 
 );
+
+export const sendReviewAction = createAsyncThunk<void, UserReview, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/sendReview',
+  async (userInfo, { extra: api }) => {
+    await api.post<Review[]>(APIRoute.Review , userInfo);
+  }
+);
+
