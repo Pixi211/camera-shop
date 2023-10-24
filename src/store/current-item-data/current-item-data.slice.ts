@@ -31,9 +31,6 @@ export const currentData = createSlice({
       .addCase(fetchSimilarAction.pending, (state) => {
         state.isSimilarsLoading = true;
       })
-      .addCase(fetchSimilarAction.pending, (state) => {
-        state.isSimilarsLoading = true;
-      })
       .addCase(fetchSimilarAction.fulfilled, (state, action) => {
         state.isSimilarsLoading = false;
         state.similarCameras = action.payload;

@@ -1,7 +1,8 @@
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { useAppSelector } from '../../store';
 import { getModalData } from '../../store/modal-data/modal-data.selectors';
-import {useCallback} from 'react';
+import { useEffect, useRef } from 'react';
+import ReactFocusLock from 'react-focus-lock';
 
 
 type ModalAddItemToBasketProps = {
@@ -12,10 +13,11 @@ type ModalAddItemToBasketProps = {
 function ModalAddItemToBasket({ onAddButtonClick, onCloseButtonClick }: ModalAddItemToBasketProps): JSX.Element {
   const currentItemData = useAppSelector(getModalData);
 
-  ///не работает фокус
-  const focusOnButton = useCallback((button: HTMLButtonElement | null) => {
-    if (button) {
-      button.focus();
+  const focusOnButton = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (focusOnButton.current) {
+      focusOnButton.current.focus();
     }
   }, []);
 
@@ -38,75 +40,76 @@ function ModalAddItemToBasket({ onAddButtonClick, onCloseButtonClick }: ModalAdd
 
   return (
     <div className="modal__wrapper">
-      <div className="modal__overlay" onClick={() => onCloseButtonClick()}></div>
-      <div className="modal__content" >
-        <p className="title title--h4" >Добавить товар в корзину</p>
-        <div className="basket-item basket-item--short">
-          <div className="basket-item__img">
-            <picture>
-              <source
-                type="image/webp"
-                srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}
-              />
-              <img
-                src={previewImg}
-                srcSet={`${previewImg2x} 2x`}
-                width={140}
-                height={120}
-                alt={`Фотоаппарат «${name}»`}
-              />
-            </picture>
-          </div>
-          <div className="basket-item__description">
-            <p className="basket-item__title">{name}</p>
-            <ul className="basket-item__list">
-              <li className="basket-item__list-item">
-                <span className="basket-item__article">
-                  Артикул:{' '}
+      <ReactFocusLock group='group-3' returnFocus ref={focusOnButton} >
+        <div className="modal__overlay" onClick={() => onCloseButtonClick()}></div>
+        <div className="modal__content" >
+          <p className="title title--h4" >Добавить товар в корзину</p>
+          <div className="basket-item basket-item--short">
+            <div className="basket-item__img">
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}
+                />
+                <img
+                  src={previewImg}
+                  srcSet={`${previewImg2x} 2x`}
+                  width={140}
+                  height={120}
+                  alt={`Фотоаппарат «${name}»`}
+                />
+              </picture>
+            </div>
+            <div className="basket-item__description">
+              <p className="basket-item__title">{name}</p>
+              <ul className="basket-item__list">
+                <li className="basket-item__list-item">
+                  <span className="basket-item__article">
+                    Артикул:{' '}
+                  </span>
+                  <span className="basket-item__number">
+                    {vendorCode}
+                  </span>
+                </li>
+                <li className="basket-item__list-item">
+                  {type} фотокамера
+                </li>
+                <li className="basket-item__list-item">
+                  {level} уровень
+                </li>
+              </ul>
+              <p className="basket-item__price">
+                <span className="visually-hidden">
+                  Цена:
                 </span>
-                <span className="basket-item__number">
-                  {vendorCode}
-                </span>
-              </li>
-              <li className="basket-item__list-item">
-                {type} фотокамера
-              </li>
-              <li className="basket-item__list-item">
-                {level} уровень
-              </li>
-            </ul>
-            <p className="basket-item__price">
-              <span className="visually-hidden">
-                Цена:
-              </span>
-              {price.toLocaleString('ru-RU')} ₽
-            </p>
+                {price.toLocaleString('ru-RU')} ₽
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="modal__buttons">
+          <div className="modal__buttons">
+            <button
+              className="btn btn--purple modal__btn modal__btn--fit-width"
+              type="button"
+              onClick={() => onAddButtonClick()}
+            >
+              <svg width={24} height={16} aria-hidden="true">
+                <use xlinkHref="#icon-add-basket"></use>
+              </svg>
+              Добавить в корзину
+            </button>
+          </div>
           <button
-            className="btn btn--purple modal__btn modal__btn--fit-width"
+            className="cross-btn"
             type="button"
-            ref={focusOnButton}
-            onClick={() => onAddButtonClick()}
+            aria-label="Закрыть попап"
+            onClick={() => onCloseButtonClick()}
           >
-            <svg width={24} height={16} aria-hidden="true">
-              <use xlinkHref="#icon-add-basket"></use>
+            <svg width={10} height={10} aria-hidden="true">
+              <use xlinkHref="#icon-close"></use>
             </svg>
-            Добавить в корзину
           </button>
         </div>
-        <button
-          className="cross-btn"
-          type="button"
-          aria-label="Закрыть попап"
-          onClick={() => onCloseButtonClick()}
-        >
-          <svg width={10} height={10} aria-hidden="true">
-            <use xlinkHref="#icon-close"></use>
-          </svg>
-        </button>
-      </div>
+      </ReactFocusLock>
     </div>
   );
 }

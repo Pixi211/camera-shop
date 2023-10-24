@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { getActiveStatus, getModalAddItemToBasketStatus, getModalAddReviewStatus, getModalSuccessStatus } from '../../store/modal-data/modal-data.selectors';
 import ModalAddItemToBasket from '../modal-catalog-add-item/modal-catalog-add-item';
@@ -55,6 +55,7 @@ function ModalWrapper(): JSX.Element {
           <ModalAddItemToBasket
             onAddButtonClick={addItemToBasketHandler}
             onCloseButtonClick={closeModalForm}
+
           />);
         break;
       case isModalAddReviewOpened:
@@ -88,16 +89,9 @@ function ModalWrapper(): JSX.Element {
 
   }, [isModalAddItemToBasketOpened, isModalSuccessOpened, isModalAddReviewOpened, dispatch, currentItemData]);
 
-  ///не работает фокус//
-  const focusOnDivElement = useCallback((element: HTMLDivElement | null) => {
-    if (element) {
-      element.focus();
-    }
-  }, []);
-  ////////////
 
   return (
-    <div className={`modal ${isActive ? 'is-active' : ''} ${isModalSuccessOpened ? 'modal--narrow' : ''} `} ref={focusOnDivElement}>
+    <div className={`modal ${isActive ? 'is-active' : ''} ${isModalSuccessOpened ? 'modal--narrow' : ''} `}>
       {modalElement}
     </div>
   );
