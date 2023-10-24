@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { CameraType } from '../../types/types';
 import { setActiveStatus, setAddItemToBasketStatus, setModalData } from '../../store/modal-data/modal-data.slice';
 import { useAppDispatch } from '../../store';
+import { FOCUS_TIMEOUT } from '../../const';
 
 type ProductCardProps = {
   camera: CameraType;
@@ -41,6 +42,10 @@ function ProductCard({ camera, isActive }: ProductCardProps): JSX.Element {
     dispatch(setModalData(camera));
     dispatch(setActiveStatus(true));
     dispatch(setAddItemToBasketStatus(true));
+
+    setTimeout(() => {
+      document.getElementById('modal__btn--add_to_basket')?.focus();
+    }, FOCUS_TIMEOUT);
   };
 
   return (

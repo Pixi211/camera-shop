@@ -6,6 +6,7 @@ import { setAddReviewStatus, setSuccessStatus } from '../../store/modal-data/mod
 import React from 'react';
 import { fetchReviewsAction, sendReviewAction } from '../../store/current-item-data/current-item-data.action';
 import ReactFocusLock from 'react-focus-lock';
+import { RESET_TIMEOUT } from '../../const';
 
 
 type ModalAddReviewForm = {
@@ -16,8 +17,6 @@ type ModalAddReviewForm = {
 function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm): JSX.Element {
 
   const dispatch = useAppDispatch();
-  //to const
-  const RESET_TIMEOUT = 300;
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<UserReview>({ mode: 'onSubmit', criteriaMode: 'all' });
 
@@ -100,7 +99,6 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                           <input
                             className="visually-hidden"
                             id={`star-${star}`}
-                            name="rate"
                             type="radio"
                             value={star}
                             onClick={() => {
@@ -131,8 +129,6 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                   </div>
                   <p className="rate__message">Нужно оценить товар</p>
                 </fieldset>
-
-
                 <div className={`custom-input form-review__item ${errors.userName ? 'is-invalid' : ''}`}>
                   <label>
                     <span className="custom-input__label">
@@ -143,7 +139,7 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                     </span>
                     <input
                       type="text"
-                      // name="user-name"
+                      id='name__input'
                       minLength={2}
                       maxLength={160}
                       placeholder="Введите ваше имя"
@@ -153,15 +149,11 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                           return isNameValid;
                         }
                       })}
-                      autoFocus
-                      tabIndex={1}
                       aria-invalid={errors.userName ? 'true' : false}
                     />
                   </label>
                   <p className="custom-input__error">Нужно указать имя</p>
                 </div>
-
-
                 <div className={`custom-input form-review__item ${errors.advantage ? 'is-invalid' : ''}`}>
                   <label>
                     <span className="custom-input__label">
@@ -172,7 +164,6 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                     </span>
                     <input
                       type="text"
-                      name="user-plus"
                       minLength={2}
                       maxLength={160}
                       placeholder="Основные преимущества товара"
@@ -192,7 +183,6 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                     </span>
                     <input
                       type="text"
-                      name="user-minus"
                       minLength={2}
                       maxLength={160}
                       placeholder="Главные недостатки товара"
@@ -211,7 +201,6 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                       </svg>
                     </span>
                     <textarea
-                      name="user-comment"
                       minLength={2}
                       maxLength={160}
                       placeholder="Поделитесь своим опытом покупки"
@@ -222,8 +211,6 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                   </label>
                   <div className="custom-textarea__error">Нужно добавить комментарий</div>
                 </div>
-
-
               </div>
               <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
             </form>

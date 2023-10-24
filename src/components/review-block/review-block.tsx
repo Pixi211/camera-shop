@@ -1,3 +1,4 @@
+import { FOCUS_TIMEOUT } from '../../const';
 import { useAppDispatch } from '../../store';
 import { setActiveStatus, setAddReviewStatus, setSuccessType } from '../../store/modal-data/modal-data.slice';
 import { Review } from '../../types/types';
@@ -27,6 +28,9 @@ function ReviewBlock({ reviews, visibleReviews, onMoreButtonClick, isDisabled }:
     dispatch(setAddReviewStatus(true));
     dispatch(setSuccessType('newReview'));
 
+    setTimeout(() => {
+      document.getElementById('name__input')?.focus();
+    }, FOCUS_TIMEOUT);
     document.body.style.overflow = 'hidden';
   };
 

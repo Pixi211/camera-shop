@@ -90,6 +90,7 @@ function ModalAddItemToBasket({ onAddButtonClick, onCloseButtonClick }: ModalAdd
             <button
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
+              id="modal__btn--add_to_basket"
               onClick={() => onAddButtonClick()}
             >
               <svg width={24} height={16} aria-hidden="true">
