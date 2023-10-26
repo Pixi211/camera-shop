@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { MAX_PRODUCTS_ON_PAGE } from '../../const';
 import { CamerasListType } from '../../types/types';
@@ -69,5 +70,7 @@ function Pagination({ cameras, currentPage, paginate, onNextButtonClick, onPrevB
   );
 }
 
-export default Pagination;
+const MemoizedPagination = React.memo(Pagination);
+
+export default MemoizedPagination;
 

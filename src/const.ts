@@ -21,12 +21,21 @@ enum NameSpace {
   Current = 'CURRENT'
 }
 
+enum RatingName {
+  Awful = 'Ужасно',
+  Bad = 'Плохо',
+  Average = 'Нормально',
+  Good = 'Хорошо',
+  Perfect = 'Отлично',
+}
+
 const BACKEND_URL = 'https://camera-shop.accelerator.pages.academy/';
 const MAX_PRODUCTS_ON_PAGE = 9;
 const FOCUS_TIMEOUT = 500;
 const RESET_TIMEOUT = 300;
+const stars = [1, 2, 3, 4, 5];
 
 export {
-  AppRoute, APIRoute, NameSpace,
-  BACKEND_URL, MAX_PRODUCTS_ON_PAGE, FOCUS_TIMEOUT, RESET_TIMEOUT
+  AppRoute, APIRoute, NameSpace, RatingName,
+  BACKEND_URL, MAX_PRODUCTS_ON_PAGE, FOCUS_TIMEOUT, RESET_TIMEOUT, stars
 };

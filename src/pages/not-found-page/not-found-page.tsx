@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import Header from '../../components/header/header';
-import Footer from '../../components/footer/footer';
+import MemoizedHeader from '../../components/header/header';
+import MemoizedFooter from '../../components/footer/footer';
 
 function NotFoundPage(): JSX.Element {
   return (
     <div className="wrapper">
-      <Header />
+      <MemoizedHeader />
       <main>
         <div className="page__not-found-page-container container">
           <section>
@@ -19,7 +19,7 @@ function NotFoundPage(): JSX.Element {
           </section>
         </div>
       </main>
-      <Footer />
+      <MemoizedFooter />
     </div>
   );
 }

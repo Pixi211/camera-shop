@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
@@ -56,4 +57,6 @@ function Header(): JSX.Element {
   );
 }
 
-export default Header;
+const MemoizedHeader = React.memo(Header);
+
+export default MemoizedHeader;

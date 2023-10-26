@@ -1,33 +1,34 @@
+import { Link } from 'react-router-dom';
 import BasketList from '../../components/basket-list/basket-list';
 import BasketSummary from '../../components/basket-summary/basket-summary';
-import Footer from '../../components/footer/footer';
-import Header from '../../components/header/header';
-
+import MemoizedFooter from '../../components/footer/footer';
+import MemoizedHeader from '../../components/header/header';
+import { AppRoute } from '../../const';
 
 function BasketPage(): JSX.Element {
 
   return (
     <div className="wrapper">
-      <Header />
+      <MemoizedHeader />
       <main>
         <div className="page-content">
           <div className="breadcrumbs">
             <div className="container">
               <ul className="breadcrumbs__list">
                 <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link" href="index.html">
+                  <Link className="breadcrumbs__link" to={AppRoute.CatalogPage}>
                     Главная
                     <svg width="5" height="8" aria-hidden="true">
                       <use xlinkHref="#icon-arrow-mini"></use>
                     </svg>
-                  </a>
+                  </Link>
                 </li>
                 <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link" href="catalog.html">Каталог
+                  <Link className="breadcrumbs__link" to={AppRoute.CatalogPage}>Каталог
                     <svg width="5" height="8" aria-hidden="true">
                       <use xlinkHref="#icon-arrow-mini"></use>
                     </svg>
-                  </a>
+                  </Link>
                 </li>
                 <li className="breadcrumbs__item"><span className="breadcrumbs__link breadcrumbs__link--active">Корзина</span>
                 </li>
@@ -45,7 +46,7 @@ function BasketPage(): JSX.Element {
           </section>
         </div>
       </main>
-      <Footer />
+      <MemoizedFooter />
     </div>
   );
 }

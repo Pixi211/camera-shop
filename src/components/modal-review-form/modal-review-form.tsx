@@ -6,7 +6,7 @@ import { setAddReviewStatus, setSuccessStatus } from '../../store/modal-data/mod
 import React from 'react';
 import { fetchReviewsAction, sendReviewAction } from '../../store/current-item-data/current-item-data.action';
 import ReactFocusLock from 'react-focus-lock';
-import { RESET_TIMEOUT } from '../../const';
+import { RESET_TIMEOUT, RatingName, stars } from '../../const';
 
 
 type ModalAddReviewForm = {
@@ -18,11 +18,9 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
 
   const dispatch = useAppDispatch();
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<UserReview>({ mode: 'onSubmit', criteriaMode: 'all' });
-
-  const nameRegExp = new RegExp('[A-Za-zА-Яа-яЁё\\s\'\\-]+'); //
   const [currentRating, setCurrentRating] = useState(0);
 
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<UserReview>({ mode: 'onSubmit', criteriaMode: 'all' });
 
   const submit: SubmitHandler<UserReview> = (data) => {
 
@@ -35,32 +33,6 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
     dispatch(fetchReviewsAction(cameraId));
 
     setTimeout(() => reset(), RESET_TIMEOUT);
-
-  };
-
-  //to const
-  const STARS_RATING = [1, 2, 3, 4, 5];
-  enum RatingName {
-    Awful = 'Ужасно',
-    Bad = 'Плохо',
-    Average = 'Нормально',
-    Good = 'Хорошо',
-    Perfect = 'Отлично',
-  }
-  //utils?
-  const getCurrentStarTitle = (star: number) => {
-    switch (star) {
-      case STARS_RATING[0]:
-        return RatingName.Awful;
-      case STARS_RATING[1]:
-        return RatingName.Bad;
-      case STARS_RATING[2]:
-        return RatingName.Average;
-      case STARS_RATING[3]:
-        return RatingName.Good;
-      case STARS_RATING[4]:
-        return RatingName.Perfect;
-    }
   };
 
   const nameInput = useRef<HTMLInputElement | null>(null);
@@ -71,6 +43,20 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
     }
   }, []);
 
+  const getCurrentStarTitle = (star: number) => {
+    switch (star) {
+      case stars[0]:
+        return RatingName.Awful;
+      case stars[1]:
+        return RatingName.Bad;
+      case stars[2]:
+        return RatingName.Average;
+      case stars[3]:
+        return RatingName.Good;
+      case stars[4]:
+        return RatingName.Perfect;
+    }
+  };
 
   return (
     <div className="modal__wrapper">
@@ -94,7 +80,7 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
 
                   <div className="rate__bar">
                     <div className="rate__group">
-                      {STARS_RATING.map((star) => (
+                      {stars.map((star) => (
                         <React.Fragment key={`star${star}`}>
                           <input
                             className="visually-hidden"
@@ -144,10 +130,7 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                       maxLength={160}
                       placeholder="Введите ваше имя"
                       {...register('userName', {
-                        required: true, validate: (value) => {
-                          const isNameValid = nameRegExp.test(value);
-                          return isNameValid;
-                        }
+                        required: true
                       })}
                       aria-invalid={errors.userName ? 'true' : false}
                     />

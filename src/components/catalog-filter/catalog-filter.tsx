@@ -1,3 +1,4 @@
+import React from 'react';
 
 function CatalogFilter(): JSX.Element {
 
@@ -100,4 +101,5 @@ function CatalogFilter(): JSX.Element {
   );
 }
 
-export default CatalogFilter;
+const MemoizedCatalogFilter = React.memo(CatalogFilter);
+export default MemoizedCatalogFilter;

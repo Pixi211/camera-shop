@@ -1,8 +1,10 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { CameraType } from '../../types/types';
 import { setActiveStatus, setAddItemToBasketStatus, setModalData } from '../../store/modal-data/modal-data.slice';
 import { useAppDispatch } from '../../store';
 import { FOCUS_TIMEOUT } from '../../const';
+import RatingForm from '../rating-form/rating-form';
 
 type ProductCardProps = {
   camera: CameraType;
@@ -22,18 +24,6 @@ function ProductCard({ camera, isActive }: ProductCardProps): JSX.Element {
     previewImgWebp,
     previewImgWebp2x
   } = camera;
-
-  //to const
-  const stars = [1, 2, 3, 4, 5];
-  const ratingForm = (
-    <>
-      {stars.map((star, index) => (
-        <svg width={17} height={16} aria-hidden="true" key={star}>
-          <use xlinkHref={`${index < rating ? '#icon-full-star' : '#icon-star'}`}></use>
-        </svg>
-      ))}
-    </>
-  );
 
   const dispatch = useAppDispatch();
 
@@ -67,7 +57,7 @@ function ProductCard({ camera, isActive }: ProductCardProps): JSX.Element {
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          {ratingForm}
+          <RatingForm rating={rating} />
           <p className="visually-hidden">Рейтинг: {rating}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>
             {reviewCount}
@@ -90,4 +80,6 @@ function ProductCard({ camera, isActive }: ProductCardProps): JSX.Element {
   );
 }
 
-export default ProductCard;
+const MemoizedProductCard = React.memo(ProductCard);
+
+export default MemoizedProductCard;

@@ -1,21 +1,10 @@
 import { Review } from '../../types/types';
+import RatingForm from '../rating-form/rating-form';
 
 
 function ReviewCard(props: Review): JSX.Element {
   const { id, userName, createAt, rating, advantage, disadvantage, review } = props;
   const date = new Date(createAt);
-
-  //to const
-  const stars = [1, 2, 3, 4, 5];
-  const ratingForm = (
-    <>
-      {stars.map((star, index) => (
-        <svg width={17} height={16} aria-hidden="true" key={star}>
-          <use xlinkHref={`${index < rating ? '#icon-full-star' : '#icon-star'}`}></use>
-        </svg>
-      ))}
-    </>
-  );
 
   return (
     <li className="review-card" key={id}>
@@ -29,7 +18,7 @@ function ReviewCard(props: Review): JSX.Element {
         </time>
       </div>
       <div className="rate review-card__rate">
-        {ratingForm}
+        <RatingForm rating={rating} />
         <p className="visually-hidden">Оценка: {rating}</p>
       </div>
       <ul className="review-card__list">

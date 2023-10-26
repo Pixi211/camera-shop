@@ -1,6 +1,4 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
-import Footer from '../../components/footer/footer';
-import Header from '../../components/header/header';
 import ProductContent from '../../components/product-content/product-content';
 import ProductSimilar from '../../components/product-similar/product-similar';
 import ReviewBlock from '../../components/review-block/review-block';
@@ -13,6 +11,8 @@ import { AppRoute } from '../../const';
 import { Link as LinkScroll } from 'react-scroll';
 import ModalWrapper from '../../components/modal-wrapper/modal-wrapper';
 import LoadingPage from '../loading-page/loading-page';
+import MemoizedHeader from '../../components/header/header';
+import MemoizedFooter from '../../components/footer/footer';
 
 function ItemPage(): JSX.Element {
 
@@ -48,25 +48,21 @@ function ItemPage(): JSX.Element {
   };
   const isDisabled = currentMax >= reviews.length;
 
-  if (isCurrentDataLoading || isSimilarsLoading || isReviewsLoading) {
-    return (<p> Loading</p>); ///
-  }
 
   if (isCurrentDataLoading || isSimilarsLoading || isReviewsLoading) {
     if (isLoadingError) {
       return (<NotFoundPage />);
     }
-    return (<LoadingPage />); ///
+    return (<LoadingPage />);
   }
 
   if (!currentItem) {
     return (<NotFoundPage />);
   }
 
-
   return (
     <div className="wrapper">
-      <Header />
+      <MemoizedHeader />
       <main>
         <div className="page-content">
           <div className="breadcrumbs">
@@ -106,7 +102,7 @@ function ItemPage(): JSX.Element {
           <use xlinkHref="#icon-arrow2"></use>
         </svg>
       </LinkScroll>
-      <Footer />
+      <MemoizedFooter />
     </div>
   );
 }

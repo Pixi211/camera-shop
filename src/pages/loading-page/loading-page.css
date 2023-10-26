@@ -1,8 +1,8 @@
-.loading_msg {
+.loading-msg {
   margin: 0;
-  margin-top: 280px;
+  margin-top: 50%;
   font-weight: 500;
-  font-size: 44px;
+  font-size: 250px;
   line-height: 60px;
   text-align: center;
   opacity: 0.89;

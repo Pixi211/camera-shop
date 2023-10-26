@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { CameraType } from '../../types/types';
 import { useSearchParams } from 'react-router-dom';
+import RatingForm from '../rating-form/rating-form';
 
 type ProductContentProps = {
   camera: CameraType;
@@ -22,18 +23,6 @@ function ProductContent({camera, typeTag}: ProductContentProps): JSX.Element {
     previewImgWebp,
     previewImgWebp2x } = camera;
 
-
-  //to const
-  const stars = [1, 2, 3, 4, 5];
-  const ratingForm = (
-    <>
-      {stars.map((star, index) => (
-        <svg width={17} height={16} aria-hidden="true" key={star}>
-          <use xlinkHref={`${index < rating ? '#icon-full-star' : '#icon-star'}`}></use>
-        </svg>
-      ))}
-    </>
-  );
 
   const [isDescription, setIsDescription] = useState<boolean>(typeTag === 'description');
   const setSearchParams = useSearchParams()[1];
@@ -70,7 +59,7 @@ function ProductContent({camera, typeTag}: ProductContentProps): JSX.Element {
           <div className="product__content">
             <h1 className="title title--h3">{name}</h1>
             <div className="rate product__rate">
-              {ratingForm}
+              <RatingForm rating={rating}/>
               <p className="visually-hidden">Рейтинг: {rating}</p>
               <p className="rate__count">
                 <span className="visually-hidden">

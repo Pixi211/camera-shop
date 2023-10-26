@@ -1,9 +1,8 @@
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from './similars-buttons.module.css';
-
-import ProductCard from '../product-card/product-card';
 import { CamerasListType } from '../../types/types';
+import MemoizedProductCard from '../product-card/product-card';
 
 type ProductSimilarProps = {
   cameras: CamerasListType;
@@ -31,7 +30,7 @@ function ProductSimilar({cameras}: ProductSimilarProps): JSX.Element {
               >
                 {cameras.map((camera) => (
                   <SwiperSlide key={camera.id}>
-                    <ProductCard
+                    <MemoizedProductCard
                       camera={camera}
                       isActive={cameras.includes(camera) ? 'is-active' : ''}
                     />

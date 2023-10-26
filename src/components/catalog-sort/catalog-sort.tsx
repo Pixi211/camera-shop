@@ -1,3 +1,4 @@
+import React from 'react';
 
 function CatalogSort(): JSX.Element {
 
@@ -40,4 +41,5 @@ function CatalogSort(): JSX.Element {
   );
 }
 
-export default CatalogSort;
+const MemoizedCatalogSort = React.memo(CatalogSort);
+export default MemoizedCatalogSort;

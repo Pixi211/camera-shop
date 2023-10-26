@@ -1,5 +1,6 @@
+import React from 'react';
 import { CamerasListType } from '../../types/types';
-import ProductCard from '../product-card/product-card';
+import MemoizedProductCard from '../product-card/product-card';
 
 type CatalogCardsProps = {
   cameras: CamerasListType;
@@ -12,7 +13,7 @@ function CatalogCards({ cameras }: CatalogCardsProps): JSX.Element {
   return (
     <div className="cards catalog__cards">
       {cameras.map((camera) => (
-        <ProductCard
+        <MemoizedProductCard
           key={camera.id} camera={camera} isActive=''
         />
       ))}
@@ -20,4 +21,6 @@ function CatalogCards({ cameras }: CatalogCardsProps): JSX.Element {
   );
 }
 
-export default CatalogCards;
+const MemoizedCatalogCards = React.memo(CatalogCards);
+
+export default MemoizedCatalogCards;

@@ -49,6 +49,7 @@ function ModalWrapper(): JSX.Element {
       document.body.style.overflow = '';
     };
 
+
     switch (true) {
       case isModalAddItemToBasketOpened:
         setModalElement(

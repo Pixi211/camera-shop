@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 import ReactFocusLock from 'react-focus-lock';
 
 type ModalSuccessProps = {
-  onCloseButtonClick: () => void;
+  onCloseButtonClick: (isNewReview?: boolean) => void;
   onReturnButtonClick: (isNewReview?: boolean) => void;
 }
 
@@ -59,10 +59,13 @@ function ModalSuccess({ onCloseButtonClick, onReturnButtonClick }: ModalSuccessP
 
   return (
     <div className="modal__wrapper">
-      <div className="modal__overlay" onClick={() => onCloseButtonClick()}></div>
+      {isNewReview ?
+        <div className="modal__overlay" onClick={() => onCloseButtonClick(true)}></div>
+        :
+        <div className="modal__overlay" onClick={() => onCloseButtonClick()}></div>}
       <div className="modal__content">
         <p className="title title--h4">
-          {`${isNewReview ? 'Спасибо за покупку' : 'Спасибо за отзыв'}`}
+          {`${isNewReview ? 'Спасибо за отзыв' : 'Спасибо за покупку!'}`}
         </p>
         <svg className="modal__icon" width={80} height={78} aria-hidden="true">
           <use xlinkHref="#icon-review-success"></use>
@@ -75,11 +78,18 @@ function ModalSuccess({ onCloseButtonClick, onReturnButtonClick }: ModalSuccessP
             <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={() => onReturnButtonClick()} autoFocus >Вернуться к покупкам
             </button>}
         </div>
-        <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => onCloseButtonClick()}>
-          <svg width={10} height={10} aria-hidden="true">
-            <use xlinkHref="#icon-close"></use>
-          </svg>
-        </button>
+        {isNewReview ?
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => onCloseButtonClick(true)}>
+            <svg width={10} height={10} aria-hidden="true">
+              <use xlinkHref="#icon-close"></use>
+            </svg>
+          </button>
+          :
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => onCloseButtonClick()}>
+            <svg width={10} height={10} aria-hidden="true">
+              <use xlinkHref="#icon-close"></use>
+            </svg>
+          </button>}
       </div>
     </div>
   );
