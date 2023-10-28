@@ -1,3 +1,6 @@
+export type Type = 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная';
+export type Category = 'Видеокамера' | 'Фотоаппарат';
+export type Level = 'Нулевой' | 'Любительский' | 'Профессиональный';
 
 // GET / cameras / { cameraId }
 
@@ -5,10 +8,10 @@ export type CameraType = {
   id: number;
   name: string;
   vendorCode: string;
-  type: 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная';
-  category: 'Видеокамера' | 'Фотоаппарат';
+  type: Type;
+  category: Category;
   description: string;
-  level: 'Нулевой' | 'Любительский' | 'Профессиональный';
+  level: Level;
   price: number;
   rating: number;
   reviewCount: number;
@@ -17,16 +20,6 @@ export type CameraType = {
   previewImgWebp: string;
   previewImgWebp2x: string;
 }
-
-// GET / cameras
-
-export type CamerasListType = CameraType[]
-
-// GET / cameras / { cameraId } / similar
-
-export type SimilarCamerasListType = CameraType[]
-
-// GET /promo
 
 export type PromoCameraType = {
   id: number;
@@ -67,14 +60,14 @@ export type PromoData = {
 }
 
 export type CamerasData = {
-  cameras: CamerasListType;
+  cameras: CameraType[];
   hasError: boolean;
   isDataLoading: boolean;
 }
 
 export type CurrentData = {
   currentItemData: CameraType | null;
-  similarCameras: CamerasListType;
+  similarCameras: CameraType[];
   reviews: Review[];
   isCurrentDataLoading: boolean;
   isSimilarsLoading: boolean;
@@ -88,8 +81,10 @@ export type ModalData = {
   isActive: boolean;
   modalData: CameraType | null;
   addReviewStatus: boolean;
-  successType: 'newReview' | 'addToBasket' | 'purchase';
+  successType: SuccessType;
 }
+
+export type SuccessType = 'newReview' | 'addToBasket' | 'purchase';
 
 export type State = ReturnType<typeof store.getState>;
 

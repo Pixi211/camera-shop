@@ -1,16 +1,16 @@
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from './similars-buttons.module.css';
-import { CamerasListType } from '../../types/types';
+import { CameraType } from '../../types/types';
 import MemoizedProductCard from '../product-card/product-card';
 
 type ProductSimilarProps = {
-  cameras: CamerasListType;
+  cameras: CameraType[];
 }
 function ProductSimilar({cameras}: ProductSimilarProps): JSX.Element {
 
   return (
-    <div className="page-content__section">
+    <div className="page-content__section" data-testid="productSimilar-test">
       <section className="product-similar">
         <div className="container">
           <h2 className="title title--h3">Похожие товары</h2>

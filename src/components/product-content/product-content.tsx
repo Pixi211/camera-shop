@@ -38,7 +38,7 @@ function ProductContent({camera, typeTag}: ProductContentProps): JSX.Element {
   }, [setSearchParams]);
 
   return (
-    <div className="page-content__section">
+    <div className="page-content__section" data-testid="productContent-test">
       <section className="product">
         <div className="container">
           <div className="product__img">

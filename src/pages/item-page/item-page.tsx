@@ -61,7 +61,7 @@ function ItemPage(): JSX.Element {
   }
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" data-testid="item-page-test">
       <MemoizedHeader />
       <main>
         <div className="page-content">

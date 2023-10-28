@@ -8,7 +8,7 @@ import { AppRoute } from '../../const';
 function BasketPage(): JSX.Element {
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" data-testid="basket-page-test">
       <MemoizedHeader />
       <main>
         <div className="page-content">

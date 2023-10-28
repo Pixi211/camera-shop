@@ -28,3 +28,7 @@
     background-color: #f4f4fc;
   }
 }
+
+.product-similar {
+  min-height: 484px !important;
+}

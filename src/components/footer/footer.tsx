@@ -5,7 +5,7 @@ import { AppRoute } from '../../const';
 function Footer(): JSX.Element {
 
   return (
-    <footer className="footer">
+    <footer className="footer" data-testid="footer-test">
       <div className="container">
         <div className="footer__info">
           <Link className="footer__logo" to={AppRoute.CatalogPage} aria-label="Переход на главную">

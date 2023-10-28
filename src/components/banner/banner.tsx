@@ -15,6 +15,7 @@ function Banner({ promos }: BannerProps): JSX.Element {
 
   return (
     <Swiper
+      data-testid="banner-test"
       modules={[Pagination, Autoplay]}
       pagination={{
         type: 'bullets',
@@ -51,8 +52,6 @@ function Banner({ promos }: BannerProps): JSX.Element {
         </SwiperSlide>
       ))}
     </Swiper>
-
-
   );
 }
 

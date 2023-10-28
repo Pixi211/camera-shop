@@ -30,7 +30,7 @@ function ModalSuccess({ onCloseButtonClick, onReturnButtonClick }: ModalSuccessP
 
   if (type === 'addToBasket') {
     return (
-      <div className="modal__wrapper">
+      <div className="modal__wrapper" data-testid="modalSuccess-test">
         <ReactFocusLock group='group-3' returnFocus ref={focusOnElement} >
           <div className="modal__overlay" onClick={() => onCloseButtonClick()}></div>
           <div className="modal__content">
@@ -39,14 +39,14 @@ function ModalSuccess({ onCloseButtonClick, onReturnButtonClick }: ModalSuccessP
               <use xlinkHref="#icon-success"></use>
             </svg>
             <div className="modal__buttons">
-              <Link className="btn btn--transparent modal__btn" to={AppRoute.CatalogPage} onClick={() => onCloseButtonClick()} >
+              <Link className="btn btn--transparent modal__btn" to={AppRoute.CatalogPage} onClick={() => onCloseButtonClick()} data-testid='btnToCatalog-test' >
                 Продолжить покупки
               </Link>
-              <button className="btn btn--purple modal__btn modal__btn--fit-width" onClick={handleNavigateToBasket}>
+              <button className="btn btn--purple modal__btn modal__btn--fit-width" onClick={handleNavigateToBasket} data-testid="btnToBasket-test">
                 Перейти в корзину
               </button>
             </div>
-            <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => onCloseButtonClick()}>
+            <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => onCloseButtonClick()} data-testid="btnClose-test">
               <svg width={10} height={10} aria-hidden="true">
                 <use xlinkHref="#icon-close"></use>
               </svg>
@@ -58,7 +58,7 @@ function ModalSuccess({ onCloseButtonClick, onReturnButtonClick }: ModalSuccessP
   }
 
   return (
-    <div className="modal__wrapper">
+    <div className="modal__wrapper" data-testid="modalSuccess-test">
       {isNewReview ?
         <div className="modal__overlay" onClick={() => onCloseButtonClick(true)}></div>
         :

@@ -35,7 +35,7 @@ function ReviewBlock({ reviews, visibleReviews, onMoreButtonClick, isDisabled }:
   };
 
   return (
-    <div className="page-content__section">
+    <div className="page-content__section" data-testid="reviewBlock-test">
       <section className="review-block">
         <div className="container">
           <div className="page-content__headed">

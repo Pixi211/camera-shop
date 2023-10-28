@@ -1,21 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MAX_PRODUCTS_ON_PAGE } from '../../const';
-import { CamerasListType } from '../../types/types';
 
 type PaginationProps = {
-  cameras: CamerasListType; //можно передавать сameras = allCameras.length. Проверить разницу по времени
+  camerasLength: number;
   currentPage: number;
   paginate: (arg0: number) => void;
   onNextButtonClick: () => void;
   onPrevButtonClick: () => void;
 }
 
-function Pagination({ cameras, currentPage, paginate, onNextButtonClick, onPrevButtonClick }: PaginationProps): JSX.Element {
+function Pagination({ camerasLength, currentPage, paginate, onNextButtonClick, onPrevButtonClick }: PaginationProps): JSX.Element {
 
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil((cameras.length / MAX_PRODUCTS_ON_PAGE)); i++) {
+  for (let i = 1; i <= Math.ceil((camerasLength / MAX_PRODUCTS_ON_PAGE)); i++) {
     pageNumbers.push(i);
   }
 
@@ -32,7 +31,7 @@ function Pagination({ cameras, currentPage, paginate, onNextButtonClick, onPrevB
   const isPrevButtonVisible = (visiblePageNumbers[0] !== 1);
 
   return (
-    <div className="pagination">
+    <div className="pagination" data-testid="pagination-test">
       <ul className="pagination__list">
         {isPrevButtonVisible &&
           <li className="pagination__item">

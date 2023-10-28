@@ -3,7 +3,7 @@ import React from 'react';
 function CatalogSort(): JSX.Element {
 
   return (
-    <div className="catalog-sort">
+    <div className="catalog-sort" data-testid="catalogSort-test">
       <form action="#">
         <div className="catalog-sort__inner">
           <p className="title title--h5">Сортировать:</p>

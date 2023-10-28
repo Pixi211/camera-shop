@@ -50,31 +50,33 @@ function ModalWrapper(): JSX.Element {
     };
 
 
-    switch (true) {
-      case isModalAddItemToBasketOpened:
-        setModalElement(
-          <ModalAddItemToBasket
-            onAddButtonClick={addItemToBasketHandler}
-            onCloseButtonClick={closeModalForm}
+    if (currentItemData) {
+      switch (true) {
+        case isModalAddItemToBasketOpened:
+          setModalElement(
+            <ModalAddItemToBasket
+              onAddButtonClick={addItemToBasketHandler}
+              onCloseButtonClick={closeModalForm}
 
-          />);
-        break;
-      case isModalAddReviewOpened:
-        setModalElement(
-          <ModalAddReviewForm
-            cameraId={currentItemData.id}
-            onCloseButtonClick={closeModalForm}
-          />
-        );
-        break;
-      case isModalSuccessOpened:
-        setModalElement(
-          <ModalSuccess
-            onCloseButtonClick={closeModalForm}
-            onReturnButtonClick={closeModalForm}
-          />
-        );
-        break;
+            />);
+          break;
+        case isModalAddReviewOpened:
+          setModalElement(
+            <ModalAddReviewForm
+              cameraId={currentItemData.id}
+              onCloseButtonClick={closeModalForm}
+            />
+          );
+          break;
+        case isModalSuccessOpened:
+          setModalElement(
+            <ModalSuccess
+              onCloseButtonClick={closeModalForm}
+              onReturnButtonClick={closeModalForm}
+            />
+          );
+          break;
+      }
     }
 
     const onEscClick = (evt: KeyboardEvent) => {
@@ -92,7 +94,7 @@ function ModalWrapper(): JSX.Element {
 
 
   return (
-    <div className={`modal ${isActive ? 'is-active' : ''} ${isModalSuccessOpened ? 'modal--narrow' : ''} `}>
+    <div className={`modal ${isActive ? 'is-active' : ''} ${isModalSuccessOpened ? 'modal--narrow' : ''} `} data-testid="modalWrapper-test">
       {modalElement}
     </div>
   );

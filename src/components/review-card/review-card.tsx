@@ -7,7 +7,7 @@ function ReviewCard(props: Review): JSX.Element {
   const date = new Date(createAt);
 
   return (
-    <li className="review-card" key={id}>
+    <li className="review-card" key={id} data-testid="reviewCard-test">
       <div className="review-card__head">
         <p className="title title--h4">{userName}</p>
         <time className="review-card__data" dateTime="2022-04-13">

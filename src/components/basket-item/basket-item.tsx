@@ -2,7 +2,7 @@ function BasketItem(): JSX.Element {
 
   return (
     <>
-      <li className="basket-item">
+      <li className="basket-item" data-testid="basketItem-test">
         <div className="basket-item__img">
           <picture>
             <source

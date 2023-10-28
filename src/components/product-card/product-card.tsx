@@ -5,6 +5,8 @@ import { setActiveStatus, setAddItemToBasketStatus, setModalData } from '../../s
 import { useAppDispatch } from '../../store';
 import { FOCUS_TIMEOUT } from '../../const';
 import RatingForm from '../rating-form/rating-form';
+//
+import './product-card.css';
 
 type ProductCardProps = {
   camera: CameraType;
@@ -39,7 +41,7 @@ function ProductCard({ camera, isActive }: ProductCardProps): JSX.Element {
   };
 
   return (
-    <div className={`product-card ${isActive}`}>
+    <div className={`product-card ${isActive}`} data-testid="productCard-test">
       <div className="product-card__img">
         <picture>
           <source
@@ -72,7 +74,7 @@ function ProductCard({ camera, isActive }: ProductCardProps): JSX.Element {
         <button className="btn btn--purple product-card__btn" type="button" onClick={buyButtonClickHandler}>
           Купить
         </button>
-        <Link className="btn btn--transparent" to={`/${id}`}>
+        <Link className="btn btn--transparent" to={`/${id}`} data-testid = "btnMore-test">
           Подробнее
         </Link>
       </div>

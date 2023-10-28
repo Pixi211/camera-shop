@@ -2,7 +2,7 @@
 function BasketSummary(): JSX.Element {
 
   return (
-    <div className="basket__summary">
+    <div className="basket__summary" data-testid="basketSummary-test">
       <div className="basket__promo">
         <p className="title title--h4">
           Если у вас есть промокод на скидку, примените его в этом поле

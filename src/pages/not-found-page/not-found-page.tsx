@@ -4,7 +4,7 @@ import MemoizedFooter from '../../components/footer/footer';
 
 function NotFoundPage(): JSX.Element {
   return (
-    <div className="wrapper">
+    <div className="wrapper" data-testid="not-found-test">
       <MemoizedHeader />
       <main>
         <div className="page__not-found-page-container container">

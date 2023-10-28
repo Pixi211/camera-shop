@@ -59,7 +59,7 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
   };
 
   return (
-    <div className="modal__wrapper">
+    <div className="modal__wrapper" data-testid="modalAddReviewForm-test">
       <ReactFocusLock group='group-3' returnFocus ref={nameInput} >
         <div className="modal__overlay" onClick={() => onCloseButtonClick()}></div>
         <div className="modal__content">

@@ -32,7 +32,7 @@ function CatalogPage(): JSX.Element {
   const getPrevPage = () => setCurrentPage((prev) => prev - 1);
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" data-testid="catalog-page-test">
       <MemoizedHeader />
       <main>
         <Banner promos={allPromos} />
@@ -63,7 +63,7 @@ function CatalogPage(): JSX.Element {
                   <MemoizedCatalogSort />
                   <MemoizedCatalogCards cameras={camerasOnPage} />
                   {isMoreThanOnePage &&
-                    <MemoizedPagination cameras={allCameras}
+                    <MemoizedPagination camerasLength={allCameras.length}
                       currentPage={currentPage}
                       paginate={paginate}
                       onNextButtonClick={getNextPage}
