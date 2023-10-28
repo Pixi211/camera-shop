@@ -1,36 +1,43 @@
 import { useState, useRef, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppDispatch } from '../../store';
-import { UserReview } from '../../types/types';
+import { CameraType, UserReview } from '../../types/types';
 import { setAddReviewStatus, setSuccessStatus } from '../../store/modal-data/modal-data.slice';
 import React from 'react';
 import { fetchReviewsAction, sendReviewAction } from '../../store/current-item-data/current-item-data.action';
 import ReactFocusLock from 'react-focus-lock';
 import { RESET_TIMEOUT, RatingName, stars } from '../../const';
+import { setReviewCount } from '../../store/current-item-data/current-item-data.slice';
 
 
 type ModalAddReviewForm = {
-  cameraId: number;
+  camera: CameraType;
   onCloseButtonClick: () => void;
 }
 
-function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm): JSX.Element {
+function ModalAddReviewForm({ camera, onCloseButtonClick }: ModalAddReviewForm): JSX.Element {
 
   const dispatch = useAppDispatch();
 
   const [currentRating, setCurrentRating] = useState(0);
+  const [name, setName] = useState('');
+  const [advantage, setAdvantage] = useState('');
+  const [disadvantage, setDisadvantage] = useState('');
+  const [comment, setComment] = useState('');
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<UserReview>({ mode: 'onSubmit', criteriaMode: 'all' });
 
+
   const submit: SubmitHandler<UserReview> = (data) => {
 
-    const reviewData = { ...data, rating: Number(data.rating), cameraId: cameraId };
+    const reviewData = { ...data, rating: Number(data.rating), cameraId: camera.id };
     dispatch(sendReviewAction(reviewData)).then(() => {
       setCurrentRating(0);
     });
     dispatch(setAddReviewStatus(false));
     dispatch(setSuccessStatus(true));
-    dispatch(fetchReviewsAction(cameraId));
+    dispatch(fetchReviewsAction(camera.id));
+    dispatch(setReviewCount(camera.reviewCount + 1));
 
     setTimeout(() => reset(), RESET_TIMEOUT);
   };
@@ -58,10 +65,39 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
     }
   };
 
+  const handleNameElementInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = evt.target;
+    setName(value);
+  };
+
+  const handleAdvantageElementInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = evt.target;
+    setAdvantage(value);
+  };
+
+  const handleDisadvantageElementInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = evt.target;
+    setDisadvantage(value);
+  };
+
+  const handleCommentElementInput = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = evt.target;
+    setComment(value);
+  };
+
+  const resetForm = () => {
+    setCurrentRating(0);
+    setName('');
+    setAdvantage('');
+    setDisadvantage('');
+    setComment('');
+    onCloseButtonClick();
+  };
+
   return (
     <div className="modal__wrapper" data-testid="modalAddReviewForm-test">
       <ReactFocusLock group='group-3' returnFocus ref={nameInput} >
-        <div className="modal__overlay" onClick={() => onCloseButtonClick()}></div>
+        <div className="modal__overlay" onClick={() => resetForm()}></div>
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
@@ -129,6 +165,8 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                       minLength={2}
                       maxLength={160}
                       placeholder="Введите ваше имя"
+                      value={name}
+                      onInput={handleNameElementInput}
                       {...register('userName', {
                         required: true
                       })}
@@ -150,6 +188,8 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                       minLength={2}
                       maxLength={160}
                       placeholder="Основные преимущества товара"
+                      value={advantage}
+                      onInput={handleAdvantageElementInput}
                       {...register('advantage', { required: true })}
                       aria-invalid={errors.advantage ? 'true' : 'false'}
                     />
@@ -169,6 +209,8 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                       minLength={2}
                       maxLength={160}
                       placeholder="Главные недостатки товара"
+                      value={disadvantage}
+                      onInput={handleDisadvantageElementInput}
                       {...register('disadvantage', { required: true })}
                       aria-invalid={errors.disadvantage ? 'true' : 'false'}
                     />
@@ -188,6 +230,8 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
                       maxLength={160}
                       placeholder="Поделитесь своим опытом покупки"
                       defaultValue={''}
+                      value={comment}
+                      onInput={handleCommentElementInput}
                       {...register('review', { required: true })}
                     >
                     </textarea>
@@ -198,7 +242,7 @@ function ModalAddReviewForm({ cameraId, onCloseButtonClick }: ModalAddReviewForm
               <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
             </form>
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => onCloseButtonClick()}>
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => resetForm()}>
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>

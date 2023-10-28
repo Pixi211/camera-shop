@@ -3,8 +3,20 @@ import ProductContent from '../../components/product-content/product-content';
 import ProductSimilar from '../../components/product-similar/product-similar';
 import ReviewBlock from '../../components/review-block/review-block';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { fetchCurrentAction, fetchReviewsAction, fetchSimilarAction } from '../../store/current-item-data/current-item-data.action';
-import { getCurentItemData, getLoadingCurrentDataStatus, getLoadingErrorStatus, getLoadingReviewsStatus, getLoadingSimilarsStatus, getReviews, getSimilarCameras } from '../../store/current-item-data/current-item-data.selectors';
+import {
+  fetchCurrentAction,
+  fetchReviewsAction,
+  fetchSimilarAction
+} from '../../store/current-item-data/current-item-data.action';
+import {
+  getCurentItemData,
+  getLoadingCurrentDataStatus,
+  getLoadingErrorStatus,
+  getLoadingReviewsStatus,
+  getLoadingSimilarsStatus,
+  getReviews,
+  getSimilarCameras
+} from '../../store/current-item-data/current-item-data.selectors';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { useEffect, useState } from 'react';
 import { AppRoute } from '../../const';

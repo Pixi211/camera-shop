@@ -9,7 +9,7 @@ function CatalogSort(): JSX.Element {
           <p className="title title--h5">Сортировать:</p>
           <div className="catalog-sort__type">
             <div className="catalog-sort__btn-text">
-              <input type="radio" id="sortPrice" name="sort" />
+              <input type="radio" id="sortPrice" name="sort" checked/>
               <label htmlFor="sortPrice">по цене</label>
             </div>
             <div className="catalog-sort__btn-text">

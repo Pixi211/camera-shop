@@ -12,7 +12,7 @@ type ReviewBlockProps = {
 }
 
 
-function ReviewBlock({ reviews, visibleReviews, onMoreButtonClick, isDisabled }: ReviewBlockProps): JSX.Element {
+function ReviewBlock({ reviews, visibleReviews, onMoreButtonClick, isDisabled}: ReviewBlockProps): JSX.Element {
 
   window.addEventListener('scroll', () => {
     const documentRect = document.documentElement.getBoundingClientRect();

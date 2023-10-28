@@ -63,7 +63,7 @@ function ModalWrapper(): JSX.Element {
         case isModalAddReviewOpened:
           setModalElement(
             <ModalAddReviewForm
-              cameraId={currentItemData.id}
+              camera={currentItemData}
               onCloseButtonClick={closeModalForm}
             />
           );

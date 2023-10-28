@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CurrentData } from '../../types/types';
 import { NameSpace } from '../../const';
 import { fetchCurrentAction, fetchReviewsAction, fetchSimilarAction } from './current-item-data.action';
@@ -17,7 +17,11 @@ const initialState: CurrentData = {
 export const currentData = createSlice({
   name: NameSpace.Current,
   initialState,
-  reducers: {},
+  reducers: {
+    setReviewCount: (state, action: PayloadAction<number>) => {
+      state.currentItemData.reviewCount = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchCurrentAction.pending, (state) => {
@@ -42,9 +46,11 @@ export const currentData = createSlice({
         state.isReviewsLoading = false;
         state.reviews = action.payload;
       })
-      .addCase(fetchCurrentAction.rejected , (state) => {
+      .addCase(fetchCurrentAction.rejected, (state) => {
         state.isCurrentDataLoading = false;
         state.hasError = true;
       });
   }
 });
+
+export const { setReviewCount } = currentData.actions;

@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { CameraType } from '../../types/types';
 import { setActiveStatus, setAddItemToBasketStatus, setModalData } from '../../store/modal-data/modal-data.slice';
 import { useAppDispatch } from '../../store';
 import { FOCUS_TIMEOUT } from '../../const';
 import RatingForm from '../rating-form/rating-form';
-//
-import './product-card.css';
 
 type ProductCardProps = {
   camera: CameraType;
   isActive: string;
+  style?: CSSProperties;
 };
 
-function ProductCard({ camera, isActive }: ProductCardProps): JSX.Element {
+function ProductCard({ isActive, camera, style }: ProductCardProps): JSX.Element {
 
   const {
     id,
@@ -41,7 +40,7 @@ function ProductCard({ camera, isActive }: ProductCardProps): JSX.Element {
   };
 
   return (
-    <div className={`product-card ${isActive}`} data-testid="productCard-test">
+    <div className={`product-card ${isActive}`} style={style} data-testid="productCard-test">
       <div className="product-card__img">
         <picture>
           <source
