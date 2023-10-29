@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { getActiveStatus, getModalAddItemToBasketStatus, getModalAddReviewStatus, getModalSuccessStatus } from '../../store/modal-data/modal-data.selectors';
 import ModalAddItemToBasket from '../modal-catalog-add-item/modal-catalog-add-item';
 import ModalSuccess from '../modal-success/modal-success';
-import { getCurentItemData } from '../../store/current-item-data/current-item-data.selectors';
+import { getCurrentItemData } from '../../store/current-item-data/current-item-data.selectors';
 import { setActiveStatus, setAddItemToBasketStatus, setAddReviewStatus, setSuccessStatus, setSuccessType } from '../../store/modal-data/modal-data.slice';
 import ModalAddReviewForm from '../modal-review-form/modal-review-form';
 import { fetchReviewsAction } from '../../store/current-item-data/current-item-data.action';
@@ -15,13 +15,16 @@ function ModalWrapper(): JSX.Element {
 
   const [modalElement, setModalElement] = useState<JSX.Element | null>(null);
 
-  const currentItemData = useAppSelector(getCurentItemData);
+  const currentItemData = useAppSelector(getCurrentItemData);
 
   const isActive = useAppSelector(getActiveStatus);
 
   const isModalAddItemToBasketOpened = useAppSelector(getModalAddItemToBasketStatus);
   const isModalSuccessOpened = useAppSelector(getModalSuccessStatus);
   const isModalAddReviewOpened = useAppSelector(getModalAddReviewStatus);
+
+  console.log(isModalAddItemToBasketOpened);
+  console.log(currentItemData);
 
   useEffect(() => {
     const addItemToBasketHandler = () => {
@@ -57,7 +60,6 @@ function ModalWrapper(): JSX.Element {
             <ModalAddItemToBasket
               onAddButtonClick={addItemToBasketHandler}
               onCloseButtonClick={closeModalForm}
-
             />);
           break;
         case isModalAddReviewOpened:
@@ -92,7 +94,7 @@ function ModalWrapper(): JSX.Element {
 
   }, [isModalAddItemToBasketOpened, isModalSuccessOpened, isModalAddReviewOpened, dispatch, currentItemData]);
 
-
+ console.log(modalElement);
   return (
     <div className={`modal ${isActive ? 'is-active' : ''} ${isModalSuccessOpened ? 'modal--narrow' : ''} `} data-testid="modalWrapper-test">
       {modalElement}

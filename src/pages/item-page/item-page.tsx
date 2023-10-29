@@ -9,7 +9,7 @@ import {
   fetchSimilarAction
 } from '../../store/current-item-data/current-item-data.action';
 import {
-  getCurentItemData,
+  getCurrentItemData,
   getLoadingCurrentDataStatus,
   getLoadingErrorStatus,
   getLoadingReviewsStatus,
@@ -44,7 +44,7 @@ function ItemPage(): JSX.Element {
     }
   }, [dispatch, currentId]);
 
-  const currentItem = useAppSelector(getCurentItemData);
+  const currentItem = useAppSelector(getCurrentItemData);
   const similars = useAppSelector(getSimilarCameras);
   const reviews = useAppSelector(getReviews);
   const isCurrentDataLoading = useAppSelector(getLoadingCurrentDataStatus);

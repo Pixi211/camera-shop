@@ -1,8 +1,8 @@
+import { store } from '../store';
+
 export type Type = 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная';
 export type Category = 'Видеокамера' | 'Фотоаппарат';
 export type Level = 'Нулевой' | 'Любительский' | 'Профессиональный';
-
-// GET / cameras / { cameraId }
 
 export type CameraType = {
   id: number;
@@ -30,7 +30,6 @@ export type PromoCameraType = {
   previewImgWebp2x: string;
 }
 
-//GET /cameras/{cameraId}/reviews
 export type Review = {
   id: string;
   createAt: string;
@@ -41,7 +40,7 @@ export type Review = {
   review: string;
   rating: number;
 }
-//GET /reviews
+
 export type UserReview = {
   cameraId: number;
   userName: string;
@@ -51,8 +50,6 @@ export type UserReview = {
   rating: number;
 }
 
-//state.ts
-import { store } from '../store';
 
 export type PromoData = {
   promos: PromoCameraType[];

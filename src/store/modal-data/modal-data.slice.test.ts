@@ -7,7 +7,7 @@ describe('ModalData slice', () => {
     modalData: null,
     addItemToBasketStatus: false,
     successStatus: false,
-    successType: 'newReview', //'newReview' | 'addToBasket' | 'purchase'
+    successType: 'newReview',
     isActive: false,
     addReviewStatus: false,
   };
