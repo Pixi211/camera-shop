@@ -24,6 +24,7 @@ describe('Component: ReviewBlock', () => {
           <ReviewBlock
             reviews={mockReviews}
             visibleReviews={visibleMockReviews}
+            onMoreButtonClick={() => void 0}
             isDisabled={isDisabled}
           />
         </HistoryRouter>

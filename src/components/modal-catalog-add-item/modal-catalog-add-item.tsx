@@ -36,7 +36,6 @@ function ModalAddItemToBasket({ onAddButtonClick, onCloseButtonClick }: ModalAdd
     previewImgWebp2x
   } = currentItemData;
 
-console.log('1');
   return (
     <div className="modal__wrapper" data-testid="modalAddItemToBasket-test">
       <ReactFocusLock group='group-3' returnFocus ref={focusOnButton} >

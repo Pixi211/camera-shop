@@ -25,7 +25,8 @@ function ModalAddReviewForm({ camera, onCloseButtonClick }: ModalAddReviewForm):
   const [disadvantage, setDisadvantage] = useState('');
   const [comment, setComment] = useState('');
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<UserReview>({ mode: 'onSubmit', criteriaMode: 'all' });
+  const { register, handleSubmit: submitFormClickHandler, formState: { errors }, reset }
+    = useForm<UserReview>({ mode: 'onSubmit', criteriaMode: 'all' });
 
 
   const submit: SubmitHandler<UserReview> = (data) => {
@@ -65,22 +66,22 @@ function ModalAddReviewForm({ camera, onCloseButtonClick }: ModalAddReviewForm):
     }
   };
 
-  const handleNameElementInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const nameElementInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = evt.target;
     setName(value);
   };
 
-  const handleAdvantageElementInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const advantageElementInputHAndler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = evt.target;
     setAdvantage(value);
   };
 
-  const handleDisadvantageElementInput = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const disadvantageElementInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = evt.target;
     setDisadvantage(value);
   };
 
-  const handleCommentElementInput = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const commentElementInputHandler = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = evt.target;
     setComment(value);
   };
@@ -102,7 +103,7 @@ function ModalAddReviewForm({ camera, onCloseButtonClick }: ModalAddReviewForm):
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
             <form method="post" onSubmit={(evt) => {
-              handleSubmit(submit)(evt);
+              submitFormClickHandler(submit)(evt);
             }}
             >
               <div className="form-review__rate">
@@ -166,7 +167,7 @@ function ModalAddReviewForm({ camera, onCloseButtonClick }: ModalAddReviewForm):
                       maxLength={160}
                       placeholder="Введите ваше имя"
                       value={name}
-                      onInput={handleNameElementInput}
+                      onInput={nameElementInputHandler}
                       {...register('userName', {
                         required: true
                       })}
@@ -189,7 +190,7 @@ function ModalAddReviewForm({ camera, onCloseButtonClick }: ModalAddReviewForm):
                       maxLength={160}
                       placeholder="Основные преимущества товара"
                       value={advantage}
-                      onInput={handleAdvantageElementInput}
+                      onInput={advantageElementInputHAndler}
                       {...register('advantage', { required: true })}
                       aria-invalid={errors.advantage ? 'true' : 'false'}
                     />
@@ -210,7 +211,7 @@ function ModalAddReviewForm({ camera, onCloseButtonClick }: ModalAddReviewForm):
                       maxLength={160}
                       placeholder="Главные недостатки товара"
                       value={disadvantage}
-                      onInput={handleDisadvantageElementInput}
+                      onInput={disadvantageElementInputHandler}
                       {...register('disadvantage', { required: true })}
                       aria-invalid={errors.disadvantage ? 'true' : 'false'}
                     />
@@ -231,7 +232,7 @@ function ModalAddReviewForm({ camera, onCloseButtonClick }: ModalAddReviewForm):
                       placeholder="Поделитесь своим опытом покупки"
                       defaultValue={''}
                       value={comment}
-                      onInput={handleCommentElementInput}
+                      onInput={commentElementInputHandler}
                       {...register('review', { required: true })}
                     >
                     </textarea>

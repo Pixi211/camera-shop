@@ -23,18 +23,11 @@ function ModalWrapper(): JSX.Element {
   const isModalSuccessOpened = useAppSelector(getModalSuccessStatus);
   const isModalAddReviewOpened = useAppSelector(getModalAddReviewStatus);
 
-  console.log(isModalAddItemToBasketOpened);
-  console.log(currentItemData);
 
   useEffect(() => {
-    const addItemToBasketHandler = () => {
+    const addItemToBasketClickHandler = () => {
       document.body.style.overflow = 'hidden';
       dispatch(setAddItemToBasketStatus(false));
-
-      //добавить в корзину. нижние строки можно в это действие запихнуть
-      // if(currentItemData) {
-      //   dispatch(addItemToBasket(currentItemData));
-      // }
       dispatch(setSuccessStatus(true));
       dispatch(setSuccessType('addToBasket'));
     };
@@ -47,38 +40,35 @@ function ModalWrapper(): JSX.Element {
       if (isNewReview && currentItemData) {
         dispatch(fetchReviewsAction(currentItemData.id));
       }
-      //окно удаления закрыть
 
-      document.body.style.overflow = '';
+      document.body.style.overflow = 'initial';
     };
 
 
-    if (currentItemData) {
-      switch (true) {
-        case isModalAddItemToBasketOpened:
-          setModalElement(
-            <ModalAddItemToBasket
-              onAddButtonClick={addItemToBasketHandler}
-              onCloseButtonClick={closeModalForm}
-            />);
-          break;
-        case isModalAddReviewOpened:
-          setModalElement(
-            <ModalAddReviewForm
-              camera={currentItemData}
-              onCloseButtonClick={closeModalForm}
-            />
-          );
-          break;
-        case isModalSuccessOpened:
-          setModalElement(
-            <ModalSuccess
-              onCloseButtonClick={closeModalForm}
-              onReturnButtonClick={closeModalForm}
-            />
-          );
-          break;
-      }
+    switch (true) {
+      case isModalAddItemToBasketOpened:
+        setModalElement(
+          <ModalAddItemToBasket
+            onAddButtonClick={addItemToBasketClickHandler}
+            onCloseButtonClick={closeModalForm}
+          />);
+        break;
+      case isModalAddReviewOpened:
+        setModalElement(
+          <ModalAddReviewForm
+            camera={currentItemData}
+            onCloseButtonClick={closeModalForm}
+          />
+        );
+        break;
+      case isModalSuccessOpened:
+        setModalElement(
+          <ModalSuccess
+            onCloseButtonClick={closeModalForm}
+            onReturnButtonClick={closeModalForm}
+          />
+        );
+        break;
     }
 
     const onEscClick = (evt: KeyboardEvent) => {
@@ -94,7 +84,6 @@ function ModalWrapper(): JSX.Element {
 
   }, [isModalAddItemToBasketOpened, isModalSuccessOpened, isModalAddReviewOpened, dispatch, currentItemData]);
 
- console.log(modalElement);
   return (
     <div className={`modal ${isActive ? 'is-active' : ''} ${isModalSuccessOpened ? 'modal--narrow' : ''} `} data-testid="modalWrapper-test">
       {modalElement}

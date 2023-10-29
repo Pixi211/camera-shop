@@ -6,12 +6,7 @@ import HistoryRouter from '../history-route/history-route';
 import ModalAddReviewForm from './modal-review-form';
 import { makeFakeCurrentCameraData } from '../../utils/mocks';
 
-const mockCameraId = makeFakeCurrentCameraData().id;
-const closeForm = () => {
-  let isOpen = true;
-  isOpen = !isOpen;
-  return isOpen;
-};
+const mockCamera = makeFakeCurrentCameraData();
 
 describe('Component: ModalAddReviewForm', () => {
   it('should render component', () => {
@@ -22,8 +17,8 @@ describe('Component: ModalAddReviewForm', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <ModalAddReviewForm cameraId={mockCameraId}
-            onCloseButtonClick={closeForm}
+          <ModalAddReviewForm camera={mockCamera}
+            onCloseButtonClick={() => void 0}
           />
         </HistoryRouter>
       </Provider>

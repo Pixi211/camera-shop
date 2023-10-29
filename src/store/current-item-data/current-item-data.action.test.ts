@@ -95,8 +95,8 @@ describe('Current Data async actions', () => {
   describe('fetchReviewsAction' , () => {
     it('should dispatch "fetchReviewsAction.pending", "fetchReviewsAction.fullfilled" when server response 200', async () => {
       const mockCurrent = makeFakeCurrentCameraData();
-      const mockComments = makeFakeReviews();
-      mockAxiosAdapter.onGet(`${APIRoute.Camera}/${mockCurrent.id}/${APIRoute.Review}`).reply(200, mockComments);
+      const mockReviews = makeFakeReviews();
+      mockAxiosAdapter.onGet(`${APIRoute.Camera}/${mockCurrent.id}/${APIRoute.Review}`).reply(200, mockReviews);
 
       await store.dispatch(fetchReviewsAction(mockCurrent.id));
       const emittedAction = store.getActions();
@@ -108,7 +108,7 @@ describe('Current Data async actions', () => {
         fetchReviewsAction.fulfilled.type
       ]);
 
-      expect(fetchReviewsActionFullfilled.payload).toEqual(mockComments);
+      expect(fetchReviewsActionFullfilled.payload).toEqual(mockReviews);
     });
 
     it('should dispatch "fetchReviewsAction.pending", "fetchReviewsAction.rejected" when server response 400', async () => {
@@ -127,10 +127,10 @@ describe('Current Data async actions', () => {
 
   describe('sendReviewAction', () => {
     it('should dispatch "sendReviewAction.pending", "sendReviewAction.fulfilled" when server response 200', async() => {
-      const fakeComment: UserReview = { cameraId: 1, userName: 'Ivan', advantage: 'abc', disadvantage: 'cba', review: 'text', rating: 4 };
+      const fakeReview: UserReview = { cameraId: 1, userName: 'Ivan', advantage: 'abc', disadvantage: 'cba', review: 'text', rating: 4 };
       mockAxiosAdapter.onPost(APIRoute.Review).reply(200, []);
 
-      await store.dispatch(sendReviewAction(fakeComment));
+      await store.dispatch(sendReviewAction(fakeReview));
       const actions = extractActionsTypes(store.getActions());
 
       expect(actions).toEqual([
@@ -140,10 +140,10 @@ describe('Current Data async actions', () => {
     });
 
     it('should dispatch "sendReviewAction.pending", "sendReviewAction.rejected" when server response 400', async () => {
-      const fakeComment: UserReview = { cameraId: 1, userName: 'Ivan', advantage: 'abc', disadvantage: 'cba', review: 'text', rating: 4 };
+      const fakeReview: UserReview = { cameraId: 1, userName: 'Ivan', advantage: 'abc', disadvantage: 'cba', review: 'text', rating: 4 };
       mockAxiosAdapter.onPost(APIRoute.Review).reply(400, []);
 
-      await store.dispatch(sendReviewAction(fakeComment));
+      await store.dispatch(sendReviewAction(fakeReview));
       const actions = extractActionsTypes(store.getActions());
 
       expect(actions).toEqual([

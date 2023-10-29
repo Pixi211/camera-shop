@@ -27,12 +27,12 @@ function ProductContent({camera, typeTag}: ProductContentProps): JSX.Element {
   const [isDescription, setIsDescription] = useState<boolean>(typeTag === 'description');
   const setSearchParams = useSearchParams()[1];
 
-  const handleDescriptionClick = useCallback(() => {
+  const descriptionTabClickHandler = useCallback(() => {
     setIsDescription(true);
     setSearchParams({ type: 'description' });
   }, [setSearchParams]);
 
-  const handleStatsClick = useCallback(() => {
+  const statsTabClickHandler = useCallback(() => {
     setIsDescription(false);
     setSearchParams({ type: 'stats' });
   }, [setSearchParams]);
@@ -82,12 +82,12 @@ function ProductContent({camera, typeTag}: ProductContentProps): JSX.Element {
             <div className="tabs product__tabs">
               <div className="tabs__controls product__tabs-controls">
                 <button className={`tabs__control ${!isDescription ? 'is-active' : ''}`}
-                  type="button" onClick={handleStatsClick}
+                  type="button" onClick={statsTabClickHandler}
                 >
                   Характеристики
                 </button>
                 <button className={`tabs__control ${isDescription ? 'is-active' : ''}`}
-                  type="button" onClick={handleDescriptionClick}
+                  type="button" onClick={descriptionTabClickHandler}
                 >
                   Описание
                 </button>

@@ -15,7 +15,7 @@ function ModalSuccess({ onCloseButtonClick, onReturnButtonClick }: ModalSuccessP
   const isNewReview = (type === 'newReview');
 
   const navigate = useNavigate();
-  const handleNavigateToBasket = () => {
+  const navigateToBasketClickHandler = () => {
     onCloseButtonClick();
     navigate(AppRoute.BasketPage);
   };
@@ -39,14 +39,29 @@ function ModalSuccess({ onCloseButtonClick, onReturnButtonClick }: ModalSuccessP
               <use xlinkHref="#icon-success"></use>
             </svg>
             <div className="modal__buttons">
-              <Link className="btn btn--transparent modal__btn" to={AppRoute.CatalogPage} onClick={() => onCloseButtonClick()} data-testid='btnToCatalog-test' >
+              <Link
+                className="btn btn--transparent modal__btn"
+                to={AppRoute.CatalogPage}
+                onClick={() => onCloseButtonClick()}
+                data-testid='btnToCatalog-test'
+              >
                 Продолжить покупки
               </Link>
-              <button className="btn btn--purple modal__btn modal__btn--fit-width" onClick={handleNavigateToBasket} data-testid="btnToBasket-test">
+              <button
+                className="btn btn--purple modal__btn modal__btn--fit-width"
+                onClick={navigateToBasketClickHandler}
+                data-testid="btnToBasket-test"
+              >
                 Перейти в корзину
               </button>
             </div>
-            <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => onCloseButtonClick()} data-testid="btnClose-test">
+            <button
+              className="cross-btn"
+              type="button"
+              aria-label="Закрыть попап"
+              onClick={() => onCloseButtonClick()}
+              data-testid="btnClose-test"
+            >
               <svg width={10} height={10} aria-hidden="true">
                 <use xlinkHref="#icon-close"></use>
               </svg>
@@ -72,20 +87,42 @@ function ModalSuccess({ onCloseButtonClick, onReturnButtonClick }: ModalSuccessP
         </svg>
         <div className="modal__buttons">
           {isNewReview ?
-            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={() => onReturnButtonClick(true)} autoFocus >Вернуться к покупкам
+            <button
+              className="btn btn--purple modal__btn modal__btn--fit-width"
+              type="button"
+              onClick={() => onReturnButtonClick(true)}
+              autoFocus
+            >
+              Вернуться к покупкам
             </button>
             :
-            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={() => onReturnButtonClick()} autoFocus >Вернуться к покупкам
+            <button
+              className="btn btn--purple modal__btn modal__btn--fit-width"
+              type="button"
+              onClick={() => onReturnButtonClick()}
+              autoFocus
+            >
+              Вернуться к покупкам
             </button>}
         </div>
         {isNewReview ?
-          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => onCloseButtonClick(true)}>
+          <button
+            className="cross-btn"
+            type="button"
+            aria-label="Закрыть попап"
+            onClick={() => onCloseButtonClick(true)}
+          >
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>
           </button>
           :
-          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => onCloseButtonClick()}>
+          <button
+            className="cross-btn"
+            type="button"
+            aria-label="Закрыть попап"
+            onClick={() => onCloseButtonClick()}
+          >
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>

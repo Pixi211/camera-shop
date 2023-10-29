@@ -8,7 +8,9 @@ const mockCameraData = makeFakeCurrentCameraData();
 describe('Component: ProductContent', () => {
 
   it('should render component', () => {
-    const preparedComponent = withHistory(<ProductContent camera={mockCameraData} typeTag={'description'}/>);
+    const preparedComponent = withHistory(
+      <ProductContent camera={mockCameraData} typeTag={'description'} />
+    );
 
     render(preparedComponent);
 

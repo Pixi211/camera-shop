@@ -5,12 +5,12 @@ import { MAX_PRODUCTS_ON_PAGE } from '../../const';
 type PaginationProps = {
   camerasLength: number;
   currentPage: number;
-  paginate: (arg0: number) => void;
+  onNumberClick: (arg0: number) => void;
   onNextButtonClick: () => void;
   onPrevButtonClick: () => void;
 }
 
-function Pagination({ camerasLength, currentPage, paginate, onNextButtonClick, onPrevButtonClick }: PaginationProps): JSX.Element {
+function Pagination({ camerasLength, currentPage, onNumberClick, onNextButtonClick, onPrevButtonClick }: PaginationProps): JSX.Element {
 
   const pageNumbers = [];
 
@@ -48,7 +48,7 @@ function Pagination({ camerasLength, currentPage, paginate, onNextButtonClick, o
               <Link
                 className={number === currentPage ? 'pagination__link pagination__link--active' : 'pagination__link'}
                 to={`/?page=${number}`}
-                onClick={() => paginate(number)}
+                onClick={() => onNumberClick(number)}
               >
                 {number}
               </Link>

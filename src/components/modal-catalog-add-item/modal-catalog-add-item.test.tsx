@@ -3,19 +3,15 @@ import ModalAddItemToBasket from './modal-catalog-add-item';
 import { makeFakeCurrentCameraData } from '../../utils/mocks';
 import { withHistory, withStore } from '../../utils/mock-component';
 
-const closeForm = () => {
-  let isOpen = true;
-  isOpen = !isOpen;
-  return isOpen;
-};
 
 const mockCamera = makeFakeCurrentCameraData();
+
 describe('Component: ModalAddItemToBasket', () => {
   it('should render component', () => {
     const { withStoreComponent } = withStore(
       <ModalAddItemToBasket
-        onAddButtonClick={closeForm}
-        onCloseButtonClick={closeForm}
+        onAddButtonClick={() => void 0}
+        onCloseButtonClick={() => void 0}
       />, {
         MODAL: {
           addItemToBasketStatus: true,

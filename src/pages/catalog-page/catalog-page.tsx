@@ -47,7 +47,8 @@ function CatalogPage(): JSX.Element {
                     </svg>
                   </Link>
                 </li>
-                <li className="breadcrumbs__item"><span className="breadcrumbs__link breadcrumbs__link--active">Каталог</span>
+                <li className="breadcrumbs__item">
+                  <span className="breadcrumbs__link breadcrumbs__link--active">Каталог</span>
                 </li>
               </ul>
             </div>
@@ -65,7 +66,7 @@ function CatalogPage(): JSX.Element {
                   {isMoreThanOnePage &&
                     <MemoizedPagination camerasLength={allCameras.length}
                       currentPage={currentPage}
-                      paginate={paginate}
+                      onNumberClick={paginate}
                       onNextButtonClick={getNextPage}
                       onPrevButtonClick={getPrevPage}
                     />}
