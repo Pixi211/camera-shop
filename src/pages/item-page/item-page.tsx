@@ -47,10 +47,10 @@ function ItemPage(): JSX.Element {
   const currentItem = useAppSelector(getCurrentItemData);
   const similars = useAppSelector(getSimilarCameras);
   const reviews = useAppSelector(getReviews);
-  const isCurrentDataLoading = useAppSelector(getLoadingCurrentDataStatus);
-  const isSimilarsLoading = useAppSelector(getLoadingSimilarsStatus);
-  const isReviewsLoading = useAppSelector(getLoadingReviewsStatus);
-  const isLoadingError = useAppSelector(getLoadingErrorStatus);
+  const currentDataLoadingStatus = useAppSelector(getLoadingCurrentDataStatus);
+  const similarsLoadingStatus = useAppSelector(getLoadingSimilarsStatus);
+  const reviewsLoadingStatus = useAppSelector(getLoadingReviewsStatus);
+  const loadingErrorStatus = useAppSelector(getLoadingErrorStatus);
 
   const [currentMax, setCurrentMax] = useState(3);
   const visibleReviews = reviews.slice(0, currentMax);
@@ -61,8 +61,8 @@ function ItemPage(): JSX.Element {
   const isDisabled = currentMax >= reviews.length;
 
 
-  if (isCurrentDataLoading || isSimilarsLoading || isReviewsLoading) {
-    if (isLoadingError) {
+  if (currentDataLoadingStatus || similarsLoadingStatus || reviewsLoadingStatus) {
+    if (loadingErrorStatus) {
       return (<NotFoundPage />);
     }
     return (<LoadingPage />);
