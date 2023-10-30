@@ -1,9 +1,11 @@
+import { ModalData } from '../../types/types';
 import { makeFakeCamerasData, makeFakeSuccessType } from '../../utils/mocks';
 import { modalData, setModalData, setAddItemToBasketStatus, setSuccessStatus, setSuccessType, setActiveStatus, setAddReviewStatus } from './modal-data.slice';
 
 describe('ModalData slice', () => {
 
-  const initialState = {
+
+  const initialState: ModalData = {
     modalData: null,
     addItemToBasketStatus: false,
     successStatus: false,
@@ -45,11 +47,11 @@ describe('ModalData slice', () => {
 
   it('should set successType', () => {
     const mock = makeFakeSuccessType();
-    const actionPayload = mock[0];
     const state = { ...initialState };
-    const expectedState = { ...initialState, successType: mock[0] };
+    const expectedState = { ...initialState, successType: mock };
 
-    const result = modalData.reducer(state, setSuccessType(actionPayload));
+    const result = modalData.reducer(state, setSuccessType(mock));
+
 
     expect(result).toEqual(expectedState);
   });
