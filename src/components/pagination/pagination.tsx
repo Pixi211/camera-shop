@@ -18,17 +18,23 @@ function Pagination({ camerasLength, currentPage, onNumberClick, onNextButtonCli
     pageNumbers.push(i);
   }
 
-  let visiblePageNumbers: number[] = [];
-  if (currentPage > 1) {
-    visiblePageNumbers = pageNumbers.slice(currentPage - 2, currentPage - 2 + 3);
-  } else {
-    visiblePageNumbers = pageNumbers.slice(0, 3);
+  const numbersOnPage = 3;
+  const pageNumbersOnPage = [];
+  for (let i = 0; i < Math.ceil(pageNumbers.length / numbersOnPage); i++) {
+    pageNumbersOnPage[i] = pageNumbers.slice((i * numbersOnPage), (i * numbersOnPage) + numbersOnPage);
+  }
+
+  let visiblePageNumbers = pageNumbers.slice(0, 3);
+  const currentTriplet = Math.ceil(currentPage / 3);
+  let isPrevButtonVisible = false;
+
+  if (currentTriplet > 1) {
+    visiblePageNumbers = pageNumbersOnPage[currentTriplet - 1];
+    isPrevButtonVisible = (currentTriplet > 1);
   }
 
   const lastElementOfPageNumbers = pageNumbers[pageNumbers.length - 1];
-
   const isNextButtonVisible = (visiblePageNumbers[visiblePageNumbers.length - 1] < lastElementOfPageNumbers);
-  const isPrevButtonVisible = (visiblePageNumbers[0] !== 1);
 
   return (
     <div className="pagination" data-testid="pagination-test">

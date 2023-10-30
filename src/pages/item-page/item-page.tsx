@@ -72,6 +72,8 @@ function ItemPage(): JSX.Element {
     return (<NotFoundPage />);
   }
 
+  window.scrollTo(0, 0);
+
   return (
     <div className="wrapper" data-testid="item-page-test">
       <MemoizedHeader />
