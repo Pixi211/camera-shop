@@ -42,6 +42,7 @@ function ItemPage(): JSX.Element {
       dispatch(fetchSimilarAction(Number(currentId)));
       dispatch(fetchReviewsAction(Number(currentId)));
     }
+    window.scrollTo(0, 0);
   }, [dispatch, currentId]);
 
   const currentItem = useAppSelector(getCurrentItemData);
@@ -72,7 +73,6 @@ function ItemPage(): JSX.Element {
     return (<NotFoundPage />);
   }
 
-  window.scrollTo(0, 0);
 
   return (
     <div className="wrapper" data-testid="item-page-test">
