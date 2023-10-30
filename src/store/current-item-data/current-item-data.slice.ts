@@ -19,7 +19,9 @@ export const currentData = createSlice({
   initialState,
   reducers: {
     setReviewCount: (state, action: PayloadAction<number>) => {
-      state.currentItemData.reviewCount = action.payload;
+      if (state.currentItemData) {
+        state.currentItemData.reviewCount = action.payload;
+      }
     }
   },
   extraReducers(builder) {
