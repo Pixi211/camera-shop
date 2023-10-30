@@ -74,6 +74,9 @@ function ModalWrapper(): JSX.Element {
     const onEscClick = (evt: KeyboardEvent) => {
       if (evt.code === 'Escape') {
         closeModalForm();
+        if (currentItemData) {
+          dispatch(fetchReviewsAction(currentItemData.id));
+        }
       }
     };
     document.addEventListener('keydown', onEscClick);

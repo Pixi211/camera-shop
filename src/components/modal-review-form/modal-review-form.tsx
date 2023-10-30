@@ -8,14 +8,16 @@ import { fetchReviewsAction, sendReviewAction } from '../../store/current-item-d
 import ReactFocusLock from 'react-focus-lock';
 import { RESET_TIMEOUT, RatingName, stars } from '../../const';
 import { setReviewCount } from '../../store/current-item-data/current-item-data.slice';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 
 
 type ModalAddReviewForm = {
-  camera: CameraType;
+  camera: CameraType | null;
   onCloseButtonClick: () => void;
 }
 
 function ModalAddReviewForm({ camera, onCloseButtonClick }: ModalAddReviewForm): JSX.Element {
+
 
   const dispatch = useAppDispatch();
 
@@ -28,6 +30,17 @@ function ModalAddReviewForm({ camera, onCloseButtonClick }: ModalAddReviewForm):
   const { register, handleSubmit: submitFormClickHandler, formState: { errors }, reset }
     = useForm<UserReview>({ mode: 'onSubmit', criteriaMode: 'all' });
 
+  const nameInput = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (nameInput.current) {
+      nameInput.current.focus();
+    }
+  }, []);
+
+  if (!camera) {
+    return <NotFoundPage />;
+  }
 
   const submit: SubmitHandler<UserReview> = (data) => {
 
@@ -42,14 +55,6 @@ function ModalAddReviewForm({ camera, onCloseButtonClick }: ModalAddReviewForm):
 
     setTimeout(() => reset(), RESET_TIMEOUT);
   };
-
-  const nameInput = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    if (nameInput.current) {
-      nameInput.current.focus();
-    }
-  }, []);
 
   const getCurrentStarTitle = (star: number) => {
     switch (star) {
