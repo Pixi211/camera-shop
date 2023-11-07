@@ -1,0 +1,9 @@
+.catalog-sort__btn-text input[type="radio"]:focus-visible + label {
+  color: #ffffff;
+  background-color: #7575e2;
+}
+
+.catalog-sort__btn input[type="radio"]:focus-visible + label {
+  color: #ffffff;
+  background-color: #7575e2;
+}
