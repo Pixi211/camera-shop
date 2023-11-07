@@ -3,6 +3,8 @@ import { store } from '../store';
 export type Type = 'Коллекционная' | 'Моментальная' | 'Цифровая' | 'Плёночная';
 export type Category = 'Видеокамера' | 'Фотоаппарат';
 export type Level = 'Нулевой' | 'Любительский' | 'Профессиональный';
+export type SortType = 'sortPrice' | 'sortPopular' | 'noSorting';
+export type SortDirection = 'sortUp' | 'sortDown' | 'noSorting';
 
 export type CameraType = {
   id: number;
@@ -60,6 +62,8 @@ export type CamerasData = {
   cameras: CameraType[];
   hasError: boolean;
   isDataLoading: boolean;
+  sortType: SortType;
+  sortDirection: SortDirection;
 }
 
 export type CurrentData = {

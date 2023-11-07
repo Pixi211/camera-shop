@@ -12,19 +12,26 @@ import MemoizedPagination from '../../components/pagination/pagination';
 import MemoizedCatalogCards from '../../components/catalog-cards/catalog-cards';
 import MemoizedCatalogFilter from '../../components/catalog-filter/catalog-filter';
 import MemoizedCatalogSort from '../../components/catalog-sort/catalog-sort';
+import { getSortDirection, getSortType } from '../../store/cameras-data/cameras-data.selectors';
+import sortCameras from '../../utils/utils';
 
 
 function CatalogPage(): JSX.Element {
 
   const allCameras = useAppSelector(getCameras);
   const allPromos = useAppSelector(getPromos);
+  const sortType = useAppSelector(getSortType);
+  const sortDirection = useAppSelector(getSortDirection);
   const { search } = useLocation();
 
   const [currentPage, setCurrentPage] = useState(Number(search.split('=')[1]) || 1);
 
   const lastCameraIndex = currentPage * MAX_PRODUCTS_ON_PAGE;
   const firstCameraIndex = lastCameraIndex - MAX_PRODUCTS_ON_PAGE;
-  const camerasOnPage = allCameras.slice(firstCameraIndex, lastCameraIndex);
+
+  const sortedCameras = sortCameras(allCameras.slice(), sortType, sortDirection);
+  const camerasOnPage = sortedCameras.slice(firstCameraIndex, lastCameraIndex);
+
   const isMoreThanOnePage = (allCameras.length >= MAX_PRODUCTS_ON_PAGE);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
