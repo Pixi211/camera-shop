@@ -1,8 +1,50 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { useAppSelector } from '../../store';
+import { getCameras } from '../../store/cameras-data/cameras-data.selectors';
+import { useAutocomplete } from '@mui/base/useAutocomplete';
 
 function Header(): JSX.Element {
+
+  const cameras = useAppSelector(getCameras);
+
+  const navigate = useNavigate();
+  const handleOptionClick = (id: number | undefined) => {
+    if (id) {
+      navigate(`${AppRoute.CatalogPage}${id?.toString()}`);
+    }
+  };
+
+  const {
+    getRootProps,
+    groupedOptions,
+    getOptionProps,
+    getInputProps,
+    getInputLabelProps,
+    getListboxProps,
+    popupOpen,
+    getClearProps,
+    inputValue } = useAutocomplete({
+    id: 'header-search-bar',
+    options: cameras,
+    getOptionLabel: (option) => option.name,
+    handleHomeEndKeys: true,
+    clearOnEscape: true,
+    onChange(evt, value) {
+      evt.preventDefault();
+      handleOptionClick(value?.id);
+    },
+    filterOptions(options, searchText) {
+      if (searchText.inputValue.length > 2) {
+        return options.filter((option) =>
+          String(option.name).toLowerCase().includes(searchText.inputValue.toLowerCase())
+        );
+      }
+      return options;
+    },
+  });
+
 
   return (
     <header className="header" id="header" data-testid="header-test">
@@ -25,23 +67,46 @@ function Header(): JSX.Element {
             </li>
           </ul>
         </nav>
-        <div className="form-search">
+        <div
+          className={`form-search ${popupOpen && inputValue.length > 2
+            ? 'list-opened'
+            : ''}`}
+          {...getRootProps()}
+        >
           <form>
-            <label>
+            <label {...getInputLabelProps()}>
               <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-lens"></use>
               </svg>
-              <input className="form-search__input" type="text" autoComplete="off" placeholder="Поиск по сайту" />
+              <input
+                className="form-search__input"
+                type="text"
+                autoComplete="off"
+                placeholder="Поиск по сайту"
+                {...getInputProps()}
+              />
             </label>
-            <ul className="form-search__select-list">
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 8i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 7i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 6i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 5i</li>
-              <li className="form-search__select-item" tabIndex={0}>Cannonball Pro MX 4i</li>
+            <ul {...getListboxProps()} className="form-search__select-list">
+              {groupedOptions.length > 0 ? (groupedOptions as typeof cameras).map((option, index) => (
+                <li
+                  {...getOptionProps({ option, index })}
+                  key={option.name}
+                  className="form-search__select-item"
+                  tabIndex={0}
+                >
+                  {option.name}
+                </li>
+              ))
+                :
+                <li
+                  className="form-search__select-item"
+                  tabIndex={0}
+                >
+                  По запросу ничего не найдено...
+                </li>}
             </ul>
           </form>
-          <button className="form-search__reset" type="reset">
+          <button className="form-search__reset" type="reset" {...getClearProps()}>
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg><span className="visually-hidden">Сбросить поиск</span>
