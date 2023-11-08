@@ -1,16 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { MAX_PRODUCTS_ON_PAGE } from '../../const';
+import { DirectionPagination, MAX_PRODUCTS_ON_PAGE } from '../../const';
 
 type PaginationProps = {
   camerasLength: number;
   currentPage: number;
-  onNumberClick: (arg0: number) => void;
-  onNextButtonClick: () => void;
-  onPrevButtonClick: () => void;
+  onPaginationClick: (pageNumber: number|undefined, direction: number|undefined) => void;
 }
 
-function Pagination({ camerasLength, currentPage, onNumberClick, onNextButtonClick, onPrevButtonClick }: PaginationProps): JSX.Element {
+function Pagination({ camerasLength, currentPage, onPaginationClick }: PaginationProps): JSX.Element {
 
   const pageNumbers = [];
 
@@ -41,34 +38,31 @@ function Pagination({ camerasLength, currentPage, onNumberClick, onNextButtonCli
       <ul className="pagination__list">
         {isPrevButtonVisible &&
           <li className="pagination__item">
-            <Link className="pagination__link pagination__link--text"
-              to={`/?page=${currentPage - 1}`}
-              onClick={onPrevButtonClick}
+            <button className="pagination__link pagination__link--text"
+              onClick={() => onPaginationClick(undefined, DirectionPagination.Prev)}
             >
               Назад
-            </Link>
+            </button>
           </li>}
         {
           visiblePageNumbers.map((number) => (
             <li className="pagination__item" key={number}>
-              <Link
+              <button
                 className={number === currentPage ? 'pagination__link pagination__link--active' : 'pagination__link'}
-                to={`/?page=${number}`}
-                onClick={() => onNumberClick(number)}
+                onClick={() => onPaginationClick(number, undefined)}
               >
                 {number}
-              </Link>
+              </button>
             </li>
           ))
         }
         {isNextButtonVisible &&
           <li className="pagination__item">
-            <Link className="pagination__link pagination__link--text"
-              to={`/?page=${currentPage + 1}`}
-              onClick={onNextButtonClick}
+            <button className="pagination__link pagination__link--text"
+              onClick={() => onPaginationClick(undefined, DirectionPagination.Next)}
             >
               Далее
-            </Link>
+            </button>
           </li>}
       </ul>
     </div>

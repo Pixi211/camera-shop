@@ -8,8 +8,8 @@ const initialState: CamerasData = {
   cameras: [],
   hasError: false,
   isDataLoading: false,
-  sortType: 'noSorting',
-  sortDirection: 'noSorting'
+  sortType: null,
+  sortDirection: null
 };
 
 export const camerasData = createSlice({

@@ -1,116 +1,54 @@
-import React, { useEffect, useCallback, useState } from 'react';
-import { setSortDirection, setSortType } from '../../store/cameras-data/cameras-data.slice';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { getSortDirection, getSortType } from '../../store/cameras-data/cameras-data.selectors';
+import React, { useEffect, useCallback } from 'react';
+import { useAppDispatch } from '../../store';
 import './catalog-sort.css';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { DirectionValue, QueryString, SortValue } from '../../const';
+import { setSortDirection, setSortType } from '../../store/cameras-data/cameras-data.slice';
 
 function CatalogSort(): JSX.Element {
 
   const dispatch = useAppDispatch();
-  const sortType = useAppSelector(getSortType);
-  const sortDirection = useAppSelector(getSortDirection);
 
-  // const setSearchParams = useSearchParams()[1];
   const [searchParams, setSearchParams] = useSearchParams();
-  const { search } = useLocation();
-  const [sortChecked, setSortChecked] = useState(search.slice(search.indexOf('=') + 1, search.indexOf('&')) || false);
-  const [directionChecked, setDirectionChecked] = useState((search.split('sort=')[1]) || false);
+
+  const sortParameter = searchParams.get(QueryString.Sort);
+  const directionParameter = searchParams.get(QueryString.Direction);
 
 
-  const params = { type: '', sort: '' };
-
-  const sortPriceClickHandler = () => {
-    setSortChecked('Price');
-    dispatch(setSortType('sortPrice'));
-    // setSearchParams({ type: 'Price' });
-    params.type = 'Price';
-    params.sort = searchParams.get('sort');
-    if (sortDirection === 'noSorting') {
-      dispatch(setSortDirection('sortUp'));
-      // setSearchParams({ sort: 'Up' });
-      params.sort = 'Up';
-      setDirectionChecked('Up');
-
-    }
-    setSearchParams(params);
+  const sortTypeClickHandler = (value: SortValue) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set(QueryString.Sort, value);
+    newSearchParams.set(QueryString.Direction, directionParameter !== 'null' ? String(directionParameter) : DirectionValue.Up);
+    dispatch(setSortDirection(newSearchParams.get(QueryString.Direction)));
+    dispatch(setSortType(value));
+    setSearchParams(newSearchParams);
   };
 
-  const sortPopularClickHandler = () => {
-    setSortChecked('Popular');
-    dispatch(setSortType('sortPopular'));
-    // setSearchParams({ type: 'Popular' });
-    params.type = 'Popular';
-    params.sort = searchParams.get('sort');
-
-    if (sortDirection === 'noSorting') {
-      dispatch(setSortDirection('sortUp'));
-      // setSearchParams({ sort: 'Up' });
-      params.sort = 'Up';
-      setDirectionChecked('Up');
-
-    }
-    setSearchParams(params);
-
-  };
-
-  const sortUpClickHandler = useCallback(() => {
-    params.type = searchParams.get('type');
-    if (sortType === 'noSorting') {
-      dispatch(setSortType('sortPrice'));
-      // setSearchParams({ type: 'Price' });
-      params.type = 'Price';
-      setSortChecked('Price');
-    }
-    dispatch(setSortDirection('sortUp'));
-    // setSearchParams({ sort: 'Up' });
-    params.sort = 'Up';
-    setDirectionChecked('Up');
-
-    setSearchParams(params);
-  }, [dispatch, sortType, setSearchParams, params, searchParams]);
-
-  const sortDownClickHandler = useCallback(() => {
-    params.type = searchParams.get('type');
-
-    if (sortType === 'noSorting') {
-      dispatch(setSortType('sortPrice'));
-      // setSearchParams({ type: 'Price' });
-      params.type = 'Price';
-      setSortChecked('Price');
-    }
-    dispatch(setSortDirection('sortDown'));
-    // setSearchParams({ sort: 'Down' });
-    params.sort = 'Down';
-    setDirectionChecked('Down');
-    setSearchParams(params);
-  }, [dispatch, sortType, setSearchParams, params, searchParams]);
+  const directionClickHandler = useCallback((value: DirectionValue) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set(QueryString.Direction, value);
+    newSearchParams.set(QueryString.Sort, sortParameter !== 'null' ? String(sortParameter) : SortValue.Price);
+    dispatch(setSortType(newSearchParams.get(QueryString.Sort)));
+    dispatch(setSortDirection(value));
+    setSearchParams(newSearchParams);
+  }, [dispatch, searchParams, sortParameter, setSearchParams]);
 
   useEffect(() => {
-
-    const onArrowUpClick = (evt: KeyboardEvent) => {
+    const onArrowClick = (evt: KeyboardEvent) => {
+      evt.preventDefault();
       if (evt.code === 'ArrowUp') {
-        evt.preventDefault();
-        sortUpClickHandler();
+        directionClickHandler(DirectionValue.Up);
+      } else if (evt.code === 'ArrowDown') {
+        directionClickHandler(DirectionValue.Down);
       }
     };
 
-    const onArrowDownClick = (evt: KeyboardEvent) => {
-      if (evt.code === 'ArrowDown') {
-        evt.preventDefault();
-        sortDownClickHandler();
-      }
-    };
-
-    document.addEventListener('keydown', onArrowUpClick);
-    document.addEventListener('keydown', onArrowDownClick);
+    document.addEventListener('keydown', onArrowClick);
 
     return () => {
-      document.removeEventListener('keydown', onArrowUpClick);
-      document.removeEventListener('keydown', onArrowDownClick);
+      document.removeEventListener('keydown', onArrowClick);
     };
-
-  }, [dispatch, sortUpClickHandler, sortDownClickHandler]);
+  }, [directionClickHandler]);
 
   return (
     <div className="catalog-sort" data-testid="catalogSort-test">
@@ -123,8 +61,8 @@ function CatalogSort(): JSX.Element {
                 type="radio"
                 id="sortPrice"
                 name="sort"
-                onClick={sortPriceClickHandler}
-                checked={sortType === 'sortPrice' || sortChecked === 'Price'}
+                onChange={() => sortTypeClickHandler(SortValue.Price)}
+                checked={sortParameter === SortValue.Price}
               />
               <label htmlFor="sortPrice">по цене</label>
             </div>
@@ -133,8 +71,8 @@ function CatalogSort(): JSX.Element {
                 type="radio"
                 id="sortPopular"
                 name="sort"
-                onClick={sortPopularClickHandler}
-                checked={sortType === 'sortPopular' || sortChecked === 'Popular'}
+                onChange={() => sortTypeClickHandler(SortValue.Popular)}
+                checked={sortParameter === SortValue.Popular}
               />
               <label htmlFor="sortPopular">по популярности</label>
             </div>
@@ -146,8 +84,8 @@ function CatalogSort(): JSX.Element {
                 id="up"
                 name="sort-icon"
                 aria-label="По возрастанию"
-                onClick={sortUpClickHandler}
-                checked={sortDirection === 'sortUp' || directionChecked === 'Up'}
+                onChange={() => directionClickHandler(DirectionValue.Up)}
+                checked={directionParameter === DirectionValue.Up}
               />
               <label htmlFor="up">
                 <svg width="16" height="14" aria-hidden="true">
@@ -161,8 +99,8 @@ function CatalogSort(): JSX.Element {
                 id="down"
                 name="sort-icon"
                 aria-label="По убыванию"
-                onClick={sortDownClickHandler}
-                checked={sortDirection === 'sortDown' || directionChecked === 'Down'}
+                onChange={() => directionClickHandler(DirectionValue.Down)}
+                checked={directionParameter === DirectionValue.Down}
               />
               <label htmlFor="down">
                 <svg width="16" height="14" aria-hidden="true">

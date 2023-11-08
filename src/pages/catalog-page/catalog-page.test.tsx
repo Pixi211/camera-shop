@@ -15,6 +15,8 @@ describe('Page: CatalogPage', () => {
         cameras: mockCameraData,
         hasError: false,
         isDataLoading: false,
+        sortType: null,
+        sortDirection: null,
       },
       PROMO: {
         promos: mockPromoData,

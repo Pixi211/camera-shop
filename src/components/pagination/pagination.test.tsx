@@ -7,9 +7,7 @@ describe('Component: Pagination', () => {
   it('should render component', () => {
     const preparedComponent = withHistory(
       <MemoizedPagination
-        onNumberClick={() => void 0}
-        onNextButtonClick={() => void 0}
-        onPrevButtonClick={() => void 0}
+        onPaginationClick={() => void 0}
         camerasLength={9}
         currentPage={1}
       />);

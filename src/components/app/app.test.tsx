@@ -17,6 +17,8 @@ describe('Component: App', () => {
         cameras: mockCameraData,
         hasError: false,
         isDataLoading: false,
+        sortType: null,
+        sortDirection: null,
       },
       PROMO: {
         promos: mockPromoData,
