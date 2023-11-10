@@ -31,8 +31,8 @@ enum RatingName {
 
 enum QueryString {
   Page = 'page',
-  Type = 'type',
   Category = 'category',
+  TypeCamera = 'type',
   Level = 'level',
   Sort = 'sort',
   Direction = 'direction',
@@ -48,6 +48,24 @@ enum SortValue {
   Popular = 'Popular',
 }
 
+enum CategoryValue {
+  Photocamera = 'photocamera',
+  Videocamera = 'videocamera',
+}
+
+enum TypeCameraValue {
+  Digital = 'digital',
+  Film = 'film',
+  Snapshot = 'snapshot',
+  Collection = 'collection',
+}
+
+enum LevelValue {
+  Zero = 'zero',
+  NonProfessional = 'non-professional',
+  Professional = 'professional',
+}
+
 enum DirectionPagination {
   Next = 1,
   Prev = -1,
@@ -59,6 +77,7 @@ const RESET_TIMEOUT = 300;
 const stars = [1, 2, 3, 4, 5];
 
 export {
-  AppRoute, APIRoute, NameSpace, RatingName, QueryString, DirectionValue, SortValue, DirectionPagination,
+  AppRoute, APIRoute, NameSpace, RatingName, QueryString, DirectionValue, SortValue,
+  DirectionPagination, CategoryValue, TypeCameraValue, LevelValue,
   BACKEND_URL, MAX_PRODUCTS_ON_PAGE, FOCUS_TIMEOUT, RESET_TIMEOUT, stars
 };

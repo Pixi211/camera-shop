@@ -5,7 +5,11 @@ import { useAppSelector } from '../../store';
 import { getCameras } from '../../store/cameras-data/cameras-data.selectors';
 import { useAutocomplete } from '@mui/base/useAutocomplete';
 
-function Header(): JSX.Element {
+type HeaderProps = {
+  onMainClickHandler?: () => void;
+}
+
+function Header({onMainClickHandler}: HeaderProps): JSX.Element {
 
   const cameras = useAppSelector(getCameras);
 
@@ -49,7 +53,7 @@ function Header(): JSX.Element {
   return (
     <header className="header" id="header" data-testid="header-test">
       <div className="container">
-        <Link className="header__logo" to={AppRoute.CatalogPage} aria-label="Переход на главную">
+        <Link className="header__logo" onClick = {onMainClickHandler} to={AppRoute.CatalogPage} aria-label="Переход на главную">
           <svg width="100" height="36" aria-hidden="true">
             <use xlinkHref="#icon-logo"></use>
           </svg>

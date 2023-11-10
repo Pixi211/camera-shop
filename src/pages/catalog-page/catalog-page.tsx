@@ -37,8 +37,8 @@ function CatalogPage(): JSX.Element {
   const isMoreThanOnePage = (allCameras.length >= MAX_PRODUCTS_ON_PAGE);
 
   const getToPage = (pageNumber = 0, direction = 1) => {
-    searchParams.set(QueryString.Sort, String(searchParams.get(QueryString.Sort)));
-    searchParams.set(QueryString.Direction, String(searchParams.get(QueryString.Direction)));
+    // searchParams.set(QueryString.Sort, String(searchParams.get(QueryString.Sort)));
+    // searchParams.set(QueryString.Direction, String(searchParams.get(QueryString.Direction)));
     if(pageNumber > 0) {
       setCurrentPage(pageNumber);
       searchParams.set(QueryString.Page, String(pageNumber));
@@ -49,9 +49,13 @@ function CatalogPage(): JSX.Element {
     setSearchParams(searchParams);
   };
 
+  const resetPage = () => {
+    setCurrentPage(1);
+  };
+
   return (
     <div className="wrapper" data-testid="catalog-page-test">
-      <MemoizedHeader />
+      <MemoizedHeader onMainClickHandler={resetPage}/>
       <main>
         <Banner promos={allPromos} />
         <div className="page-content">
@@ -59,14 +63,14 @@ function CatalogPage(): JSX.Element {
             <div className="container">
               <ul className="breadcrumbs__list">
                 <li className="breadcrumbs__item">
-                  <Link className="breadcrumbs__link" to={AppRoute.CatalogPage}>Главная
+                  <Link className="breadcrumbs__link" onClick={resetPage} to={AppRoute.CatalogPage}>Главная
                     <svg width="5" height="8" aria-hidden="true">
                       <use xlinkHref="#icon-arrow-mini"></use>
                     </svg>
                   </Link>
                 </li>
                 <li className="breadcrumbs__item">
-                  <span className="breadcrumbs__link breadcrumbs__link--active">Каталог</span>
+                  <Link className="breadcrumbs__link breadcrumbs__link--active" onClick={resetPage} to={AppRoute.CatalogPage}>Каталог</Link>
                 </li>
               </ul>
             </div>

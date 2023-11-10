@@ -18,19 +18,18 @@ function CatalogSort(): JSX.Element {
   const sortTypeClickHandler = (value: SortValue) => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set(QueryString.Sort, value);
-    newSearchParams.set(QueryString.Direction, directionParameter !== 'null' ? String(directionParameter) : DirectionValue.Up);
+    newSearchParams.set(QueryString.Direction, directionParameter === null ? DirectionValue.Up : String(directionParameter));
     dispatch(setSortDirection(newSearchParams.get(QueryString.Direction)));
     dispatch(setSortType(value));
     setSearchParams(newSearchParams);
   };
 
   const directionClickHandler = useCallback((value: DirectionValue) => {
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set(QueryString.Direction, value);
-    newSearchParams.set(QueryString.Sort, sortParameter !== 'null' ? String(sortParameter) : SortValue.Price);
-    dispatch(setSortType(newSearchParams.get(QueryString.Sort)));
+    searchParams.set(QueryString.Direction, value);
+    searchParams.set(QueryString.Sort, sortParameter === null ? SortValue.Price : String(sortParameter));
+    dispatch(setSortType(searchParams.get(QueryString.Sort)));
     dispatch(setSortDirection(value));
-    setSearchParams(newSearchParams);
+    setSearchParams(searchParams);
   }, [dispatch, searchParams, sortParameter, setSearchParams]);
 
   useEffect(() => {
