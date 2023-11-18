@@ -6,9 +6,13 @@ import BasketPage from '../../pages/basket-page/basket-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route/history-route';
+import { useAppSelector } from '../../store';
+import { getCameras } from '../../store/cameras-data/cameras-data.selectors';
 
 
 function App(): JSX.Element {
+
+  const allCameras = useAppSelector(getCameras);
 
   return (
     <HistoryRouter history={browserHistory}>
@@ -16,7 +20,7 @@ function App(): JSX.Element {
         <Route
           index
           path={AppRoute.CatalogPage}
-          element={<CatalogPage />}
+          element={allCameras.length && <CatalogPage allCameras={allCameras}/>}
         />
         <Route
           path={AppRoute.ItemPage}

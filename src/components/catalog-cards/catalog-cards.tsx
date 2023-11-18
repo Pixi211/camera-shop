@@ -10,16 +10,23 @@ function CatalogCards({ cameras }: CatalogCardsProps): JSX.Element {
 
 
   return (
-    <div className="cards catalog__cards" data-testid="catalogCards-test">
-      {cameras.map((camera) => (
-        <MemoizedProductCard
-          key={camera.id} camera={camera} isActive=''
-        />
-      ))}
-    </div>
+
+    cameras.length ?
+      <div className="cards catalog__cards" data-testid="catalogCards-test">
+        {cameras.map((camera) => (
+          <MemoizedProductCard
+            key={camera.id} camera={camera} isActive=''
+          />
+        ))}
+      </div>
+      :
+      <div className="cards catalog__cards" data-testid="catalogCards-test">
+
+        <p>По вашему запросу ничего не найдено</p>
+      </div>
+
   );
 }
-
 const MemoizedCatalogCards = React.memo(CatalogCards);
 
 export default MemoizedCatalogCards;

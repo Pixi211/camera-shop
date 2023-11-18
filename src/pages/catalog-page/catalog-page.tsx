@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Banner from '../../components/banner/banner';
 import { useAppSelector } from '../../store';
-import { getCameras } from '../../store/cameras-data/cameras-data.selectors';
+import { getCamerasByPrice } from '../../store/cameras-data/cameras-data.selectors';
 import { getPromos } from '../../store/promo-data/promo-data.selectors';
 import { AppRoute, MAX_PRODUCTS_ON_PAGE, QueryString } from '../../const';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -13,17 +13,25 @@ import MemoizedCatalogCards from '../../components/catalog-cards/catalog-cards';
 import MemoizedCatalogFilter from '../../components/catalog-filter/catalog-filter';
 import MemoizedCatalogSort from '../../components/catalog-sort/catalog-sort';
 import { getSortDirection, getSortType } from '../../store/cameras-data/cameras-data.selectors';
-import sortCameras from '../../utils/utils';
+import { filterCameras, getMinMaxPrices, sortCameras } from '../../utils/utils';
+import { CameraType } from '../../types/types';
 
+type CatalogPageProps = {
+  allCameras: CameraType[];
+};
 
-function CatalogPage(): JSX.Element {
+function CatalogPage({ allCameras }: CatalogPageProps): JSX.Element {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const allCameras = useAppSelector(getCameras);
+  // const allCameras = useAppSelector(getCameras);
   const allPromos = useAppSelector(getPromos);
   const sortType = useAppSelector(getSortType);
   const sortDirection = useAppSelector(getSortDirection);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+
+  const camerasByPrice = useAppSelector(getCamerasByPrice);
+  // const startPrice = searchParams.get(QueryString.Start);
+  // const endPrice = useAppSelector(getMaxPrice);
 
   const [currentPage, setCurrentPage] = useState(Number(searchParams.get(QueryString.Page)) || 1);
 
@@ -31,15 +39,34 @@ function CatalogPage(): JSX.Element {
   const lastCameraIndex = currentPage * MAX_PRODUCTS_ON_PAGE;
   const firstCameraIndex = lastCameraIndex - MAX_PRODUCTS_ON_PAGE;
 
-  const sortedCameras = sortCameras(allCameras.slice(), sortType, sortDirection);
+  const category = searchParams.get(QueryString.Category);
+  const type = searchParams.getAll(QueryString.TypeCamera);
+  const level = searchParams.getAll(QueryString.Level);
+
+  const [minPrice, maxPrice] = getMinMaxPrices(allCameras);
+
+  let filteredCameras = [];
+  // console.log(camerasByPrice);
+  // console.log( useAppSelector(getMinPrice));
+  // console.log(endPrice);
+  if (camerasByPrice.length === 0 && !searchParams.has(QueryString.Start) && !searchParams.has(QueryString.End)) {
+    filteredCameras = filterCameras(allCameras, type, level, category);
+  } else {
+    filteredCameras = filterCameras(camerasByPrice, type, level, category);
+  }
+
+  const sortedCameras = sortCameras(filteredCameras.slice(), sortType, sortDirection); //для sort нужен slice?
   const camerasOnPage = sortedCameras.slice(firstCameraIndex, lastCameraIndex);
 
-  const isMoreThanOnePage = (allCameras.length >= MAX_PRODUCTS_ON_PAGE);
+
+  const [minPriceSorted, maxPriceSorted] = getMinMaxPrices(sortedCameras);
+
+
+  const isMoreThanOnePage = (sortedCameras.length >= MAX_PRODUCTS_ON_PAGE);
 
   const getToPage = (pageNumber = 0, direction = 1) => {
-    // searchParams.set(QueryString.Sort, String(searchParams.get(QueryString.Sort)));
-    // searchParams.set(QueryString.Direction, String(searchParams.get(QueryString.Direction)));
-    if(pageNumber > 0) {
+
+    if (pageNumber > 0) {
       setCurrentPage(pageNumber);
       searchParams.set(QueryString.Page, String(pageNumber));
     } else {
@@ -53,9 +80,10 @@ function CatalogPage(): JSX.Element {
     setCurrentPage(1);
   };
 
+
   return (
     <div className="wrapper" data-testid="catalog-page-test">
-      <MemoizedHeader onMainClickHandler={resetPage}/>
+      <MemoizedHeader onMainClickHandler={resetPage} />
       <main>
         <Banner promos={allPromos} />
         <div className="page-content">
@@ -80,7 +108,13 @@ function CatalogPage(): JSX.Element {
               <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
               <div className="page-content__columns">
                 <div className="catalog__aside">
-                  <MemoizedCatalogFilter />
+                  <MemoizedCatalogFilter
+                    minPriceOfCatalog={minPrice}
+                    maxPriceOfCatalog={maxPrice}
+                    minPriceSorted={minPriceSorted}
+                    maxPriceSorted={maxPriceSorted}
+                    setCurrentPage={setCurrentPage}
+                  />
                 </div>
                 <div className="catalog__content">
                   <MemoizedCatalogSort />

@@ -36,6 +36,8 @@ enum QueryString {
   Level = 'level',
   Sort = 'sort',
   Direction = 'direction',
+  Start = '_start',
+  End = '_end',
 }
 
 enum DirectionValue {

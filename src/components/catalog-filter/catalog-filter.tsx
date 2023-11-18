@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CategoryValue, LevelValue, QueryString, TypeCameraValue } from '../../const';
+import { useAppDispatch } from '../../store';
+import { fetchCamerasByPriceAction } from '../../store/cameras-data/cameras-data.action';
+import { debounce } from '../../utils/utils';
 
-function CatalogFilter(): JSX.Element {
+type CatalogFilterProps = {
+  minPriceOfCatalog: number;
+  maxPriceOfCatalog: number;
+  minPriceSorted: number;
+  maxPriceSorted: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, maxPriceSorted, setCurrentPage }: CatalogFilterProps): JSX.Element {
+
+  const dispatch = useAppDispatch();
+
   let isDisabled = false;
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [priceStart, setPriceStart] = useState(minPriceSorted);
+  const [priceEnd, setPriceEnd] = useState(maxPriceSorted);
   const categoryParameter = searchParams.get(QueryString.Category);
   const typeParameter = searchParams.getAll(QueryString.TypeCamera);
 
@@ -16,10 +31,23 @@ function CatalogFilter(): JSX.Element {
     isDisabled = false;
   }
 
+  const resetPriceStart = () => {
+    searchParams.delete(QueryString.Start);
+    setPriceStart(minPriceOfCatalog);
+  };
+
+  const resetPriceEnd = () => {
+    searchParams.delete(QueryString.End);
+    setPriceEnd(maxPriceOfCatalog);
+  };
+
   const onResetClickHandler = () => {
     searchParams.delete(QueryString.Category);
     searchParams.delete(QueryString.TypeCamera);
     searchParams.delete(QueryString.Level);
+
+    resetPriceStart();
+    resetPriceEnd();
     setSearchParams(searchParams);
   };
 
@@ -28,10 +56,10 @@ function CatalogFilter(): JSX.Element {
       searchParams.delete(QueryString.TypeCamera, TypeCameraValue.Film);
       searchParams.delete(QueryString.TypeCamera, TypeCameraValue.Snapshot);
     }
-    // searchParams.set(QueryString.Sort, String(searchParams.get(QueryString.Sort)));
-    // searchParams.set(QueryString.Direction, String(searchParams.get(QueryString.Direction)));
-    // searchParams.set(QueryString.Page, String(searchParams.get(QueryString.Page))); //?
     searchParams.set(QueryString.Category, value);
+    searchParams.set(QueryString.Start, String(priceStart));
+    searchParams.set(QueryString.End, String(priceEnd));
+
     setSearchParams(searchParams);
   };
 
@@ -41,6 +69,8 @@ function CatalogFilter(): JSX.Element {
     } else {
       searchParams.append(QueryString.TypeCamera, value);
     }
+    // searchParams.set(QueryString.Start, String(priceStart));
+    // searchParams.set(QueryString.End, String(priceEnd));
     setSearchParams(searchParams);
   };
 
@@ -50,13 +80,90 @@ function CatalogFilter(): JSX.Element {
     } else {
       searchParams.append(QueryString.Level, value);
     }
+    // searchParams.set(QueryString.Start, String(priceStart));
+    // searchParams.set(QueryString.End, String(priceEnd));
     setSearchParams(searchParams);
   };
+
+  //PRICE///////////////////////////////////////////////
+
+  const inputStartChangeHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    if (searchParams.get(QueryString.Start) !== null) {
+      evt.target.placeholder = String(searchParams.get(QueryString.Start));
+    }
+    const valueInput = Number(evt.target.value);
+    if (valueInput < 0) {
+      evt.target.value = String(minPriceOfCatalog);
+    }
+
+    let valueStart = valueInput;
+    if (valueStart !== 0 && valueStart < minPriceOfCatalog) {
+      valueStart = minPriceOfCatalog;
+      evt.target.value = String(minPriceOfCatalog);
+    }
+
+    const startPrice = searchParams.get(QueryString.End) !== null ? Number(searchParams.get(QueryString.End)) : maxPriceSorted;
+    if (valueInput !== 0 && valueInput >= startPrice) {
+      valueStart = startPrice;
+      evt.target.value = String(startPrice);
+    }
+
+    setPriceStart(valueStart);
+    // setMinPrice(valueStart);
+    searchParams.set(QueryString.Start, String(valueStart));
+    searchParams.set(QueryString.Page, '1');
+    setCurrentPage(1);
+    setSearchParams(searchParams);
+    if (evt.target.value === '') {
+      resetPriceStart();
+    }
+  };
+
+  const inputEndChangeHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
+
+    const valueInput = Number(evt.target.value);
+    if (valueInput < 0) {
+      evt.target.value = String(maxPriceOfCatalog);
+    }
+
+    let valueEnd = valueInput;
+    if (valueEnd !== 0 && valueEnd > maxPriceOfCatalog) {
+      // valueEnd = maxPriceSorted;
+      // evt.target.value = String(maxPriceSorted);
+      valueEnd = maxPriceOfCatalog;
+      evt.target.value = String(maxPriceOfCatalog);
+    }
+    const endPrice = searchParams.get(QueryString.Start) !== null ? Number(searchParams.get(QueryString.Start)) : minPriceSorted;
+    if (valueInput !== 0 && valueInput <= endPrice) {
+      valueEnd = endPrice;
+      evt.target.value = String(endPrice);
+    }
+
+    setPriceEnd(valueEnd);
+    // setMaxPrice(valueEnd);
+    searchParams.set(QueryString.End, String(valueEnd));
+    searchParams.set(QueryString.Page, '1');
+    setCurrentPage(1);
+    setSearchParams(searchParams);
+
+    if (evt.target.value === '') {
+      resetPriceEnd();
+    }
+  };
+
+  // console.log('_start ' + priceStart);
+  // console.log('_end ' + priceEnd);
+
+  dispatch(fetchCamerasByPriceAction([Number(priceStart), Number(priceEnd)]));
+  const debouncedInputStartChangeHandler = debounce(inputStartChangeHandler, 1000);
+  const debouncedInputEndChangeHandler = debounce(inputEndChangeHandler, 1000);
+
 
   return (
     <div className="catalog-filter" data-testid="catalogFilter-test">
       <form action="#">
         <h2 className="visually-hidden">Фильтр</h2>
+
         <fieldset className="catalog-filter__block">
           <legend className="title title--h5">Цена, ₽</legend>
           <div className="catalog-filter__price-range">
@@ -65,7 +172,10 @@ function CatalogFilter(): JSX.Element {
                 <input
                   type="number"
                   name="price"
-                  placeholder="от"
+                  placeholder={`${priceStart}`}
+                  // placeholder={ searchParams.get(QueryString.Start) !== null ? String(searchParams.get(QueryString.Start)) : `${priceStart}`}
+                  onChange={debouncedInputStartChangeHandler}
+                  style={{ padding: '8px 10px' }}
                 />
               </label>
             </div>
@@ -74,7 +184,10 @@ function CatalogFilter(): JSX.Element {
                 <input
                   type="number"
                   name="priceUp"
-                  placeholder="до"
+                  placeholder={`${priceEnd}`}
+                  // placeholder={ searchParams.get(QueryString.End) !== null ? String(searchParams.get(QueryString.End)) : `${priceEnd}`}
+                  onInput={debouncedInputEndChangeHandler}
+                  style={{ padding: '8px 10px' }}
                 />
               </label>
             </div>
