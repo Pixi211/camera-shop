@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CamerasData, SortType, SortDirection } from '../../types/types';
 import { NameSpace } from '../../const';
-import { fetchCamerasAction, fetchCamerasByPriceAction } from './cameras-data.action';
+import { fetchCamerasAction } from './cameras-data.action';
 
 
 const initialState: CamerasData = {
@@ -44,13 +44,13 @@ export const camerasData = createSlice({
       .addCase(fetchCamerasAction.rejected, (state) => {
         state.isDataLoading = false;
         state.hasError = true;
-      })
-      .addCase(fetchCamerasByPriceAction.fulfilled, (state, action) => {
-        state.camerasByPrice = action.payload;
       });
+    // .addCase(fetchCamerasByPriceAction.fulfilled, (state, action) => {
+    //   state.camerasByPrice = action.payload;
+    // });
   }
 });
 
 export const { setSortType, setSortDirection,
-   setMinPrice, setMaxPrice
+  setMinPrice, setMaxPrice
 } = camerasData.actions;

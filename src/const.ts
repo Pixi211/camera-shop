@@ -29,6 +29,13 @@ enum RatingName {
   Perfect = 'Отлично',
 }
 
+export enum KeyCode {
+  ArrowUp = 'ArrowUp',
+  ArrowDown = 'ArrowDown',
+  Esc = 'Escape',
+  Enter = 'Enter',
+}
+
 enum QueryString {
   Page = 'page',
   Category = 'category',
@@ -77,10 +84,12 @@ const MAX_PRODUCTS_ON_PAGE = 9;
 const FOCUS_TIMEOUT = 500;
 const RESET_TIMEOUT = 300;
 const DEBOUNCED_VALUE = 1000;
+const SEARCH_SYMBOLS_MINIMUM = 3;
 const stars = [1, 2, 3, 4, 5];
 
 export {
   AppRoute, APIRoute, NameSpace, RatingName, QueryString, DirectionValue, SortValue,
   DirectionPagination, CategoryValue, TypeCameraValue, LevelValue,
-  BACKEND_URL, MAX_PRODUCTS_ON_PAGE, FOCUS_TIMEOUT, RESET_TIMEOUT, DEBOUNCED_VALUE, stars
+  BACKEND_URL, MAX_PRODUCTS_ON_PAGE, FOCUS_TIMEOUT, RESET_TIMEOUT, DEBOUNCED_VALUE,
+  SEARCH_SYMBOLS_MINIMUM, stars,
 };
