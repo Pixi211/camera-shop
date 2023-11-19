@@ -9,7 +9,12 @@ const mockCameraData = makeFakeCurrentCameraData();
 describe('Component: SearchItem', () => {
 
   it('should render component', () => {
-    const preparedComponent = withHistory(<MemoSearchItem camera={mockCameraData} isCurrent={false} onItemClick={() => void 0}/>);
+    const preparedComponent = withHistory(
+      <MemoSearchItem
+        camera={mockCameraData}
+        isCurrent={false}
+        onItemClick={() => void 0}
+      />);
 
     render(preparedComponent);
 

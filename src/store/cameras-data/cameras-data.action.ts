@@ -25,20 +25,3 @@ export const fetchCamerasAction = createAsyncThunk<CameraType[], undefined, {
 
 );
 
-// export const fetchCamerasByPriceAction = createAsyncThunk<CameraType[], [number, number], {
-//   dispatch: AppDispatch;
-//   state: State;
-//   extra: AxiosInstance;
-// }>(
-//   'data/fetchCamerasByPrice',
-//   async (_args, { extra: api }): Promise<CameraType[]> => {
-//     try {
-//       const { data } = await api.get<CameraType[]>(`${APIRoute.Camera}?price_gte=${_args[0]}&price_lte=${_args[1]}`);
-//       return data;
-//     } catch (error) {
-//       toast.error('Не удается загрузить каталог');
-//       throw error;
-//     }
-//   }
-
-// );

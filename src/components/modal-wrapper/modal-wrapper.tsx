@@ -7,6 +7,7 @@ import { getCurrentItemData } from '../../store/current-item-data/current-item-d
 import { setActiveStatus, setAddItemToBasketStatus, setAddReviewStatus, setSuccessStatus, setSuccessType } from '../../store/modal-data/modal-data.slice';
 import ModalAddReviewForm from '../modal-review-form/modal-review-form';
 import { fetchReviewsAction } from '../../store/current-item-data/current-item-data.action';
+import { KeyCode } from '../../const';
 
 
 function ModalWrapper(): JSX.Element {
@@ -72,7 +73,7 @@ function ModalWrapper(): JSX.Element {
     }
 
     const onEscClick = (evt: KeyboardEvent) => {
-      if (evt.code === 'Escape') {
+      if (evt.code === KeyCode.Esc) {
         closeModalForm();
         if (currentItemData) {
           dispatch(fetchReviewsAction(currentItemData.id));

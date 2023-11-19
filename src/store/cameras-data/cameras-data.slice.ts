@@ -6,7 +6,6 @@ import { fetchCamerasAction } from './cameras-data.action';
 
 const initialState: CamerasData = {
   cameras: [],
-  // camerasByPrice: [],
   minPrice: null,
   maxPrice: null,
   hasError: false,
@@ -45,12 +44,7 @@ export const camerasData = createSlice({
         state.isDataLoading = false;
         state.hasError = true;
       });
-    // .addCase(fetchCamerasByPriceAction.fulfilled, (state, action) => {
-    //   state.camerasByPrice = action.payload;
-    // });
   }
 });
 
-export const { setSortType, setSortDirection,
-  setMinPrice, setMaxPrice
-} = camerasData.actions;
+export const { setSortType, setSortDirection, setMinPrice, setMaxPrice } = camerasData.actions;

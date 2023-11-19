@@ -22,9 +22,15 @@
     background-color: #a2a2ff;
   }
 
+  &:default {
+    color: #7575e2;
+    background-color: #f4f4fc;
+  }
+
   &:disabled {
     opacity: 0.6;
     cursor: unset;
+    color: #ddd;
     background-color: #f8f8f8;
   }
 }

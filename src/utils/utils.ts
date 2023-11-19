@@ -1,4 +1,4 @@
-import { CategoryValue, LevelValue, TypeCameraValue } from '../const';
+import { CameraCharacteristic, CategoryValue, LevelValue, TypeCameraValue } from '../const';
 import { CameraType, SortType, SortDirection } from '../types/types';
 import { ChangeEvent } from 'react';
 
@@ -31,29 +31,28 @@ export const sortCameras = (cameras: CameraType[], sortType: SortType, sortDirec
     return cameras.sort((firstCamera, secondCamera) => firstCamera.rating - secondCamera.rating);
   }
 };
-//все строки забить в enum
+
 export const filterCameras = (cameras: CameraType[], type: string[], level: string[], category: string | null) => {
-  // const cameras = cameras.slice(); //нужно для filter копировать?
   let filteredCameras = cameras.slice();
   if (category) {
     filteredCameras = cameras.filter((camera) =>
-      (category === CategoryValue.Photocamera && camera.category === 'Фотоаппарат') ||
-      (category === CategoryValue.Videocamera && camera.category === 'Видеокамера'));
+      (category === CategoryValue.Photocamera && camera.category === CameraCharacteristic.Photocamera) ||
+      (category === CategoryValue.Videocamera && camera.category === CameraCharacteristic.Videocamera));
   }
 
   if (type.length) {
     filteredCameras = filteredCameras.filter((camera) =>
-      (type.includes(TypeCameraValue.Collection) && camera.type === 'Коллекционная') ||
-      (type.includes(TypeCameraValue.Digital) && camera.type === 'Цифровая') ||
-      (type.includes(TypeCameraValue.Film) && camera.type === 'Плёночная') ||
-      (type.includes(TypeCameraValue.Snapshot) && camera.type === 'Моментальная'));
+      (type.includes(TypeCameraValue.Collection) && camera.type === CameraCharacteristic.Collection) ||
+      (type.includes(TypeCameraValue.Digital) && camera.type === CameraCharacteristic.Digital) ||
+      (type.includes(TypeCameraValue.Film) && camera.type === CameraCharacteristic.Film) ||
+      (type.includes(TypeCameraValue.Snapshot) && camera.type === CameraCharacteristic.Snapshot));
   }
 
   if (level.length) {
     filteredCameras = filteredCameras.filter((camera) =>
-      (level.includes(LevelValue.Zero) && camera.level === 'Нулевой') ||
-      (level.includes(LevelValue.NonProfessional) && camera.level === 'Любительский') ||
-      (level.includes(LevelValue.Professional) && camera.level === 'Профессиональный'));
+      (level.includes(LevelValue.Zero) && camera.level === CameraCharacteristic.Zero) ||
+      (level.includes(LevelValue.NonProfessional) && camera.level === CameraCharacteristic.NonProfessional) ||
+      (level.includes(LevelValue.Professional) && camera.level === CameraCharacteristic.Professional));
   }
 
   return filteredCameras;
@@ -70,8 +69,7 @@ export const getMinMaxPrices = (cameras: CameraType[]): number[] => {
 export const getCamerasByPrice = (cameras: CameraType[], minPrice: number | null, maxPrice: number | null): CameraType[] => {
   if (minPrice === null || maxPrice === null) {
     return [];
-  } else {
-    const camerasByPrice = cameras.filter((camera) => camera.price >= minPrice && camera.price <= maxPrice);
-    return camerasByPrice;
   }
+  const camerasByPrice = cameras.filter((camera) => camera.price >= minPrice && camera.price <= maxPrice);
+  return camerasByPrice;
 };

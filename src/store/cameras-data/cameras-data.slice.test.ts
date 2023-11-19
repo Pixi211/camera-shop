@@ -8,7 +8,6 @@ describe('CamerasData Slice', () => {
 
   const initialState: CamerasData = {
     cameras: [],
-    // camerasByPrice: [],
     minPrice: null,
     maxPrice: null,
     hasError: false,

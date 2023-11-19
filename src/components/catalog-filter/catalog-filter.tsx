@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CategoryValue, DEBOUNCED_VALUE, LevelValue, QueryString, TypeCameraValue } from '../../const';
 import { useAppDispatch } from '../../store';
-// import { fetchCamerasByPriceAction } from '../../store/cameras-data/cameras-data.action';
 import { debounce } from '../../utils/utils';
 import { setMaxPrice, setMinPrice, setSortDirection, setSortType } from '../../store/cameras-data/cameras-data.slice';
 
@@ -15,7 +14,12 @@ type CatalogFilterProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, maxPriceSorted, setCurrentPage }: CatalogFilterProps): JSX.Element {
+function CatalogFilter(
+  { minPriceOfCatalog,
+    maxPriceOfCatalog,
+    minPriceSorted,
+    maxPriceSorted,
+    setCurrentPage }: CatalogFilterProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
@@ -56,7 +60,6 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
     searchParams.delete(QueryString.Direction);
     searchParams.set(QueryString.Page, '1');
     setCurrentPage(1);
-    // dispatch(fetchCamerasByPriceAction([minPriceOfCatalog, maxPriceOfCatalog]));
 
     resetPriceStart();
     resetPriceEnd();
@@ -81,8 +84,6 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
     } else {
       searchParams.append(QueryString.TypeCamera, value);
     }
-    // searchParams.set(QueryString.Start, String(priceStart));
-    // searchParams.set(QueryString.End, String(priceEnd));
     setSearchParams(searchParams);
   };
 
@@ -92,8 +93,6 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
     } else {
       searchParams.append(QueryString.Level, value);
     }
-    // searchParams.set(QueryString.Start, String(priceStart));
-    // searchParams.set(QueryString.End, String(priceEnd));
     setSearchParams(searchParams);
   };
 
@@ -113,7 +112,10 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
       evt.target.value = String(minPriceOfCatalog);
     }
 
-    const startPrice = searchParams.get(QueryString.End) !== null ? Number(searchParams.get(QueryString.End)) : maxPriceSorted;
+    const startPrice = searchParams.get(QueryString.End) !== null
+      ? Number(searchParams.get(QueryString.End))
+      : maxPriceSorted;
+
     if (valueInput !== 0 && valueInput >= startPrice) {
       valueStart = startPrice;
       evt.target.value = String(startPrice);
@@ -143,7 +145,10 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
       valueEnd = maxPriceOfCatalog;
       evt.target.value = String(maxPriceOfCatalog);
     }
-    const endPrice = searchParams.get(QueryString.Start) !== null ? Number(searchParams.get(QueryString.Start)) : minPriceSorted;
+    const endPrice = searchParams.get(QueryString.Start) !== null
+      ? Number(searchParams.get(QueryString.Start))
+      : minPriceSorted;
+
     if (valueInput !== 0 && valueInput <= endPrice) {
       valueEnd = endPrice;
       evt.target.value = String(endPrice);
@@ -166,10 +171,6 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
   const debouncedInputStartChangeHandler = debounce(inputStartChangeHandler, DEBOUNCED_VALUE);
   const debouncedInputEndChangeHandler = debounce(inputEndChangeHandler, DEBOUNCED_VALUE);
 
-  // if (searchParams.has(QueryString.Start) || searchParams.has(QueryString.End)) {
-  //   dispatch(fetchCamerasByPriceAction([Number(priceStart), Number(priceEnd)]));
-  // }
-
   return (
     <div className="catalog-filter" data-testid="catalogFilter-test">
       <form action="#">
@@ -183,8 +184,11 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
                 <input
                   type="number"
                   name="price"
-                  // placeholder={`${minPriceSorted}`}
-                  placeholder={ searchParams.get(QueryString.Start) !== null ? String(searchParams.get(QueryString.Start)) : `${minPriceSorted}`}
+                  placeholder={
+                    searchParams.get(QueryString.Start) !== null
+                      ? String(searchParams.get(QueryString.Start))
+                      : `${minPriceSorted}`
+                  }
                   onChange={debouncedInputStartChangeHandler}
                   style={{ padding: '8px 10px' }}
                 />
@@ -195,8 +199,11 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
                 <input
                   type="number"
                   name="priceUp"
-                  // placeholder={`${maxPriceSorted}`}
-                  placeholder={ searchParams.get(QueryString.End) !== null ? String(searchParams.get(QueryString.End)) : `${maxPriceSorted}`}
+                  placeholder={
+                    searchParams.get(QueryString.End) !== null
+                      ? String(searchParams.get(QueryString.End))
+                      : `${maxPriceSorted}`
+                  }
                   onInput={debouncedInputEndChangeHandler}
                   style={{ padding: '8px 10px' }}
                 />

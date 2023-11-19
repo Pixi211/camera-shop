@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { useAppDispatch } from '../../store';
 import './catalog-sort.css';
 import { useSearchParams } from 'react-router-dom';
-import { DirectionValue, QueryString, SortValue } from '../../const';
+import { DirectionValue, KeyCode, QueryString, SortValue } from '../../const';
 import { setSortDirection, setSortType } from '../../store/cameras-data/cameras-data.slice';
 
 function CatalogSort(): JSX.Element {
@@ -34,10 +34,10 @@ function CatalogSort(): JSX.Element {
 
   useEffect(() => {
     const onArrowClick = (evt: KeyboardEvent) => {
-      if (evt.code === 'ArrowUp') {
+      if (evt.code === KeyCode.ArrowUp) {
         evt.preventDefault();
         directionClickHandler(DirectionValue.Up);
-      } else if (evt.code === 'ArrowDown') {
+      } else if (evt.code === KeyCode.ArrowDown) {
         evt.preventDefault();
         directionClickHandler(DirectionValue.Down);
       }

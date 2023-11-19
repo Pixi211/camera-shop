@@ -9,7 +9,6 @@ export const getCamerasDataLoading = (state: State): boolean => state[NameSpace.
 export const getDataLoadingErrorStatus = (state: State): boolean => state[NameSpace.Cameras].hasError;
 export const getSortType = (state: State): SortType => state[NameSpace.Cameras].sortType;
 export const getSortDirection = (state: State): SortDirection => state[NameSpace.Cameras].sortDirection;
-// export const getCamerasByPrice = (state: State): CameraType[] => state[NameSpace.Cameras].camerasByPrice;
 export const getMinPrice = (state: State): number | null => state[NameSpace.Cameras].minPrice;
 export const getMaxPrice = (state: State): number | null => state[NameSpace.Cameras].maxPrice;
 

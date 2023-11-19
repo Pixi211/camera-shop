@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Banner from '../../components/banner/banner';
 import { useAppSelector } from '../../store';
-// import { getCamerasByPrice } from '../../store/cameras-data/cameras-data.selectors';
 import { getPromos } from '../../store/promo-data/promo-data.selectors';
 import { AppRoute, MAX_PRODUCTS_ON_PAGE, QueryString } from '../../const';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -40,11 +39,12 @@ function CatalogPage({ allCameras }: CatalogPageProps): JSX.Element {
 
   const [minPrice, maxPrice] = getMinMaxPrices(allCameras);
 
-  /////////////////////////
+
   let currentMinPrice = useAppSelector(getMinPrice);
   let currentMaxPrice = useAppSelector(getMaxPrice);
 
-  if (searchParams.get(QueryString.End) !== null && !searchParams.get(QueryString.Start) !== null) {
+  if (searchParams.get(QueryString.End) !== null
+    && !searchParams.get(QueryString.Start) !== null) {
     currentMinPrice = Number(searchParams.get(QueryString.Start));
     currentMaxPrice = Number(searchParams.get(QueryString.End));
   } else if (!searchParams.has(QueryString.End)) {
@@ -64,15 +64,11 @@ function CatalogPage({ allCameras }: CatalogPageProps): JSX.Element {
 
   const camerasByPrice = getCamerasByPrice(allCameras, currentMinPrice, currentMaxPrice);
 
-  // // console.log(allCameras);
-  // console.log(sortType);
-  // console.log(sortDirection);
-  // //////////////////
-
 
   let filteredCameras = [];
 
-  if (camerasByPrice.length === 0 && !searchParams.has(QueryString.Start) && !searchParams.has(QueryString.End)) {
+  if (camerasByPrice.length === 0 && !searchParams.has(QueryString.Start)
+    && !searchParams.has(QueryString.End)) {
     filteredCameras = filterCameras(allCameras, type, level, category);
   } else {
     filteredCameras = filterCameras(camerasByPrice, type, level, category);
@@ -114,14 +110,25 @@ function CatalogPage({ allCameras }: CatalogPageProps): JSX.Element {
             <div className="container">
               <ul className="breadcrumbs__list">
                 <li className="breadcrumbs__item">
-                  <Link className="breadcrumbs__link" onClick={resetPage} to={AppRoute.CatalogPage}>Главная
+                  <Link
+                    className="breadcrumbs__link"
+                    onClick={resetPage}
+                    to={AppRoute.CatalogPage}
+                  >
+                    Главная
                     <svg width="5" height="8" aria-hidden="true">
                       <use xlinkHref="#icon-arrow-mini"></use>
                     </svg>
                   </Link>
                 </li>
                 <li className="breadcrumbs__item">
-                  <Link className="breadcrumbs__link breadcrumbs__link--active" onClick={resetPage} to={AppRoute.CatalogPage}>Каталог</Link>
+                  <Link
+                    className="breadcrumbs__link breadcrumbs__link--active"
+                    onClick={resetPage}
+                    to={AppRoute.CatalogPage}
+                  >
+                    Каталог
+                  </Link>
                 </li>
               </ul>
             </div>
