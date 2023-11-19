@@ -63,8 +63,15 @@ export const getMinMaxPrices = (cameras: CameraType[]): number[] => {
   const prices: number[] = [];
   cameras.forEach((camera) => prices.push(camera.price));
   const minPrice = Math.min.apply(null, prices);
-  const maxPrice = Math.max.apply(null,prices);
+  const maxPrice = Math.max.apply(null, prices);
   return [minPrice, maxPrice];
 };
 
-
+export const getCamerasByPrice = (cameras: CameraType[], minPrice: number | null, maxPrice: number | null): CameraType[] => {
+  if (minPrice === null || maxPrice === null) {
+    return [];
+  } else {
+    const camerasByPrice = cameras.filter((camera) => camera.price >= minPrice && camera.price <= maxPrice);
+    return camerasByPrice;
+  }
+};

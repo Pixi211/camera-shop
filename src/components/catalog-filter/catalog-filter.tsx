@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CategoryValue, DEBOUNCED_VALUE, LevelValue, QueryString, TypeCameraValue } from '../../const';
 import { useAppDispatch } from '../../store';
-import { fetchCamerasByPriceAction } from '../../store/cameras-data/cameras-data.action';
+// import { fetchCamerasByPriceAction } from '../../store/cameras-data/cameras-data.action';
 import { debounce } from '../../utils/utils';
-import { setSortDirection, setSortType } from '../../store/cameras-data/cameras-data.slice';
+import { setMaxPrice, setMinPrice, setSortDirection, setSortType } from '../../store/cameras-data/cameras-data.slice';
 
 
 type CatalogFilterProps = {
@@ -36,11 +36,13 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
   const resetPriceStart = () => {
     searchParams.delete(QueryString.Start);
     setPriceStart(minPriceOfCatalog);
+    dispatch(setMinPrice(minPriceOfCatalog));
   };
 
   const resetPriceEnd = () => {
     searchParams.delete(QueryString.End);
     setPriceEnd(maxPriceOfCatalog);
+    dispatch(setMaxPrice(maxPriceOfCatalog));
   };
 
   const onResetClickHandler = () => {
@@ -54,7 +56,7 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
     searchParams.delete(QueryString.Direction);
     searchParams.set(QueryString.Page, '1');
     setCurrentPage(1);
-    dispatch(fetchCamerasByPriceAction([minPriceOfCatalog, maxPriceOfCatalog]));
+    // dispatch(fetchCamerasByPriceAction([minPriceOfCatalog, maxPriceOfCatalog]));
 
     resetPriceStart();
     resetPriceEnd();
@@ -118,6 +120,8 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
     }
 
     setPriceStart(valueStart);
+    dispatch(setMinPrice(valueStart));
+    dispatch(setMaxPrice(priceEnd));
     searchParams.set(QueryString.Start, String(valueStart));
     searchParams.set(QueryString.Page, '1');
     setCurrentPage(1);
@@ -146,7 +150,8 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
     }
 
     setPriceEnd(valueEnd);
-
+    dispatch(setMinPrice(priceStart));
+    dispatch(setMaxPrice(valueEnd));
     searchParams.set(QueryString.End, String(valueEnd));
     searchParams.set(QueryString.Page, '1');
     setCurrentPage(1);
@@ -161,9 +166,9 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
   const debouncedInputStartChangeHandler = debounce(inputStartChangeHandler, DEBOUNCED_VALUE);
   const debouncedInputEndChangeHandler = debounce(inputEndChangeHandler, DEBOUNCED_VALUE);
 
-  if (searchParams.has(QueryString.Start) || searchParams.has(QueryString.End)) {
-    dispatch(fetchCamerasByPriceAction([Number(priceStart), Number(priceEnd)]));
-  }
+  // if (searchParams.has(QueryString.Start) || searchParams.has(QueryString.End)) {
+  //   dispatch(fetchCamerasByPriceAction([Number(priceStart), Number(priceEnd)]));
+  // }
 
   return (
     <div className="catalog-filter" data-testid="catalogFilter-test">
@@ -178,8 +183,8 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
                 <input
                   type="number"
                   name="price"
-                  placeholder={`${priceStart}`}
-                  // placeholder={ searchParams.get(QueryString.Start) !== null ? String(searchParams.get(QueryString.Start)) : `${priceStart}`}
+                  // placeholder={`${minPriceSorted}`}
+                  placeholder={ searchParams.get(QueryString.Start) !== null ? String(searchParams.get(QueryString.Start)) : `${minPriceSorted}`}
                   onChange={debouncedInputStartChangeHandler}
                   style={{ padding: '8px 10px' }}
                 />
@@ -190,8 +195,8 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
                 <input
                   type="number"
                   name="priceUp"
-                  placeholder={`${priceEnd}`}
-                  // placeholder={ searchParams.get(QueryString.End) !== null ? String(searchParams.get(QueryString.End)) : `${priceEnd}`}
+                  // placeholder={`${maxPriceSorted}`}
+                  placeholder={ searchParams.get(QueryString.End) !== null ? String(searchParams.get(QueryString.End)) : `${maxPriceSorted}`}
                   onInput={debouncedInputEndChangeHandler}
                   style={{ padding: '8px 10px' }}
                 />

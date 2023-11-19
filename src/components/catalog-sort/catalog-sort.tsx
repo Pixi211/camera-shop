@@ -35,8 +35,10 @@ function CatalogSort(): JSX.Element {
   useEffect(() => {
     const onArrowClick = (evt: KeyboardEvent) => {
       if (evt.code === 'ArrowUp') {
+        evt.preventDefault();
         directionClickHandler(DirectionValue.Up);
       } else if (evt.code === 'ArrowDown') {
+        evt.preventDefault();
         directionClickHandler(DirectionValue.Down);
       }
     };
@@ -47,6 +49,7 @@ function CatalogSort(): JSX.Element {
       document.removeEventListener('keydown', onArrowClick);
     };
   }, [directionClickHandler]);
+
 
   return (
     <div className="catalog-sort" data-testid="catalogSort-test">

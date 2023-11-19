@@ -7,8 +7,8 @@ import { fetchCamerasAction, fetchCamerasByPriceAction } from './cameras-data.ac
 const initialState: CamerasData = {
   cameras: [],
   camerasByPrice: [],
-  // minPrice: null,
-  // maxPrice: null,
+  minPrice: null,
+  maxPrice: null,
   hasError: false,
   isDataLoading: false,
   sortType: null,
@@ -25,12 +25,12 @@ export const camerasData = createSlice({
     setSortDirection: (state, action: PayloadAction<SortDirection>) => {
       state.sortDirection = action.payload;
     },
-    // setMinPrice: (state, action: PayloadAction<number | null>) => {
-    //   state.minPrice = action.payload;
-    // },
-    // setMaxPrice: (state, action: PayloadAction<number | null>) => {
-    //   state.maxPrice = action.payload;
-    // },
+    setMinPrice: (state, action: PayloadAction<number | null>) => {
+      state.minPrice = action.payload;
+    },
+    setMaxPrice: (state, action: PayloadAction<number | null>) => {
+      state.maxPrice = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -52,5 +52,5 @@ export const camerasData = createSlice({
 });
 
 export const { setSortType, setSortDirection,
-  //  setMinPrice, setMaxPrice
+   setMinPrice, setMaxPrice
 } = camerasData.actions;

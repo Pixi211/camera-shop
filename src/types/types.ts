@@ -61,8 +61,8 @@ export type PromoData = {
 export type CamerasData = {
   cameras: CameraType[];
   camerasByPrice: CameraType[];
-  // minPrice: number | null;
-  // maxPrice: number | null;
+  minPrice: number | null;
+  maxPrice: number | null;
   hasError: boolean;
   isDataLoading: boolean;
   sortType: SortType;

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Banner from '../../components/banner/banner';
 import { useAppSelector } from '../../store';
-import { getCamerasByPrice } from '../../store/cameras-data/cameras-data.selectors';
+// import { getCamerasByPrice } from '../../store/cameras-data/cameras-data.selectors';
 import { getPromos } from '../../store/promo-data/promo-data.selectors';
 import { AppRoute, MAX_PRODUCTS_ON_PAGE, QueryString } from '../../const';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -12,8 +12,8 @@ import MemoizedPagination from '../../components/pagination/pagination';
 import MemoizedCatalogCards from '../../components/catalog-cards/catalog-cards';
 import MemoizedCatalogFilter from '../../components/catalog-filter/catalog-filter';
 import MemoizedCatalogSort from '../../components/catalog-sort/catalog-sort';
-import { getSortDirection, getSortType } from '../../store/cameras-data/cameras-data.selectors';
-import { filterCameras, getMinMaxPrices, sortCameras } from '../../utils/utils';
+import { getMaxPrice, getMinPrice, getSortDirection, getSortType } from '../../store/cameras-data/cameras-data.selectors';
+import { filterCameras, getMinMaxPrices, sortCameras, getCamerasByPrice } from '../../utils/utils';
 import { CameraType } from '../../types/types';
 
 type CatalogPageProps = {
@@ -22,16 +22,12 @@ type CatalogPageProps = {
 
 function CatalogPage({ allCameras }: CatalogPageProps): JSX.Element {
 
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const allPromos = useAppSelector(getPromos);
 
-  const sortType = useAppSelector(getSortType);
-  const sortDirection = useAppSelector(getSortDirection);
-
-
-  const camerasByPrice = useAppSelector(getCamerasByPrice);
+  let sortType = useAppSelector(getSortType);
+  let sortDirection = useAppSelector(getSortDirection);
 
   const [currentPage, setCurrentPage] = useState(Number(searchParams.get(QueryString.Page)) || 1);
 
@@ -44,6 +40,35 @@ function CatalogPage({ allCameras }: CatalogPageProps): JSX.Element {
 
   const [minPrice, maxPrice] = getMinMaxPrices(allCameras);
 
+  /////////////////////////
+  let currentMinPrice = useAppSelector(getMinPrice);
+  let currentMaxPrice = useAppSelector(getMaxPrice);
+
+  if (searchParams.get(QueryString.End) !== null && !searchParams.get(QueryString.Start) !== null) {
+    currentMinPrice = Number(searchParams.get(QueryString.Start));
+    currentMaxPrice = Number(searchParams.get(QueryString.End));
+  } else if (!searchParams.has(QueryString.End)) {
+    currentMinPrice = Number(searchParams.get(QueryString.Start));
+    currentMaxPrice = maxPrice;
+  } else if (!searchParams.has(QueryString.Start)) {
+    currentMaxPrice = Number(searchParams.get(QueryString.End));
+    currentMinPrice = minPrice;
+  }
+
+  if (searchParams.has(QueryString.Sort)) {
+    sortType = searchParams.get(QueryString.Sort);
+  }
+  if (searchParams.has(QueryString.Direction)) {
+    sortDirection = searchParams.get(QueryString.Direction);
+  }
+
+  const camerasByPrice = getCamerasByPrice(allCameras, currentMinPrice, currentMaxPrice);
+
+  // // console.log(allCameras);
+  // console.log(sortType);
+  // console.log(sortDirection);
+  // //////////////////
+
 
   let filteredCameras = [];
 
@@ -54,9 +79,6 @@ function CatalogPage({ allCameras }: CatalogPageProps): JSX.Element {
   }
 
   const sortedCameras = sortCameras(filteredCameras.slice(), sortType, sortDirection);
-  console.log(sortedCameras);
-  console.log(sortType);
-  console.log(sortDirection);
   const camerasOnPage = sortedCameras.slice(firstCameraIndex, lastCameraIndex);
 
 
