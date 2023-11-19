@@ -6,7 +6,7 @@ import { fetchCamerasAction, fetchCamerasByPriceAction } from './cameras-data.ac
 
 const initialState: CamerasData = {
   cameras: [],
-  camerasByPrice: [],
+  // camerasByPrice: [],
   minPrice: null,
   maxPrice: null,
   hasError: false,

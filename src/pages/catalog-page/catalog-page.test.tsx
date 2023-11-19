@@ -10,9 +10,11 @@ const mockReviews = makeFakeReviews();
 
 describe('Page: CatalogPage', () => {
   it('should render page', () => {
-    const { withStoreComponent } = withStore(<CatalogPage />, {
+    const { withStoreComponent } = withStore(<CatalogPage allCameras={mockCameraData}/>, {
       CAMERAS: {
         cameras: mockCameraData,
+        minPrice: null,
+        maxPrice: null,
         hasError: false,
         isDataLoading: false,
         sortType: null,

@@ -8,11 +8,13 @@ describe('CamerasData Slice', () => {
 
   const initialState: CamerasData = {
     cameras: [],
-    camerasByPrice: [],
+    // camerasByPrice: [],
+    minPrice: null,
+    maxPrice: null,
     hasError: false,
     isDataLoading: false,
-    sortDirection: 'noSorting',
-    sortType: 'noSorting',
+    sortDirection: null,
+    sortType: null,
   };
 
   it('should return initial state with empty action', () => {

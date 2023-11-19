@@ -14,8 +14,9 @@ describe('Component: App', () => {
   it('should navigate to ItemPage when click on button "More"', async () => {
     const { withStoreComponent } = withStore(<App />, {
       CAMERAS: {
+        minPrice: null,
+        maxPrice: null,
         cameras: mockCameraData,
-        camerasByPrice: [],
         hasError: false,
         isDataLoading: false,
         sortType: null,
