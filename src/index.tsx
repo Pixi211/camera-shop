@@ -6,6 +6,8 @@ import { fetchPromosAction } from './store/promo-data/promo-data.action';
 import { fetchCamerasAction } from './store/cameras-data/cameras-data.action';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 store.dispatch(fetchPromosAction());
 store.dispatch(fetchCamerasAction());

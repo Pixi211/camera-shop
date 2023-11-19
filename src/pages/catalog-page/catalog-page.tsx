@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Banner from '../../components/banner/banner';
 import { useAppSelector } from '../../store';
 import { getCamerasByPrice } from '../../store/cameras-data/cameras-data.selectors';
@@ -21,20 +21,19 @@ type CatalogPageProps = {
 };
 
 function CatalogPage({ allCameras }: CatalogPageProps): JSX.Element {
+
+
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // const allCameras = useAppSelector(getCameras);
   const allPromos = useAppSelector(getPromos);
+
   const sortType = useAppSelector(getSortType);
   const sortDirection = useAppSelector(getSortDirection);
 
 
   const camerasByPrice = useAppSelector(getCamerasByPrice);
-  // const startPrice = searchParams.get(QueryString.Start);
-  // const endPrice = useAppSelector(getMaxPrice);
 
   const [currentPage, setCurrentPage] = useState(Number(searchParams.get(QueryString.Page)) || 1);
-
 
   const lastCameraIndex = currentPage * MAX_PRODUCTS_ON_PAGE;
   const firstCameraIndex = lastCameraIndex - MAX_PRODUCTS_ON_PAGE;
@@ -45,17 +44,19 @@ function CatalogPage({ allCameras }: CatalogPageProps): JSX.Element {
 
   const [minPrice, maxPrice] = getMinMaxPrices(allCameras);
 
+
   let filteredCameras = [];
-  // console.log(camerasByPrice);
-  // console.log( useAppSelector(getMinPrice));
-  // console.log(endPrice);
+
   if (camerasByPrice.length === 0 && !searchParams.has(QueryString.Start) && !searchParams.has(QueryString.End)) {
     filteredCameras = filterCameras(allCameras, type, level, category);
   } else {
     filteredCameras = filterCameras(camerasByPrice, type, level, category);
   }
 
-  const sortedCameras = sortCameras(filteredCameras.slice(), sortType, sortDirection); //для sort нужен slice?
+  const sortedCameras = sortCameras(filteredCameras.slice(), sortType, sortDirection);
+  console.log(sortedCameras);
+  console.log(sortType);
+  console.log(sortDirection);
   const camerasOnPage = sortedCameras.slice(firstCameraIndex, lastCameraIndex);
 
 

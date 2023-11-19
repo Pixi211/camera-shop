@@ -22,7 +22,7 @@ function CatalogCards({ cameras }: CatalogCardsProps): JSX.Element {
       :
       <div className="cards catalog__cards" data-testid="catalogCards-test">
 
-        <p>По вашему запросу ничего не найдено</p>
+        <p>По вашему запросу ничего не найдено. Сбросьте фильтры</p>
       </div>
 
   );

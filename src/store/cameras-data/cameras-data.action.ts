@@ -4,6 +4,7 @@ import { CameraType } from '../../types/types';
 import { AppDispatch, State } from '../../types/types';
 import { AxiosInstance } from 'axios';
 import { APIRoute } from '../../const';
+import { toast } from 'react-toastify';
 
 
 export const fetchCamerasAction = createAsyncThunk<CameraType[], undefined, {
@@ -13,8 +14,13 @@ export const fetchCamerasAction = createAsyncThunk<CameraType[], undefined, {
 }>(
   'data/fetchCameras',
   async (_arg, { extra: api }): Promise<CameraType[]> => {
-    const { data } = await api.get<CameraType[]>(APIRoute.Camera);
-    return data;
+    try {
+      const { data } = await api.get<CameraType[]>(APIRoute.Camera);
+      return data;
+    } catch (error) {
+      toast.error('Не удается загрузить каталог');
+      throw error;
+    }
   }
 
 );
@@ -26,8 +32,13 @@ export const fetchCamerasByPriceAction = createAsyncThunk<CameraType[], [number,
 }>(
   'data/fetchCamerasByPrice',
   async (_args, { extra: api }): Promise<CameraType[]> => {
-    const { data } = await api.get<CameraType[]>(`${APIRoute.Camera}?price_gte=${_args[0]}&price_lte=${_args[1]}`);
-    return data;
+    try {
+      const { data } = await api.get<CameraType[]>(`${APIRoute.Camera}?price_gte=${_args[0]}&price_lte=${_args[1]}`);
+      return data;
+    } catch (error) {
+      toast.error('Не удается загрузить каталог');
+      throw error;
+    }
   }
 
 );

@@ -34,7 +34,6 @@ function CatalogSort(): JSX.Element {
 
   useEffect(() => {
     const onArrowClick = (evt: KeyboardEvent) => {
-      // evt.preventDefault();
       if (evt.code === 'ArrowUp') {
         directionClickHandler(DirectionValue.Up);
       } else if (evt.code === 'ArrowDown') {

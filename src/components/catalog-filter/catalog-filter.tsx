@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { CategoryValue, LevelValue, QueryString, TypeCameraValue } from '../../const';
+import { CategoryValue, DEBOUNCED_VALUE, LevelValue, QueryString, TypeCameraValue } from '../../const';
 import { useAppDispatch } from '../../store';
 import { fetchCamerasByPriceAction } from '../../store/cameras-data/cameras-data.action';
 import { debounce } from '../../utils/utils';
+import { setSortDirection, setSortType } from '../../store/cameras-data/cameras-data.slice';
+
 
 type CatalogFilterProps = {
   minPriceOfCatalog: number;
@@ -46,6 +48,14 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
     searchParams.delete(QueryString.TypeCamera);
     searchParams.delete(QueryString.Level);
 
+    dispatch(setSortType(null));
+    dispatch(setSortDirection(null));
+    searchParams.delete(QueryString.Sort);
+    searchParams.delete(QueryString.Direction);
+    searchParams.set(QueryString.Page, '1');
+    setCurrentPage(1);
+    dispatch(fetchCamerasByPriceAction([minPriceOfCatalog, maxPriceOfCatalog]));
+
     resetPriceStart();
     resetPriceEnd();
     setSearchParams(searchParams);
@@ -85,7 +95,6 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
     setSearchParams(searchParams);
   };
 
-  //PRICE///////////////////////////////////////////////
 
   const inputStartChangeHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     if (searchParams.get(QueryString.Start) !== null) {
@@ -109,7 +118,6 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
     }
 
     setPriceStart(valueStart);
-    // setMinPrice(valueStart);
     searchParams.set(QueryString.Start, String(valueStart));
     searchParams.set(QueryString.Page, '1');
     setCurrentPage(1);
@@ -128,8 +136,6 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
 
     let valueEnd = valueInput;
     if (valueEnd !== 0 && valueEnd > maxPriceOfCatalog) {
-      // valueEnd = maxPriceSorted;
-      // evt.target.value = String(maxPriceSorted);
       valueEnd = maxPriceOfCatalog;
       evt.target.value = String(maxPriceOfCatalog);
     }
@@ -140,7 +146,7 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
     }
 
     setPriceEnd(valueEnd);
-    // setMaxPrice(valueEnd);
+
     searchParams.set(QueryString.End, String(valueEnd));
     searchParams.set(QueryString.Page, '1');
     setCurrentPage(1);
@@ -151,13 +157,13 @@ function CatalogFilter({ minPriceOfCatalog, maxPriceOfCatalog, minPriceSorted, m
     }
   };
 
-  // console.log('_start ' + priceStart);
-  // console.log('_end ' + priceEnd);
 
-  dispatch(fetchCamerasByPriceAction([Number(priceStart), Number(priceEnd)]));
-  const debouncedInputStartChangeHandler = debounce(inputStartChangeHandler, 1000);
-  const debouncedInputEndChangeHandler = debounce(inputEndChangeHandler, 1000);
+  const debouncedInputStartChangeHandler = debounce(inputStartChangeHandler, DEBOUNCED_VALUE);
+  const debouncedInputEndChangeHandler = debounce(inputEndChangeHandler, DEBOUNCED_VALUE);
 
+  if (searchParams.has(QueryString.Start) || searchParams.has(QueryString.End)) {
+    dispatch(fetchCamerasByPriceAction([Number(priceStart), Number(priceEnd)]));
+  }
 
   return (
     <div className="catalog-filter" data-testid="catalogFilter-test">

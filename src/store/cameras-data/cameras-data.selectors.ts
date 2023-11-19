@@ -5,6 +5,8 @@ import { CameraType } from '../../types/types';
 
 
 export const getCameras = (state: State): CameraType[] => state[NameSpace.Cameras].cameras;
+export const getCamerasDataLoading = (state: State): boolean => state[NameSpace.Cameras].isDataLoading;
+export const getDataLoadingErrorStatus = (state: State): boolean => state[NameSpace.Cameras].hasError;
 export const getSortType = (state: State): SortType => state[NameSpace.Cameras].sortType;
 export const getSortDirection = (state: State): SortDirection => state[NameSpace.Cameras].sortDirection;
 export const getCamerasByPrice = (state: State): CameraType[] => state[NameSpace.Cameras].camerasByPrice;

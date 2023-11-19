@@ -1,11 +1,9 @@
 import MemoizedFooter from '../../components/footer/footer';
-import MemoizedHeader from '../../components/header/header';
 import './loading-page.css';
 
 function LoadingPage(): JSX.Element {
   return (
     <div className="wrapper">
-      <MemoizedHeader />
       <main>
         <div className="page__not-found-page-container container">
           <section>
