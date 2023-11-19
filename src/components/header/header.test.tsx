@@ -1,16 +1,28 @@
 
 
 import MemoizedHeader from './header';
-import { withHistory , } from '../../utils/mock-component';
 import { render, screen } from '@testing-library/react';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+import { createMemoryHistory } from 'history';
+import { Provider } from 'react-redux';
+import HistoryRouter from '../history-route/history-route';
 
 describe('Component: Header', () => {
-  it('should render component' , () => {
+  it('should render component', () => {
 
-    const preparedComponent = withHistory(<MemoizedHeader />);
     const expectedLinkText = 'Каталог';
 
-    render(preparedComponent);
+    const mockStore = configureMockStore();
+    const history = createMemoryHistory();
+    const store = mockStore({});
+
+    render(
+      <Provider store={store}>
+        <HistoryRouter history={history}>
+          <MemoizedHeader onMainClickHandler={() => void 0}/>
+        </HistoryRouter>
+      </Provider>
+    );
 
     expect(screen.getByTestId('header-test')).toBeInTheDocument();
     expect(screen.getByText(expectedLinkText));

@@ -15,6 +15,7 @@ describe('Component: App', () => {
     const { withStoreComponent } = withStore(<App />, {
       CAMERAS: {
         cameras: mockCameraData,
+        camerasByPrice: [],
         hasError: false,
         isDataLoading: false,
         sortType: null,

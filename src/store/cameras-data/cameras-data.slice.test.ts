@@ -1,7 +1,6 @@
 
 import { CamerasData } from '../../types/types';
 import { makeFakeCamerasData } from '../../utils/mocks';
-import sortCameras from '../../utils/utils';
 import { fetchCamerasAction } from './cameras-data.action';
 import { camerasData } from './cameras-data.slice';
 
@@ -9,6 +8,7 @@ describe('CamerasData Slice', () => {
 
   const initialState: CamerasData = {
     cameras: [],
+    camerasByPrice: [],
     hasError: false,
     isDataLoading: false,
     sortDirection: 'noSorting',
