@@ -190,11 +190,7 @@ function CatalogFilter(
                 <input
                   type="number"
                   name="price"
-                  placeholder={
-                    searchParams.get(QueryString.Start) !== null
-                      ? String(searchParams.get(QueryString.Start))
-                      : `${minPriceSorted}`
-                  }
+                  placeholder={`${minPriceSorted}`}
                   onChange={debouncedInputStartChangeHandler}
                   style={{ padding: '8px 10px' }}
                 />
@@ -205,11 +201,7 @@ function CatalogFilter(
                 <input
                   type="number"
                   name="priceUp"
-                  placeholder={
-                    searchParams.get(QueryString.End) !== null
-                      ? String(searchParams.get(QueryString.End))
-                      : `${maxPriceSorted}`
-                  }
+                  placeholder={`${maxPriceSorted}`}
                   onInput={debouncedInputEndChangeHandler}
                   style={{ padding: '8px 10px' }}
                 />
