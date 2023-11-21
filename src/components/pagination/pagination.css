@@ -1,0 +1,13 @@
+.pagination__link--active {
+  color: #ffffff;
+  background-color: #7575e2;
+  border: none !important;
+  pointer-events: none;
+
+}
+
+.pagination__link {
+  width: 36px;
+  height: 36px;
+  border: none !important;
+}

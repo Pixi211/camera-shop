@@ -33,6 +33,7 @@ function Header({ onMainClickHandler }: HeaderProps): JSX.Element {
 
   const searchTextResetHandler = () => {
     setTextValue('');
+    inputRef.current?.focus();
   };
 
   const searchTextChangeHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,11 +91,11 @@ function Header({ onMainClickHandler }: HeaderProps): JSX.Element {
           </ul>
         </nav>
         <div
-          className={classNames({ 'list-opened': textValue.length >= SEARCH_SYMBOLS_MINIMUM && searchedCameras.length }, 'form-search')}
+          className={classNames({ 'list-opened': textValue.length >= SEARCH_SYMBOLS_MINIMUM }, 'form-search')}
           ref={formRef}
           tabIndex={-1}
         >
-          <ReactFocusLock disabled={!textValue}>
+          <ReactFocusLock disabled={textValue === ''}>
             <form data-testid='search-form'>
               <label>
                 <svg className="form-search__icon" width="16" height="16" aria-hidden="true">
@@ -121,9 +122,8 @@ function Header({ onMainClickHandler }: HeaderProps): JSX.Element {
                 })}
               </ul>
             </form>
-
             <button className="form-search__reset" type="reset" onClick={searchTextResetHandler}>
-              <svg width="10" height="10" aria-hidden="true">
+              <svg width={10} height={10} aria-hidden="true">
                 <use xlinkHref="#icon-close"></use>
               </svg><span className="visually-hidden">Сбросить поиск</span>
             </button>
@@ -136,7 +136,7 @@ function Header({ onMainClickHandler }: HeaderProps): JSX.Element {
           </svg>
         </Link>
       </div>
-    </header>
+    </header >
   );
 }
 

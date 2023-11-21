@@ -1,5 +1,6 @@
 import React from 'react';
 import { DirectionPagination, MAX_PRODUCTS_ON_PAGE } from '../../const';
+import './pagination.css';
 
 type PaginationProps = {
   camerasLength: number;
