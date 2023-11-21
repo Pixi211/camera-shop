@@ -91,7 +91,7 @@ function Header({ onMainClickHandler }: HeaderProps): JSX.Element {
           </ul>
         </nav>
         <div
-          className={classNames({ 'list-opened': textValue.length >= SEARCH_SYMBOLS_MINIMUM }, 'form-search')}
+          className={classNames({ 'list-opened': textValue.length >= 1 }, 'form-search')}
           ref={formRef}
           tabIndex={-1}
         >
@@ -108,6 +108,7 @@ function Header({ onMainClickHandler }: HeaderProps): JSX.Element {
                   value={textValue}
                 />
               </label>
+              {textValue.length >= SEARCH_SYMBOLS_MINIMUM && searchedCameras.length !== 0 &&
               <ul className={classNames({ 'scroller': searchedCameras.length > SEARCH_SYMBOLS_MINIMUM }, 'form-search__select-list')}>
                 {searchedCameras.map((camera, i) => {
                   const isCurrent = i === currentCameraIndex;
@@ -120,7 +121,7 @@ function Header({ onMainClickHandler }: HeaderProps): JSX.Element {
                     />
                   );
                 })}
-              </ul>
+              </ul>}
             </form>
             <button className="form-search__reset" type="reset" onClick={searchTextResetHandler}>
               <svg width={10} height={10} aria-hidden="true">
