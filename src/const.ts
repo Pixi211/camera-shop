@@ -18,7 +18,8 @@ enum NameSpace {
   Cameras = 'CAMERAS',
   Promo = 'PROMO',
   Modal = 'MODAL',
-  Current = 'CURRENT'
+  Current = 'CURRENT',
+  Basket = 'BASKET',
 }
 
 enum RatingName {

@@ -4,9 +4,28 @@ import BasketSummary from '../../components/basket-summary/basket-summary';
 import MemoizedFooter from '../../components/footer/footer';
 import MemoizedHeader from '../../components/header/header';
 import { AppRoute } from '../../const';
+import { useAppSelector } from '../../store';
+import { getBasketItems } from '../../store/basket-data/basket-data.selectors';
+import ModalWrapper from '../../components/modal-wrapper/modal-wrapper';
 
 function BasketPage(): JSX.Element {
 
+
+  const camerasInBasket = useAppSelector(getBasketItems);
+  // console.log(busketEmptyStatus);
+  // const savedItemsInBasket = JSON.parse(localStorage.getItem('items'));
+
+  // console.log('cameras: ' + camerasInBasket);
+  // console.log(savedItemsInBasket);
+
+  // if (!savedItemsInBasket || (camerasInBasket.length !== 0 && savedItemsInBasket !== camerasInBasket)
+  // || busketEmptyStatus) {
+  //   localStorage.setItem('items', JSON.stringify(camerasInBasket));
+  // }
+
+  // const initialValue = JSON.parse(localStorage.getItem('items'));
+
+  // console.log('local: ' + initialValue);
   return (
     <div className="wrapper" data-testid="basket-page-test">
       <MemoizedHeader />
@@ -39,12 +58,13 @@ function BasketPage(): JSX.Element {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
 
-              <BasketList />
+              <BasketList basketItems={camerasInBasket} />
               <BasketSummary />
 
             </div>
           </section>
         </div>
+        <ModalWrapper />
       </main>
       <MemoizedFooter />
     </div>

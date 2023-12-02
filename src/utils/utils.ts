@@ -1,5 +1,5 @@
 import { CameraCharacteristic, CategoryValue, LevelValue, TypeCameraValue } from '../const';
-import { CameraType, SortType, SortDirection } from '../types/types';
+import { CameraType, SortType, SortDirection, BasketItemType } from '../types/types';
 import { ChangeEvent } from 'react';
 
 type DebouncedFunction<F extends (evt: ChangeEvent<HTMLInputElement>) => void> = (
@@ -72,4 +72,16 @@ export const getCamerasByPrice = (cameras: CameraType[], minPrice: number | null
   }
   const camerasByPrice = cameras.filter((camera) => camera.price >= minPrice && camera.price <= maxPrice);
   return camerasByPrice;
+};
+
+export const changeTypeEnding = (type: string, category: string): string => {
+  if (category === 'Фотоаппарат') {
+    return type.replace('ая', 'ый');
+  }
+  return type;
+};
+
+export const getAmount = (cameras: BasketItemType[]):number => {
+  const amounts = cameras.map((camera) => camera.amount);
+  return amounts.reduce((first, second) => first + second);
 };

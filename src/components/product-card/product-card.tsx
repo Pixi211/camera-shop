@@ -39,6 +39,8 @@ function ProductCard({ isActive, camera, style }: ProductCardProps): JSX.Element
     }, FOCUS_TIMEOUT);
   };
 
+  /// если камера есть в camerasInBasket то поменять вид кнопки купить
+
   return (
     <div className={`product-card ${isActive}`} style={style} data-testid="productCard-test">
       <div className="product-card__img">

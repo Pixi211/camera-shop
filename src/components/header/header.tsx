@@ -7,6 +7,8 @@ import classNames from 'classnames';
 import ReactFocusLock from 'react-focus-lock';
 import MemoSearchItem from '../search-item/search-item';
 import { useKeyPress } from '../../hooks/useKeyPress';
+import { getBasketItems } from '../../store/basket-data/basket-data.selectors';
+import { getAmount } from '../../utils/utils';
 
 type HeaderProps = {
   onMainClickHandler?: () => void;
@@ -15,6 +17,7 @@ type HeaderProps = {
 function Header({ onMainClickHandler }: HeaderProps): JSX.Element {
 
   const cameras = useAppSelector(getCameras);
+  const camerasInBasket = useAppSelector(getBasketItems);
 
   const [textValue, setTextValue] = useState('');
   const [currentCameraIndex, setCurrentCameraIndex] = useState(-1);
@@ -109,19 +112,19 @@ function Header({ onMainClickHandler }: HeaderProps): JSX.Element {
                 />
               </label>
               {textValue.length >= SEARCH_SYMBOLS_MINIMUM && searchedCameras.length !== 0 &&
-              <ul className={classNames({ 'scroller': searchedCameras.length > SEARCH_SYMBOLS_MINIMUM }, 'form-search__select-list')}>
-                {searchedCameras.map((camera, i) => {
-                  const isCurrent = i === currentCameraIndex;
-                  return (
-                    <MemoSearchItem
-                      camera={camera}
-                      isCurrent={isCurrent}
-                      key={camera.id}
-                      onItemClick={searchItemClickHandler}
-                    />
-                  );
-                })}
-              </ul>}
+                <ul className={classNames({ 'scroller': searchedCameras.length > SEARCH_SYMBOLS_MINIMUM }, 'form-search__select-list')}>
+                  {searchedCameras.map((camera, i) => {
+                    const isCurrent = i === currentCameraIndex;
+                    return (
+                      <MemoSearchItem
+                        camera={camera}
+                        isCurrent={isCurrent}
+                        key={camera.id}
+                        onItemClick={searchItemClickHandler}
+                      />
+                    );
+                  })}
+                </ul>}
             </form>
             <button className="form-search__reset" type="reset" onClick={searchTextResetHandler}>
               <svg width={10} height={10} aria-hidden="true">
@@ -135,6 +138,7 @@ function Header({ onMainClickHandler }: HeaderProps): JSX.Element {
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
           </svg>
+          {camerasInBasket.length !== 0 && <span className="header__basket-count">{getAmount(camerasInBasket)}</span>}
         </Link>
       </div>
     </header >

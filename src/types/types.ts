@@ -23,6 +23,21 @@ export type CameraType = {
   previewImgWebp2x: string;
 }
 
+export type BasketItemType = {
+  id: number;
+  amount: number;
+  name: string;
+  vendorCode: string;
+  type: Type;
+  category: Category;
+  level: Level;
+  price: number;
+  previewImg: string;
+  previewImg2x: string;
+  previewImgWebp: string;
+  previewImgWebp2x: string;
+}
+
 export type PromoCameraType = {
   id: number;
   name: string;
@@ -68,6 +83,11 @@ export type CamerasData = {
   sortDirection: SortDirection;
 }
 
+export type BasketData = {
+  basketItems: BasketItemType[];
+  itemForBasket: BasketItemType | null;
+}
+
 export type CurrentData = {
   currentItemData: CameraType | null;
   similarCameras: CameraType[];
@@ -82,8 +102,9 @@ export type ModalData = {
   addItemToBasketStatus: boolean;
   successStatus: boolean;
   isActive: boolean;
-  modalData: CameraType | null;
+  modalData: BasketItemType | CameraType | null;
   addReviewStatus: boolean;
+  removeFromBasketStatus: boolean;
   successType: SuccessType;
 }
 

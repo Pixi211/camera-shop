@@ -3,10 +3,11 @@ import { useAppSelector } from '../../store';
 import { getModalData } from '../../store/modal-data/modal-data.selectors';
 import { useEffect, useRef } from 'react';
 import ReactFocusLock from 'react-focus-lock';
+import { BasketItemType } from '../../types/types';
 
 
 type ModalAddItemToBasketProps = {
-  onAddButtonClick: () => void;
+  onAddButtonClick: (item: BasketItemType) => void;
   onCloseButtonClick: () => void;
 }
 
@@ -29,12 +30,14 @@ function ModalAddItemToBasket({ onAddButtonClick, onCloseButtonClick }: ModalAdd
     vendorCode,
     price,
     type,
+    category,
     level,
     previewImg,
     previewImg2x,
     previewImgWebp,
-    previewImgWebp2x
+    previewImgWebp2x,
   } = currentItemData;
+
 
   return (
     <div className="modal__wrapper" data-testid="modalAddItemToBasket-test">
@@ -70,7 +73,7 @@ function ModalAddItemToBasket({ onAddButtonClick, onCloseButtonClick }: ModalAdd
                   </span>
                 </li>
                 <li className="basket-item__list-item">
-                  {type} фотокамера
+                  {type} {category}
                 </li>
                 <li className="basket-item__list-item">
                   {level} уровень
@@ -89,7 +92,7 @@ function ModalAddItemToBasket({ onAddButtonClick, onCloseButtonClick }: ModalAdd
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
               id="modal__btn--add_to_basket"
-              onClick={() => onAddButtonClick()}
+              onClick={() => onAddButtonClick({...currentItemData, amount: 1})}
             >
               <svg width={24} height={16} aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>

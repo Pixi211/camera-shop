@@ -2,6 +2,9 @@ import { useCallback, useState } from 'react';
 import { CameraType } from '../../types/types';
 import { useSearchParams } from 'react-router-dom';
 import RatingForm from '../rating-form/rating-form';
+import { useAppDispatch } from '../../store';
+import { setActiveStatus, setAddItemToBasketStatus, setModalData } from '../../store/modal-data/modal-data.slice';
+import { FOCUS_TIMEOUT } from '../../const';
 
 type ProductContentProps = {
   camera: CameraType;
@@ -36,6 +39,21 @@ function ProductContent({camera, typeTag}: ProductContentProps): JSX.Element {
     setIsDescription(false);
     setSearchParams({ type: 'stats' });
   }, [setSearchParams]);
+
+
+  const dispatch = useAppDispatch();
+
+  //проверить
+  const buyButtonClickHandler = () => {
+    document.body.style.overflow = 'hidden';
+    dispatch(setModalData(camera));
+    dispatch(setActiveStatus(true));
+    dispatch(setAddItemToBasketStatus(true));
+
+    setTimeout(() => {
+      document.getElementById('modal__btn--add_to_basket')?.focus();
+    }, FOCUS_TIMEOUT);
+  };
 
   return (
     <div className="page-content__section" data-testid="productContent-test">
@@ -74,11 +92,13 @@ function ProductContent({camera, typeTag}: ProductContentProps): JSX.Element {
               </span>
               {price.toLocaleString('ru-RU')} ₽
             </p>
-            <button className="btn btn--purple" type="button">
+
+            <button className="btn btn--purple" type="button" onClick={buyButtonClickHandler}>
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>
               </svg>Добавить в корзину
             </button>
+
             <div className="tabs product__tabs">
               <div className="tabs__controls product__tabs-controls">
                 <button className={`tabs__control ${!isDescription ? 'is-active' : ''}`}

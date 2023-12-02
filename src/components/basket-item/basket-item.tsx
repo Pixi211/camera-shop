@@ -1,117 +1,169 @@
-function BasketItem(): JSX.Element {
+import { FOCUS_TIMEOUT } from '../../const';
+import { useAppDispatch } from '../../store';
+import { changeAmountInBasket } from '../../store/basket-data/basket-data.slice';
+import { setActiveStatus, setModalData, setRemoveFromBasketStatus } from '../../store/modal-data/modal-data.slice';
+import { BasketItemType } from '../../types/types';
+import { changeTypeEnding } from '../../utils/utils';
+
+type BasketItemProps = {
+  basketItem: BasketItemType;
+}
+
+function BasketItem({ basketItem }: BasketItemProps): JSX.Element {
+
+  const {
+    name,
+    amount,
+    vendorCode,
+    type,
+    category,
+    level,
+    price,
+    previewImg,
+    previewImg2x,
+    previewImgWebp,
+    previewImgWebp2x
+  } = basketItem;
+
+  const dispatch = useAppDispatch();
+
+
+  const summary = price * amount;
+
+
+  const deleteFromList = () => {
+    document.body.style.overflow = 'hidden';
+    dispatch(setModalData(basketItem));
+    dispatch(setActiveStatus(true));
+    dispatch(setRemoveFromBasketStatus(true));
+
+    setTimeout(() => {
+      document.getElementById('modal__btn--half-width')?.focus();
+    }, FOCUS_TIMEOUT);
+
+    // dispatch(deleteFromBasket(basketItem));
+  };
+
+  const increaseAmount = () => {
+    if (basketItem.amount !== 99) {
+      dispatch(changeAmountInBasket([basketItem.id, basketItem.amount + 1]));
+    }
+
+    // dispatch(addToBasket(basketItem));
+
+  };
+
+  const decreaseAmount = () => {
+    if (basketItem.amount !== 1) {
+      dispatch(changeAmountInBasket([basketItem.id, basketItem.amount - 1]));
+    }
+    // dispatch(deleteFromBasket(basketItem));
+  };
+
+  const changeAmount = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    let newValue = Number(evt.target.value);
+
+    if(isNaN(newValue) || newValue < 1) {
+      newValue = 1;
+    }
+
+    if (newValue >= 99) {
+      newValue = 99;
+    }
+
+    dispatch(changeAmountInBasket([basketItem.id, newValue]));
+  };
+
 
   return (
-    <>
-      <li className="basket-item" data-testid="basketItem-test">
-        <div className="basket-item__img">
-          <picture>
-            <source
-              type="image/webp"
-              srcSet="img/content/orlenok.webp, img/content/orlenok@2x.webp 2x"
-            />
-            <img
-              src="img/content/orlenok.jpg"
-              srcSet="img/content/orlenok@2x.jpg 2x"
-              width="140"
-              height="120"
-              alt="Фотоаппарат «Орлёнок»"
-            />
-          </picture>
-        </div>
-        <div className="basket-item__description">
-          <p className="basket-item__title">Орлёнок</p>
-          <ul className="basket-item__list">
-            <li className="basket-item__list-item">
-              <span className="basket-item__article">
-                Артикул:
-              </span>
-              <span className="basket-item__number">
-                O78DFGSD832
-              </span>
-            </li>
-            <li className="basket-item__list-item">Плёночная фотокамера</li>
-            <li className="basket-item__list-item">Любительский уровень</li>
-          </ul>
-        </div>
-        <p className="basket-item__price">
-          <span className="visually-hidden">
-            Цена
-          </span>
-          18 970 ₽
-        </p>
-        <div className="quantity">
-          <button
-            className="btn-icon btn-icon--prev"
-            aria-label="уменьшить количество товара"
-          >
-            <svg width="7" height="12" aria-hidden="true">
-              <use xlinkHref="#icon-arrow"></use>
-            </svg>
-          </button>
-          <label className="visually-hidden" htmlFor="counter1"></label>
-          <input type="number" id="counter1" value="2" min="1" max="99" aria-label="количество товара" />
-          <button
-            className="btn-icon btn-icon--next"
-            aria-label="увеличить количество товара"
-          >
-            <svg width="7" height="12" aria-hidden="true">
-              <use xlinkHref="#icon-arrow"></use>
-            </svg>
-          </button>
-        </div>
-        <div className="basket-item__total-price">
-          <span className="visually-hidden">
-            Общая цена:
-          </span>
-          37 940 ₽
-        </div>
-        <button className="cross-btn" type="button" aria-label="Удалить товар">
-          <svg width="10" height="10" aria-hidden="true">
-            <use xlinkHref="#icon-close"></use>
+    <li className="basket-item" data-testid="basketItem-test">
+      <div className="basket-item__img">
+        <picture>
+          <source
+            type="image/webp"
+            srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}
+          />
+          <img
+            src={previewImg}
+            srcSet={previewImg2x}
+            width={140}
+            height={120}
+            alt={`Фотоаппарат «${name}»`}
+          />
+        </picture>
+      </div>
+      <div className="basket-item__description">
+        <p className="basket-item__title">{name}</p>
+        <ul className="basket-item__list">
+          <li className="basket-item__list-item">
+            <span className="basket-item__article">
+              Артикул:
+            </span>
+            <span className="basket-item__number">
+              {' '}{vendorCode}
+            </span>
+          </li>
+          <li className="basket-item__list-item">{changeTypeEnding(type, category)} {category.toLowerCase()}</li>
+          <li className="basket-item__list-item">{level} уровень</li>
+        </ul>
+      </div>
+      <p className="basket-item__price">
+        <span className="visually-hidden">
+          Цена
+        </span>
+        {price.toLocaleString('ru-RU')} ₽
+      </p>
+
+      <div className="quantity">
+        <button
+          className="btn-icon btn-icon--prev"
+          aria-label="уменьшить количество товара"
+          onClick={() => decreaseAmount()}
+        >
+          <svg width={7} height={12} aria-hidden="true">
+            <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
-      </li>
 
+        <label className="visually-hidden" htmlFor="counter1"></label>
+        <input
+          type="number"
+          id="counter1"
+          value={amount}
+          min="1"
+          max="99"
+          aria-label="количество товара"
+          onChange={changeAmount}
+        />
 
-      <li className="basket-item">
-        <div className="basket-item__img">
-          <picture>
-            <source type="image/webp" srcSet="img/content/das-auge.webp, img/content/das-auge@2x.webp 2x" />
-            <img src="img/content/das-auge.jpg" srcSet="img/content/das-auge@2x.jpg 2x" width="140" height="120" alt="Ретрокамера «Das Auge IV»" />
-          </picture>
-        </div>
-        <div className="basket-item__description">
-          <p className="basket-item__title">Ретрокамера «Das Auge IV»</p>
-          <ul className="basket-item__list">
-            <li className="basket-item__list-item"><span className="basket-item__article">Артикул:</span> <span className="basket-item__number">DA4IU67AD5</span>
-            </li>
-            <li className="basket-item__list-item">Коллекционная видеокамера</li>
-            <li className="basket-item__list-item">Любительский уровень</li>
-          </ul>
-        </div>
-        <p className="basket-item__price"><span className="visually-hidden">Цена:</span>73 450 ₽</p>
-        <div className="quantity">
-          <button className="btn-icon btn-icon--prev" disabled aria-label="уменьшить количество товара">
-            <svg width="7" height="12" aria-hidden="true">
-              <use xlinkHref="#icon-arrow"></use>
-            </svg>
-          </button>
-          <label className="visually-hidden" htmlFor="counter2"></label>
-          <input type="number" id="counter2" value="1" min="1" max="99" aria-label="количество товара" />
-          <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
-            <svg width="7" height="12" aria-hidden="true">
-              <use xlinkHref="#icon-arrow"></use>
-            </svg>
-          </button>
-        </div>
-        <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>73 450 ₽</div>
-        <button className="cross-btn" type="button" aria-label="Удалить товар">
-          <svg width="10" height="10" aria-hidden="true">
-            <use xlinkHref="#icon-close"></use>
+        <button
+          className="btn-icon btn-icon--next"
+          aria-label="увеличить количество товара"
+          onClick={() => increaseAmount()}
+        >
+          <svg width={7} height={12} aria-hidden="true">
+            <use xlinkHref="#icon-arrow"></use>
           </svg>
         </button>
-      </li>
-    </>
+
+      </div>
+      <div className="basket-item__total-price">
+        <span className="visually-hidden">
+          Общая цена:
+        </span>
+        {summary.toLocaleString('ru-RU')} ₽
+      </div>
+      <button
+        className="cross-btn"
+        type="button"
+        aria-label="Удалить товар"
+        onClick={deleteFromList}
+      >
+        <svg width="10" height="10" aria-hidden="true">
+          <use xlinkHref="#icon-close"></use>
+        </svg>
+      </button>
+    </li>
   );
 }
 
