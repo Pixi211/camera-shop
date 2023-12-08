@@ -92,6 +92,21 @@ enum DirectionPagination {
   Next = 1,
   Prev = -1,
 }
+
+enum PromoCode {
+  None = 'None',
+  Camera333 = 'camera-333',
+  Camera444 = 'camera-444',
+  Camera555 = 'camera-555',
+}
+
+enum Discount {
+  None = 0,
+  Camera333 = 333,
+  Camera444 = 444,
+  Camera555 = 555,
+}
+
 const BACKEND_URL = 'https://camera-shop.accelerator.pages.academy/';
 const MAX_PRODUCTS_ON_PAGE = 9;
 const FOCUS_TIMEOUT = 500;
@@ -101,8 +116,8 @@ const SEARCH_SYMBOLS_MINIMUM = 3;
 const stars = [1, 2, 3, 4, 5];
 
 export {
-  AppRoute, APIRoute, NameSpace, RatingName, QueryString, DirectionValue, SortValue,
-  DirectionPagination, CategoryValue, TypeCameraValue, LevelValue, KeyCode, CameraCharacteristic,
+  AppRoute, APIRoute, NameSpace, RatingName, QueryString, DirectionValue, SortValue, DirectionPagination,
+  CategoryValue, TypeCameraValue, LevelValue, KeyCode, CameraCharacteristic, PromoCode, Discount,
   BACKEND_URL, MAX_PRODUCTS_ON_PAGE, FOCUS_TIMEOUT, RESET_TIMEOUT, DEBOUNCED_VALUE,
   SEARCH_SYMBOLS_MINIMUM, stars,
 };

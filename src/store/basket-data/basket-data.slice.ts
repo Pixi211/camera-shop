@@ -1,11 +1,15 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { BasketData, BasketItemType } from '../../types/types';
 import { NameSpace } from '../../const';
+import { fetchPromoCodeAction } from './basket-data.action';
 
 
 const initialState: BasketData = {
   basketItems: JSON.parse(localStorage.getItem('items') || '[]') as BasketItemType[],
   itemForBasket: null,
+  isPromoCodeValid: false,
+  isPromoCodeInvalid: false,
+  promoCodeName: null,
 };
 
 export const basketData = createSlice({
@@ -35,23 +39,39 @@ export const basketData = createSlice({
       state.basketItems.splice(indexToDelete, 1);
       localStorage.setItem('items', JSON.stringify(state.basketItems));
     },
+    resetBasket: (state) => {
+      state.basketItems = [];
+      state.isPromoCodeInvalid = false;
+      state.isPromoCodeValid = false;
+      localStorage.setItem('items', '[]');
+    },
+    setIsPromoCodeValid: (state, action: PayloadAction<boolean>) => {
+      state.isPromoCodeValid = action.payload;
+    },
+    setIsPromoCodeInvalid: (state, action: PayloadAction<boolean>) => {
+      state.isPromoCodeInvalid = action.payload;
+    },
   },
-  // extraReducers(builder) {
-  //   builder
-  //     .addCase(fetchCamerasAction.pending, (state) => {
-  //       state.isDataLoading = true;
-  //     })
-  //     .addCase(fetchCamerasAction.fulfilled, (state, action) => {
-  //       state.isDataLoading = false;
-  //       state.cameras = action.payload;
-  //     })
-  //     .addCase(fetchCamerasAction.rejected, (state) => {
-  //       state.isDataLoading = false;
-  //       state.hasError = true;
-  //     });
-  // }
+  extraReducers(builder) {
+    builder
+      .addCase(fetchPromoCodeAction.fulfilled, (state, action) => {
+        // state.promoCodeValue = action.payload.data;
+        state.promoCodeName = action.payload.value;
+        state.isPromoCodeValid = true;
+        state.isPromoCodeInvalid = false;
+      })
+      .addCase(fetchPromoCodeAction.pending, (state) => {
+        state.isPromoCodeInvalid = false;
+        state.isPromoCodeValid = false;
+      })
+      .addCase(fetchPromoCodeAction.rejected, (state) => {
+        state.isPromoCodeInvalid = true;
+        state.isPromoCodeValid = false;
+        // state.promoCodeValue = 0;
+      });
+  }
 });
 
 export const { addToBasket, changeAmountInBasket,
-  deleteFromBasket,
+  deleteFromBasket, resetBasket, setIsPromoCodeValid, setIsPromoCodeInvalid
 } = basketData.actions;

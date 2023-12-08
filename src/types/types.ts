@@ -86,6 +86,10 @@ export type CamerasData = {
 export type BasketData = {
   basketItems: BasketItemType[];
   itemForBasket: BasketItemType | null;
+  // promoCodeValue: number;
+  isPromoCodeValid: boolean;
+  isPromoCodeInvalid: boolean;
+  promoCodeName: string | null;
 }
 
 export type CurrentData = {
@@ -106,6 +110,11 @@ export type ModalData = {
   addReviewStatus: boolean;
   removeFromBasketStatus: boolean;
   successType: SuccessType;
+}
+
+export type Order = {
+  camerasIds: number[];
+  coupon: string | null;
 }
 
 export type SuccessType = 'newReview' | 'addToBasket' | 'purchase';

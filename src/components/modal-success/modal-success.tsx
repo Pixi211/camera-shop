@@ -20,6 +20,11 @@ function ModalSuccess({ onCloseButtonClick, onReturnButtonClick }: ModalSuccessP
     navigate(AppRoute.BasketPage);
   };
 
+  const navigateToCatalogClickHandler = () => {
+    onCloseButtonClick();
+    navigate(AppRoute.CatalogPage);
+  };
+
   const focusOnElement = useRef<HTMLAnchorElement | null>(null);
 
   useEffect(() => {
@@ -100,7 +105,7 @@ function ModalSuccess({ onCloseButtonClick, onReturnButtonClick }: ModalSuccessP
               <button
                 className="btn btn--purple modal__btn modal__btn--fit-width"
                 type="button"
-                onClick={() => onReturnButtonClick()}
+                onClick={navigateToCatalogClickHandler}
                 autoFocus
               >
                 Вернуться к покупкам
