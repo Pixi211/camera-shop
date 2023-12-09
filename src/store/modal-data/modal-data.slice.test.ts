@@ -1,6 +1,6 @@
 import { ModalData } from '../../types/types';
 import { makeFakeCamerasData, makeFakeSuccessType } from '../../utils/mocks';
-import { modalData, setModalData, setAddItemToBasketStatus, setSuccessStatus, setSuccessType, setActiveStatus, setAddReviewStatus } from './modal-data.slice';
+import { modalData, setModalData, setAddItemToBasketStatus, setSuccessStatus, setSuccessType, setActiveStatus, setAddReviewStatus, setRemoveFromBasketStatus } from './modal-data.slice';
 
 describe('ModalData slice', () => {
 
@@ -12,6 +12,7 @@ describe('ModalData slice', () => {
     successType: 'newReview',
     isActive: false,
     addReviewStatus: false,
+    removeFromBasketStatus: false,
   };
 
   it('should set modalData with data', () => {
@@ -75,4 +76,15 @@ describe('ModalData slice', () => {
 
     expect(result).toEqual(expectedState);
   });
+
+  it('should set removeFromBasketStatus', () => {
+    const actionPayload = true;
+    const state = { ...initialState };
+    const expectedState = { ...initialState, removeFromBasketStatus: true };
+
+    const result = modalData.reducer(state, setRemoveFromBasketStatus(actionPayload));
+
+    expect(result).toEqual(expectedState);
+  });
 });
+

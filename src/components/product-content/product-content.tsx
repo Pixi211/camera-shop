@@ -43,7 +43,6 @@ function ProductContent({camera, typeTag}: ProductContentProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  //проверить
   const buyButtonClickHandler = () => {
     document.body.style.overflow = 'hidden';
     dispatch(setModalData(camera));

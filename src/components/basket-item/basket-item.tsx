@@ -41,23 +41,18 @@ function BasketItem({ basketItem }: BasketItemProps): JSX.Element {
       document.getElementById('modal__btn--half-width')?.focus();
     }, FOCUS_TIMEOUT);
 
-    // dispatch(deleteFromBasket(basketItem));
   };
 
   const increaseAmount = () => {
     if (basketItem.amount !== 99) {
       dispatch(changeAmountInBasket([basketItem.id, basketItem.amount + 1]));
     }
-
-    // dispatch(addToBasket(basketItem));
-
   };
 
   const decreaseAmount = () => {
     if (basketItem.amount !== 1) {
       dispatch(changeAmountInBasket([basketItem.id, basketItem.amount - 1]));
     }
-    // dispatch(deleteFromBasket(basketItem));
   };
 
   const changeAmount = (evt: React.ChangeEvent<HTMLInputElement>) => {

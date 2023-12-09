@@ -35,7 +35,6 @@ function ModalWrapper(): JSX.Element {
       dispatch(setSuccessStatus(true));
       dispatch(setSuccessType('addToBasket'));
 
-      //
       dispatch(addToBasket(item));
     };
 

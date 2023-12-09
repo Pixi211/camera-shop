@@ -2,7 +2,7 @@
 import { CamerasData } from '../../types/types';
 import { makeFakeCamerasData } from '../../utils/mocks';
 import { fetchCamerasAction } from './cameras-data.action';
-import { camerasData } from './cameras-data.slice';
+import { camerasData, setMaxPrice, setMinPrice, setSortDirection, setSortType } from './cameras-data.slice';
 
 describe('CamerasData Slice', () => {
 
@@ -25,7 +25,7 @@ describe('CamerasData Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should retun default initial state with empty action and undefined', () => {
+  it('should return default initial state with empty action and undefined', () => {
     const emptyAction = { type: '' };
     const expectedState = { ...initialState };
 
@@ -34,6 +34,55 @@ describe('CamerasData Slice', () => {
     expect(result).toEqual(expectedState);
 
   });
+
+  it('should set sortType', () => {
+
+    const actionPayload = 'test';
+    const state = { ...initialState};
+
+    const expectedState = { ...initialState, sortType: 'test' };
+
+    const result = camerasData.reducer(state, setSortType(actionPayload));
+
+    expect(result).toEqual(expectedState);
+  });
+
+  it('should set sortDirection', () => {
+
+    const actionPayload = 'test';
+    const state = { ...initialState};
+
+    const expectedState = { ...initialState, sortDirection: 'test' };
+
+    const result = camerasData.reducer(state, setSortDirection(actionPayload));
+
+    expect(result).toEqual(expectedState);
+  });
+
+  it('should set minPrice', () => {
+
+    const actionPayload = 5;
+    const state = { ...initialState};
+
+    const expectedState = { ...initialState, minPrice: 5 };
+
+    const result = camerasData.reducer(state, setMinPrice(actionPayload));
+
+    expect(result).toEqual(expectedState);
+  });
+
+  it('should set maxPrice', () => {
+
+    const actionPayload = 5;
+    const state = { ...initialState};
+
+    const expectedState = { ...initialState, maxPrice: 5 };
+
+    const result = camerasData.reducer(state, setMaxPrice(actionPayload));
+
+    expect(result).toEqual(expectedState);
+  });
+
 
   describe(' fetchCamerasAction Slice', () => {
 

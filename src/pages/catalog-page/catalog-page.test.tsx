@@ -40,6 +40,14 @@ describe('Page: CatalogPage', () => {
         modalData: null,
         addReviewStatus: false,
         successType: 'newReview',
+        removeFromBasketStatus: false,
+      },
+      BASKET: {
+        basketItems: [],
+        itemForBasket: null,
+        isPromoCodeValid: false,
+        isPromoCodeInvalid: false,
+        promoCodeName: null,
       }
     }
     );

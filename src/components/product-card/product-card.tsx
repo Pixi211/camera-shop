@@ -2,9 +2,10 @@ import React, { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { CameraType } from '../../types/types';
 import { setActiveStatus, setAddItemToBasketStatus, setModalData } from '../../store/modal-data/modal-data.slice';
-import { useAppDispatch } from '../../store';
-import { FOCUS_TIMEOUT } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { AppRoute, FOCUS_TIMEOUT } from '../../const';
 import RatingForm from '../rating-form/rating-form';
+import { getBasketItems } from '../../store/basket-data/basket-data.selectors';
 
 type ProductCardProps = {
   camera: CameraType;
@@ -39,7 +40,8 @@ function ProductCard({ isActive, camera, style }: ProductCardProps): JSX.Element
     }, FOCUS_TIMEOUT);
   };
 
-  /// если камера есть в camerasInBasket то поменять вид кнопки купить
+  const camerasInBasket = useAppSelector(getBasketItems);
+  const inBasketStatus = camerasInBasket.some((item) => item.id === camera.id);
 
   return (
     <div className={`product-card ${isActive}`} style={style} data-testid="productCard-test">
@@ -72,9 +74,20 @@ function ProductCard({ isActive, camera, style }: ProductCardProps): JSX.Element
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button" onClick={buyButtonClickHandler}>
-          Купить
-        </button>
+        {!inBasketStatus ?
+          <button
+            className="btn btn--purple product-card__btn"
+            type="button"
+            onClick={buyButtonClickHandler}
+          >
+                      Купить
+          </button>
+          :
+          <Link className="btn btn--purple-border product-card__btn product-card__btn--in-cart" to={AppRoute.BasketPage}>
+            <svg width="16" height="16" aria-hidden="true">
+              <use xlinkHref="#icon-basket"></use>
+            </svg>В корзине
+          </Link>}
         <Link className="btn btn--transparent" to={`/${id}`} data-testid = "btnMore-test">
           Подробнее
         </Link>

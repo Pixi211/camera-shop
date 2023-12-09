@@ -86,7 +86,6 @@ export type CamerasData = {
 export type BasketData = {
   basketItems: BasketItemType[];
   itemForBasket: BasketItemType | null;
-  // promoCodeValue: number;
   isPromoCodeValid: boolean;
   isPromoCodeInvalid: boolean;
   promoCodeName: string | null;

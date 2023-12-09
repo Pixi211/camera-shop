@@ -1,6 +1,6 @@
 import { BasketData } from '../../types/types';
 import { makeFakeBasketItemsData } from '../../utils/mocks';
-import { fetchCouponAction, fetchPromoCodeAction } from './basket-data.action';
+import { fetchPromoCodeAction } from './basket-data.action';
 import { addToBasket, basketData, changeAmountInBasket, deleteFromBasket, resetBasket, setIsPromoCodeInvalid, setIsPromoCodeValid } from './basket-data.slice';
 
 

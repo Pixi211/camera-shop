@@ -1,6 +1,4 @@
-// type BasketSummaryProps = {
-//   prices: number[];
-// }
+
 import { useRef, useState } from 'react';
 import { BasketItemType, Order } from '../../types/types';
 import { Discount, PromoCode } from '../../const';
@@ -18,23 +16,15 @@ function BasketSummary(): JSX.Element {
   const camerasInBasket: BasketItemType[] = JSON.parse(localStorage.getItem('items') || '[]') as BasketItemType[];
   const summary = camerasInBasket.reduce((total, camera) => total + (camera.price * camera.amount), 0);
   const [discount, setDiscount] = useState(Number(JSON.parse((localStorage.getItem('discount')) || '0')));
-  // console.log(JSON.parse((localStorage.getItem('discount'))));
-  //
+
   const promoCodeInvalidStatus = useAppSelector(getIsPromoCodeInvalid);
   const promoCodeValidStatus = useAppSelector(getIsPromoCodeValid);
   const promoCodeName = useAppSelector(getPromoCodeName);
   const [promoCode, setPromoCode] = useState<string | null>(promoCodeName || null);
-  // const [promoCode, setPromoCode] = useState<string | null>(JSON.parse((localStorage.getItem('promoCode'))) || null);
 
-
-  // const [promoCode, setPromoCode] = useState<string>(JSON.parse((localStorage.getItem('promoCode')) || '') as string);
-
-  // console.log(promoCode);
-  // console.log(discount);
   const summaryWithDiscount = summary > discount
     ? summary - discount
     : summary;
-
 
   const promoCodeInputHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = evt.target.value.replace(/\s/g, '');
@@ -61,19 +51,15 @@ function BasketSummary(): JSX.Element {
         setDiscount(Discount.None);
         break;
     }
-    // localStorage.setItem('discount', JSON.stringify(discount));
 
     if (promoCode !== '') {
       dispatch(fetchPromoCodeAction(promoCode));
-      // localStorage.setItem('promoCode', JSON.stringify(promoCode));
     }
   };
 
   const orderSubmitHandler = () => {
-    // console.log(promoCode);
     const coupon = Object.values(PromoCode)?.includes(promoCode) ? promoCode : null;
     const serverData: Order = { camerasIds: camerasInBasket.map((elem) => elem.id), coupon: coupon };
-    // console.log(serverData);
     dispatch(postOrderAction(serverData)).then(() => {
       if (inputRef.current) {
         inputRef.current.value = '';

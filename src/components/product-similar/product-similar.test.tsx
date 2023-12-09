@@ -5,6 +5,7 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import HistoryRouter from '../history-route/history-route';
+import { withStore } from '../../utils/mock-component';
 
 const mockCameras = makeFakeCamerasData();
 
@@ -15,11 +16,20 @@ describe('Component: ProductSimilar', () => {
     const mockStore = configureMockStore();
     const history = createMemoryHistory();
     const store = mockStore({});
+    const { withStoreComponent } = withStore(<ProductSimilar cameras={mockCameras} />, {
+      BASKET: {
+        basketItems: [],
+        itemForBasket: null,
+        isPromoCodeValid: false,
+        isPromoCodeInvalid: false,
+        promoCodeName: null,
+      }
+    });
 
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <ProductSimilar cameras={mockCameras} />
+          {withStoreComponent}
         </HistoryRouter>
       </Provider>
     );

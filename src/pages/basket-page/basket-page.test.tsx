@@ -26,7 +26,32 @@ describe('Page: BasketPage', () => {
         isDataLoading: false,
         sortType: null,
         sortDirection: null,
-      }
+      },
+      BASKET: {
+        basketItems: [],
+        itemForBasket: null,
+        isPromoCodeValid: false,
+        isPromoCodeInvalid: false,
+        promoCodeName: null,
+      },
+      CURRENT: {
+        currentItemData: null,
+        similarCameras: mockCameraData,
+        reviews: [],
+        isCurrentDataLoading: false,
+        isSimilarsLoading: false,
+        isReviewsLoading: false,
+        hasError: false,
+      },
+      MODAL: {
+        addItemToBasketStatus: false,
+        successStatus: false,
+        isActive: false,
+        modalData: null,
+        addReviewStatus: false,
+        successType: 'newReview',
+        removeFromBasketStatus: false,
+      },
     });
 
     render(

@@ -12,20 +12,7 @@ function BasketPage(): JSX.Element {
 
 
   const camerasInBasket = useAppSelector(getBasketItems);
-  // console.log(busketEmptyStatus);
-  // const savedItemsInBasket = JSON.parse(localStorage.getItem('items'));
 
-  // console.log('cameras: ' + camerasInBasket);
-  // console.log(savedItemsInBasket);
-
-  // if (!savedItemsInBasket || (camerasInBasket.length !== 0 && savedItemsInBasket !== camerasInBasket)
-  // || busketEmptyStatus) {
-  //   localStorage.setItem('items', JSON.stringify(camerasInBasket));
-  // }
-
-  // const initialValue = JSON.parse(localStorage.getItem('items'));
-
-  // console.log('local: ' + initialValue);
   return (
     <div className="wrapper" data-testid="basket-page-test">
       <MemoizedHeader />

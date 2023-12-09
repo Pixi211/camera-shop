@@ -41,7 +41,7 @@ function ModalRemoveFromBasket({ onCloseButtonClick, onDeleteButtonClick }: Moda
 
 
   return (
-    <div className="modal__wrapper" >
+    <div className="modal__wrapper" data-testid='modalRemoveFromBasket-test'>
       <ReactFocusLock group='group-3' returnFocus ref={focusOnButton} >
         <div className="modal__overlay" onClick={() => onCloseButtonClick()}> </div>
         <div className="modal__content" >

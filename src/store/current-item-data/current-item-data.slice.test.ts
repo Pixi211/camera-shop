@@ -1,6 +1,6 @@
 import { makeFakeCamerasData, makeFakeReviews, makeFakeCurrentCameraData } from '../../utils/mocks';
 import { fetchCurrentAction, fetchReviewsAction, fetchSimilarAction } from './current-item-data.action';
-import { currentData } from './current-item-data.slice';
+import { currentData, setReviewCount } from './current-item-data.slice';
 
 describe('Current Camera data slice' , () => {
 
@@ -35,6 +35,23 @@ describe('Current Camera data slice' , () => {
 
   });
 
+
+  it('should set reviewCount', () => {
+
+    const actionPayload = 5;
+    const state = { ...initialState, currentItemData: mockCurrentCamera };
+    const newObject = {
+      ...mockCurrentCamera,
+      reviewCount: actionPayload,
+    };
+    const expectedState = { ...initialState, currentItemData: newObject };
+
+    const result = currentData.reducer(state, setReviewCount(actionPayload));
+
+    expect(result).toEqual(expectedState);
+  });
+
+
   describe('fetchCurrentAction slice' , () => {
 
     it('should set "isCurrentDataLoading" to true with fetchCurrentAction.pending' , () => {
@@ -48,7 +65,7 @@ describe('Current Camera data slice' , () => {
       expect(result).toEqual(expectedState);
     });
 
-    it('should set currentInfo to object with data , isDataLoading to false with "fetchCurrentAction.fullfilled"', () => {
+    it('should set currentItemData to object with data , isDataLoading to false with "fetchCurrentAction.fullfilled"', () => {
       const expectedState = {
         ...initialState,
         currentItemData: mockCurrentCamera

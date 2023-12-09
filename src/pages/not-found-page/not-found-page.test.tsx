@@ -27,6 +27,13 @@ describe('Page: NotFoundPage', () => {
         isDataLoading: false,
         sortType: null,
         sortDirection: null,
+      },
+      BASKET: {
+        basketItems: [],
+        itemForBasket: null,
+        isPromoCodeValid: false,
+        isPromoCodeInvalid: false,
+        promoCodeName: null,
       }
     });
 

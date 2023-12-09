@@ -32,7 +32,7 @@ export const basketData = createSlice({
       state.basketItems[indexToChange].amount = newAmount;
       localStorage.setItem('items', JSON.stringify(state.basketItems));
     },
-    deleteFromBasket: (state, action: PayloadAction<BasketItemType>) => {//передать только id?
+    deleteFromBasket: (state, action: PayloadAction<BasketItemType>) => {
       const idToDelete = action.payload.id;
 
       const indexToDelete = state.basketItems.findIndex((item) => item.id === idToDelete);
@@ -55,7 +55,6 @@ export const basketData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchPromoCodeAction.fulfilled, (state, action) => {
-        // state.promoCodeValue = action.payload.data;
         state.promoCodeName = action.payload.value;
         state.isPromoCodeValid = true;
         state.isPromoCodeInvalid = false;
@@ -67,7 +66,6 @@ export const basketData = createSlice({
       .addCase(fetchPromoCodeAction.rejected, (state) => {
         state.isPromoCodeInvalid = true;
         state.isPromoCodeValid = false;
-        // state.promoCodeValue = 0;
       });
   }
 });
