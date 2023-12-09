@@ -27,6 +27,7 @@ describe('Component: ModalWrapper', () => {
         modalData: null,
         addReviewStatus: false,
         successType: 'newReview',
+        removeFromBasketStatus: false,
       }
     }
     );

@@ -8,16 +8,17 @@ describe('Component: ModalSuccess', () => {
       <ModalSuccess
         onReturnButtonClick={() => void 0}
         onCloseButtonClick={() => void 0}
-      />, {MODAL: {
-        addItemToBasketStatus: false,
-        successStatus: true,
-        isActive: false,
-        modalData: null,
-        addReviewStatus: false,
-        successType: 'newReview',
-      }
-      }
-    );
+      />, {
+        MODAL: {
+          addItemToBasketStatus: false,
+          successStatus: false,
+          isActive: false,
+          modalData: null,
+          addReviewStatus: false,
+          successType: 'newReview',
+          removeFromBasketStatus: false,
+        }
+      });
     const pagePrepared = withHistory(withStoreComponent);
 
     render(pagePrepared);

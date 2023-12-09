@@ -30,7 +30,6 @@ function CatalogFilter(
   const categoryParameter = searchParams.get(QueryString.Category);
   const typeParameter = searchParams.getAll(QueryString.TypeCamera);
 
-  // @ts-ignore
   if (searchParams.has(QueryString.Category, CategoryValue.Videocamera)) {
     isDisabled = true;
   } else {
@@ -68,9 +67,7 @@ function CatalogFilter(
 
   const categoryClickHandler = (value: CategoryValue) => {
     if (value === CategoryValue.Videocamera) {
-      // @ts-ignore
       searchParams.delete(QueryString.TypeCamera, TypeCameraValue.Film);
-      // @ts-ignore
       searchParams.delete(QueryString.TypeCamera, TypeCameraValue.Snapshot);
     }
     searchParams.set(QueryString.Category, value);
@@ -81,9 +78,7 @@ function CatalogFilter(
   };
 
   const typeClickHandler = (value: TypeCameraValue) => {
-    // @ts-ignore
     if (searchParams.has(QueryString.TypeCamera, value)) {
-      // @ts-ignore
       searchParams.delete(QueryString.TypeCamera, value);
     } else {
       searchParams.append(QueryString.TypeCamera, value);
@@ -92,9 +87,7 @@ function CatalogFilter(
   };
 
   const levelClickHandler = (value: LevelValue) => {
-    // @ts-ignore
     if (searchParams.has(QueryString.Level, value)) {
-      // @ts-ignore
       searchParams.delete(QueryString.Level, value);
     } else {
       searchParams.append(QueryString.Level, value);
@@ -300,7 +293,6 @@ function CatalogFilter(
                 type="checkbox"
                 name="zero"
                 onChange={() => levelClickHandler(LevelValue.Zero)}
-                // @ts-ignore
                 checked={searchParams.has(QueryString.Level, LevelValue.Zero)}
 
               />
@@ -314,7 +306,6 @@ function CatalogFilter(
                 type="checkbox"
                 name="non-professional"
                 onChange={() => levelClickHandler(LevelValue.NonProfessional)}
-                // @ts-ignore
                 checked={searchParams.has(QueryString.Level, LevelValue.NonProfessional)}
               />
               <span className="custom-checkbox__icon"></span>
@@ -327,7 +318,6 @@ function CatalogFilter(
                 type="checkbox"
                 name="professional"
                 onChange={() => levelClickHandler(LevelValue.Professional)}
-                // @ts-ignore
                 checked={searchParams.has(QueryString.Level, LevelValue.Professional)}
               />
               <span className="custom-checkbox__icon"></span>
