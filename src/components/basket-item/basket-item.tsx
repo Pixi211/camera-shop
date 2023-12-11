@@ -31,7 +31,7 @@ function BasketItem({ basketItem }: BasketItemProps): JSX.Element {
   const summary = price * amount;
 
 
-  const deleteFromList = () => {
+  const deleteFromListHandler = () => {
     document.body.style.overflow = 'hidden';
     dispatch(setModalData(basketItem));
     dispatch(setActiveStatus(true));
@@ -43,19 +43,19 @@ function BasketItem({ basketItem }: BasketItemProps): JSX.Element {
 
   };
 
-  const increaseAmount = () => {
+  const increaseAmountHandler = () => {
     if (basketItem.amount !== 99) {
       dispatch(changeAmountInBasket([basketItem.id, basketItem.amount + 1]));
     }
   };
 
-  const decreaseAmount = () => {
+  const decreaseAmountHandler = () => {
     if (basketItem.amount !== 1) {
       dispatch(changeAmountInBasket([basketItem.id, basketItem.amount - 1]));
     }
   };
 
-  const changeAmount = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const changeAmountHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = Number(evt.target.value);
 
     if(isNaN(newValue) || newValue < 1) {
@@ -113,7 +113,7 @@ function BasketItem({ basketItem }: BasketItemProps): JSX.Element {
         <button
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
-          onClick={() => decreaseAmount()}
+          onClick={decreaseAmountHandler}
         >
           <svg width={7} height={12} aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -128,13 +128,13 @@ function BasketItem({ basketItem }: BasketItemProps): JSX.Element {
           min="1"
           max="99"
           aria-label="количество товара"
-          onChange={changeAmount}
+          onChange={changeAmountHandler}
         />
 
         <button
           className="btn-icon btn-icon--next"
           aria-label="увеличить количество товара"
-          onClick={() => increaseAmount()}
+          onClick={increaseAmountHandler}
         >
           <svg width={7} height={12} aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -152,7 +152,7 @@ function BasketItem({ basketItem }: BasketItemProps): JSX.Element {
         className="cross-btn"
         type="button"
         aria-label="Удалить товар"
-        onClick={deleteFromList}
+        onClick={deleteFromListHandler}
       >
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>

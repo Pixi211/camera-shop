@@ -70,8 +70,7 @@ export const getCamerasByPrice = (cameras: CameraType[], minPrice: number | null
   if (minPrice === null || maxPrice === null) {
     return [];
   }
-  const camerasByPrice = cameras.filter((camera) => camera.price >= minPrice && camera.price <= maxPrice);
-  return camerasByPrice;
+  return cameras.filter((camera) => camera.price >= minPrice && camera.price <= maxPrice);
 };
 
 export const changeTypeEnding = (type: string, category: string): string => {
