@@ -53,6 +53,7 @@ function ModalWrapper(): JSX.Element {
 
     const deleteItem = () => {
       if (modalData) {
+        // @ts-ignore
         dispatch(deleteFromBasket(modalData));
       }
       closeModalForm();

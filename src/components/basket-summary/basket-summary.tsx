@@ -58,6 +58,7 @@ function BasketSummary(): JSX.Element {
   };
 
   const orderSubmitHandler = () => {
+    // @ts-ignore
     const coupon = Object.values(PromoCode)?.includes(promoCode) ? promoCode : null;
     const serverData: Order = { camerasIds: camerasInBasket.map((elem) => elem.id), coupon: coupon };
     dispatch(postOrderAction(serverData)).then(() => {
