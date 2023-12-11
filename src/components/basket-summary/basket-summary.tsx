@@ -1,5 +1,4 @@
-
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BasketItemType, Order } from '../../types/types';
 import { Discount, PromoCode } from '../../const';
 import { fetchPromoCodeAction, postOrderAction } from '../../store/basket-data/basket-data.action';
@@ -56,6 +55,15 @@ function BasketSummary(): JSX.Element {
       dispatch(fetchPromoCodeAction(promoCode));
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem('discount', String(discount));
+
+    if (!discount) {
+      setPromoCode('');
+    }
+
+  }, [discount]);
 
   const orderSubmitHandler = () => {
     // @ts-ignore

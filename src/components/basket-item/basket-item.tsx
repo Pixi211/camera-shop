@@ -56,7 +56,7 @@ function BasketItem({ basketItem }: BasketItemProps): JSX.Element {
   };
 
   const changeAmountHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    let newValue = Number(evt.target.value);
+    let newValue = Number(evt.target.value.replace(/[,.]/g, ''));
 
     if(isNaN(newValue) || newValue < 1) {
       newValue = 1;
@@ -114,6 +114,7 @@ function BasketItem({ basketItem }: BasketItemProps): JSX.Element {
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
           onClick={decreaseAmountHandler}
+          disabled={basketItem.amount <= 1}
         >
           <svg width={7} height={12} aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -135,6 +136,7 @@ function BasketItem({ basketItem }: BasketItemProps): JSX.Element {
           className="btn-icon btn-icon--next"
           aria-label="увеличить количество товара"
           onClick={increaseAmountHandler}
+          disabled={basketItem.amount >= 99}
         >
           <svg width={7} height={12} aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>

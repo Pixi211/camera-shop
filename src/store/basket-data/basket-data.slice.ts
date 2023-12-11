@@ -44,6 +44,7 @@ export const basketData = createSlice({
       state.isPromoCodeInvalid = false;
       state.isPromoCodeValid = false;
       localStorage.setItem('items', '[]');
+      localStorage.setItem('discount', '0');
     },
     setIsPromoCodeValid: (state, action: PayloadAction<boolean>) => {
       state.isPromoCodeValid = action.payload;
